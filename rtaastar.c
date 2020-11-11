@@ -201,8 +201,8 @@ void Multi_print_grid() {
     }
 }
 
-/* Inicializa el g sobre la celda y setea las iteraciones 
- * @param tmpcell celda a inicilizar */
+/* Inicializa el costo g sobre la celda y setea las iteraciones 
+ * @param tmpcell celda a inicializar */
 void initialize_state(cell1 *tmpcell) {
     // Si no se ha cruzado sobre la celda
     if (tmpcell->iteration == 0) {
@@ -277,12 +277,14 @@ int compare_path(int a, int j, int myConflictStep, int otherConflictStep, int lo
     return 1;
 }
 
-/* TODO: DEFINIR
+/* TODO: Determina las situaciones de conflicto entre agentes,
+    define las restricciones sobre estas y
+    ejecuta decisiones sobre estas en base al entorno de ambos agentes
  * @param a Agente actual
  * @param lookahead estado de lookhead
  * @param formula Es comparada con agentInfo de todos los vecinos para dar preferencia
  * @param currentCell Celda actual sobre la cual itera
- * @param initialState El estado incial es 1 si esta es la primera llamada por el agente
+ * @param initialState El estado inicial es 1 si esta es la primera llamada por el agente
 */
 void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell, int initialState) {
     //int conflictsPosition=0;
@@ -613,20 +615,21 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                     }
                     // El agente con la maxima heuristica es
                     printf("The Agent with MAX H, whose H changes by my movement  is %i ", maxHagent + 1);
-                    // Con una heuristica de
+                    // Con un valor heuristico de
                     printf(" with H of %f \n", maxH);
                 }
 
-                // Another agent might ALREADY be here (> first step)
+                // Otro agente ya debiera encontrarse aquí
                 if (((maze1[currentCell->y][currentCell->x].blockedAgent[a][future - 1])) &&
                     (future > 0)) {
                     // El agente future-1 no puede desplazarse a la celda actual, ya que hay un agente en ella
                     printf("****At %i MIGHT NOT BE ABLE to move to [%d %d], there MIGHT ALREADY BE an agent\n",
                         future - 1, currentCell->y, currentCell->x);
-                    // TODO: Marca como estaba allí
+                    // TODO: Marca como agente wasthere
                     wasthere = 1;
                     //backupH[MAZEWIDTH*(tmpcell1->move[d]->y) + (tmpcell1->move[d]->x)][a];
-                    //hvalues[MAZEWIDTH*(position[a]->y) + (position[a]->x)][a];//[MAZEWIDTH*(tmpcell1->y) + (tmpcell1->x)][a];
+                    //hvalues[MAZEWIDTH*(position[a]->y) + (position[a]->x)][a];
+                    //[MAZEWIDTH*(tmpcell1->y) + (tmpcell1->x)][a];
 
                     // Actualiza el maximo valor heuristico
                     float maxH = backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a];
@@ -636,7 +639,6 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                     for (int j = 0; j < NAGENTS; ++j) {
                         // Si la celda para moverse a a j a travez future-1 esta bloqueada
                         if (maze1[currentCell->y][currentCell->x].agentMovingTo[a][future - 1][j] > 0) {
-
                             // Incrementa el contador de conflictos
                             numConflicts++;
                             // El agente j con una cantidad de numConflicts
@@ -652,8 +654,6 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                             // Actualiza la suma de valores heuristicos
                             sumH = sumH + backupH[MAZEWIDTH * (currentCell->y) + (currentCell->x)][j];
                             printf(", SumH is %f \n", sumH);
-
-
                             //Copied from above
                             printf("My info %i vs other agent's info %i \n", formula, agentInfo[j]);
 
@@ -662,122 +662,132 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                                 printf(" POINT conflict, my cost :  %i vs his :%i \n",
                                     (int) (hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]) + 2,
                                     (int) (hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j]) + 1);
-                                
+
+                                // Si el valor heuristico de j es mayor que el de a
                                 if ((int) (hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j]) + 1 >
                                     (int) (hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]) + 2) {
+                                    // Actualiza maxInfo a j
                                     maxInfo = j;
                                     printf(" MaxInfo: %i\n", maxInfo);
                                 }
                             }
                             
+                            // Si existe punto de conflicto
                             if (conflictType[a][j] == 1) {
                                 printf(" PATH conflict\n");
                                 if (formula < agentInfo[j]) {
+                                    // Actualiza maxInfo a j
                                     maxInfo = j;
                                     printf(" MaxInfo: %i\n", maxInfo + 1);
                                 }
                             }
-                        // End of copy from above
 
-
-
+                        // Si formula y el camino asociado a j superan el umbral
                         if ((formula > 20000) && (agentInfo[j] > 20000)) {
-                            int distanceFromAgent = 0;
-                            distanceFromAgent =
-                                    abs(position[a]->x - position[j]->x) + abs(position[a]->y - position[j]->y);
+
+                            // Determina la distancia entre a y j
+                            int distanceFromAgent = abs(position[a]->x - position[j]->x) + abs(position[a]->y - position[j]->y);
 
                             printf("(2) We are both SCREWED!!, his H is %i, mine is %i and my distance from start is %i, dist from agent is %i, total for comparison: Other %i vs mine %i \n",
                                    agentInfo[j] - 20003, formula - 20003, distanceFromStart[a], distanceFromAgent,
                                    agentInfo[j] - 20003 - distanceFromAgent, distanceFromStart[a]);
 
-                            if (agentInfo[j] - 20003 <
-                                formula - 20003)//( distanceFromStart[a] >= agentInfo[j]-20003 - distanceFromAgent)
-                            {
+                            // Si el camino sobre j es menor a formula
+                            if (agentInfo[j] - 20003 < formula - 20003) {
                                 printf(" I COULD AT LEAST HELP HIM GET TO HIS GOAL!!!\n");
+                                // Asigna j a maxInfo
                                 maxInfo = j;
                             } else {
                                 printf(" NO WAY, I CANT HELP EVEN IF I WANTED TO\n");
+                                // De otra forma asigna a a
                                 maxInfo = a;
                             }
                         } else {
+                            // Si el valor de formula es menor que el camino sobre j
                             if (formula < agentInfo[j]) {
+                                // Asigna j a maxInfo
                                 maxInfo = j;
-
                             }
                         }
 
-
+                        // Si el valor heuristico sobre j es mayor que el mayor actual
                         if ((hvalues[MAZEWIDTH * (position[j]->y) + (position[j]->x)][j] > maxH)) {
+                            // Actualiza el los mayores actuales
                             maxHagent = j;
                             maxH = hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)][j];
-
                         }
 
+                        // TODO: Queda por definir esto
                         determine_role(&role[a][j], maxInfo, a, j, &cell_role);
-
-
                     }
                 }
+
+                // Despliega el agente con maximo valor heuristico y su valor heuristico asociado
                 printf("The Agent with MAX H, whose H changes by my movement  is %i ", maxHagent + 1);
                 printf(" with H of %f \n", maxH);
-
             }
 
+            // Tercer caso - hay un agente en la celda actual
 
-
-
-
-
-
-
-            //Third case: there is an agent in currentCell
-
+            // Por cada uno de los agentes
             for (int u = 0; u < NAGENTS; ++u) {
-                if ((currentCell->x == position[u]->x) && (currentCell->y == position[u]->y) && (future == 1) &&
+
+                // Si en celda actual hay un agente que quiere llegar 
+                if ((currentCell->x == position[u]->x) &&
+                    (currentCell->y == position[u]->y) &&
+                    (future == 1) &&
                     (u != a)) {
                     printf("\nOps, agent %i is at the next position position, is it its goal?..", u + 1);
 
+                    // Si el agente actual esta en su goal lo pasa por encima ignorandolo
                     if ((goal[u]->y == position[u]->y) && (goal[u]->x == position[u]->x)) {
                         printf("\nYES, I can move through");
                     } else {
                         printf("\n No, Cant move here\n");
+                        // caso contrario no es posible moverse sobre la celda actual
                         canmovehere = 0;
                     }
-
                 }
             }
 
-
-            //Another agent IS here - currentCell (first step)
+            // En el caso que la celda actual se ecuentre bloqueada por un agente
             if (((maze1[currentCell->y][currentCell->x].blockedAgent[a][0])) && (!canmovehere)) {
+                // No puedo moverme sobre la celda hay un agente
                 printf("\n****At %i Cant move to [%d %d], there is an agent\n", future, currentCell->y, currentCell->x);
+                // TODO: POR DEFINIR
                 learningCutoff[a] = future - 1;
 
+                // Por cada uno de los agentes
                 for (int j = 0; j < NAGENTS; ++j) {
-
+                    
+                    // Si j esta sobre la celda actual
                     if ((currentCell->y == position[j]->y) && (currentCell->x == position[j]->x)) {
 
+                        // Incremeta el contador de conflictos sobre a
                         (currentCell)->numConflicts[a] = (currentCell)->numConflicts[a] + 1;
                         printf("This guy -> %i, total conflicts %i \n", j + 1, (currentCell)->numConflicts[a]);
+                        // Actualiza el nuevo camino más largo a j
                         maxInfo = j;
-
-
+                        // TODO: POR DEFINIR
                         determine_role(&role[a][j], maxInfo, a, j, &cell_role);
-
                     }
                 }
-
             }
 
-            //Why only when numConflicts is zero?
+            // Caso que el número de conflictos sea cero
             if (numConflicts == 0) {
 
+                // Por cada uno de los agentes
                 for (int j = 0; j < NAGENTS; ++j) {
+
+                    // Si sobre la celda actual es posible mover a sobre j en future
                     if (maze1[currentCell->y][currentCell->x].agentMovingTo[a][future][j] > 0) {
+                        // si el agente j se encuentra en el goal
                         if (goal_reached[j]) {
-                            //agent is on goal, never mind
+                            // pasa de j y continua
                             continue;
                         }
+                        // Incrementa el contador de conflictos
                         numConflicts++;
                         printf("This guy -> %i wants to move where I am (planning to be)  (total %i) at time %i \n",
                                j + 1, numConflicts, future);
@@ -786,20 +796,21 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                                idealPath[j][future]->x,
                                maze1[idealPath[j][future]->y][idealPath[j][future]->x].degree[j]);
                         printf("My info %i vs other agent's info %i \n", formula, agentInfo[j]);
-
+                        // Si formula y el camino de j superan el umbral
                         if ((formula > 20000) && (agentInfo[j] > 20000)) {
-                            int distanceFromAgent =
-                                    abs(position[a]->x - position[j]->x) + abs(position[a]->y - position[j]->y);
 
+                            // Determina la distancia entre a y j
+                            int distanceFromAgent = abs(position[a]->x - position[j]->x) + abs(position[a]->y - position[j]->y);
                             printf("(3) We are both SCREWED!!, his H is %i, mine is %i and my distance from start is %i, dist from agent is %i, total for comparison: Other %i vs mine %i \n",
                                    agentInfo[j] - 20003, formula - 20003, distanceFromStart[a], distanceFromAgent,
                                    agentInfo[j] - 20003 - distanceFromAgent, distanceFromStart[a]);
 
-                            if (agentInfo[j] <
-                                formula)//( distanceFromStart[a] >= agentInfo[j]-20003 - distanceFromAgent)
-                            {
+                            // Si el camino sobre j es menor que el determinado mediante formula
+                            if (agentInfo[j] < formula) {
                                 printf(" I COULD AT LEAST HELP HIM GET TO HIS GOAL!!!\n");
+                                // Marca j como el mayor camino
                                 maxInfo = j;
+                                // Marca deadlock en a sobre la celda actual en el paso future
                                 deadlock[a][currentCell->y][currentCell->x][future] = 1;
                             } else {
                                 printf(" NO WAY, I CANT HELP EVEN IF I WANTED TO\n");
@@ -814,33 +825,24 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                                 //printf("MAX INFO: %i, role(%i, %i): %i %i\n",a+1,a+1, j+1,role[a][j],role[1][0]);
                             }
                         }
-
+                        // TODO:
                         determine_role(&role[a][j], maxInfo, a, j, &cell_role);
-
                     }
                 }
             }
-
-
             printf(" ªªªª****ªªªªª*****A THE AGENT WITH MAX INFO IS %i\n", maxInfo + 1);
-
-
             //if(maxInfo!=a)
             //if(role[i][j]<0.9)
             if (cell_role == 0) {
                 int step = 0;
                 if (initialState == 0) {
                     step = pathlength[a];
-
                 }
                 printf(" My step (of pathlength) is now %i\n", step);
-
                 if (conflictCost[a][currentCell->y][currentCell->x][step] ==
                     0) //<  (float)1/(float)(future-pathlength[a]+1))
                 {
-
                     printf("CCost of current cell is %.1f\n", conflictCost[a][currentCell->y][currentCell->x][step]);
-
                     //If the neighbor tried to move to my "current" cell
                     if (!wasthere) {
                         printf(" %f  + %f= %f\n", (deadlock[a][currentCell->y][currentCell->x][step]),
@@ -853,11 +855,9 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                         if (conflictCost[a][currentCell->y][currentCell->x][step] > 1) {
                             conflictCost[a][currentCell->y][currentCell->x][step] = 1;
                         }
-
                         printf("CASE A!!\n");
                         printf("New CCost of current cell is %.1f\n",
                                conflictCost[a][currentCell->y][currentCell->x][step]);
-
                     } else  // if the neighbor was there when the agent tried to move to the cell
                     {
                         conflictCost[a][currentCell->y][currentCell->x][future] =
@@ -866,7 +866,6 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                         if (conflictCost[a][currentCell->y][currentCell->x][step] > 1) {
                             conflictCost[a][currentCell->y][currentCell->x][step] = 1;
                         }
-
                         printf("CASE B!!\n");
                     }
                     //printf(" ªªªª****ªªªªª***** My time %i vs conflict time %i, ConflictCost at time %i is: %f \n", pathlength[a], future,   pathlength[a], conflictCost[a][currentCell->y][currentCell->x][pathlength[a]]);
@@ -874,22 +873,16 @@ void determine_constraints(int a, int lookahead, int formula, cell1 *currentCell
                 printf(" ªªªª****ªªªªª***** My time %i vs conflict time %i, ConflictCost at time %i is: %f, deadlock at %i is: %i  \n",
                        step, future, step, conflictCost[a][currentCell->y][currentCell->x][step], step,
                        deadlock[a][currentCell->y][currentCell->x][step]);
-
-
             }
-
-
         }
-
     }
-
 }
 
-void determine_role(int *roleij, int maxInfo, int a, int j, int *cell_role) {  //printf("Inside, role is %i", *roleij);
+void determine_role(int *roleij, int maxInfo, int a, int j, int *cell_role) {
 
-
-    if (*roleij == -1) // meaning that it has not been set yet
-    {
+    //printf("Inside, role is %i", *roleij);
+    // meaning that it has not been set yet
+    if (*roleij == -1) {
         if (maxInfo == a) {
             // printf("This is me\n");
             *roleij = 1;
@@ -897,10 +890,9 @@ void determine_role(int *roleij, int maxInfo, int a, int j, int *cell_role) {  /
             *roleij = 0;
             //printf("I defer\n");
         }
-
-    } else  //Meaning that there is already a relation between the agents a and j
-    {
-
+    } 
+    //Meaning that there is already a relation between the agents a and j
+    else {
 
     }
 

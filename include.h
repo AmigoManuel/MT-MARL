@@ -61,7 +61,6 @@ float agent_cost[NAGENTS];
 //#define TORUS                /* must define TORUS */
 #define REVERSE         /* A* search from the target back to the start    */
 
-//_________________________________________________________________________________________________________
 #define LARGE  10000000
 #define BASE   100000
 #define ALLMAXSEARCHES 100000000
