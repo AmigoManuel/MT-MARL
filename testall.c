@@ -197,6 +197,7 @@ void generate_maze(int RUN1) {
                     maze1[y][x].g = 0;
                 }
 
+            /* Definición de la ubicación de los agentes en el mapa */
             if (a == 0) {
                 goaly = 4;
                 goalx = 10;
@@ -210,6 +211,13 @@ void generate_maze(int RUN1) {
                 goalx = 1;
                 starty = 4;
                 startx = 14;
+            }
+
+            if (a == 2) {
+                goaly = 5;
+                goalx = 10;
+                starty = 5;
+                startx = 1;
             }
 
             // Marca el inicio y objetivo sin obstaculo
