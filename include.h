@@ -45,8 +45,8 @@
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */
 
 #define MAX_TIME_STEPS 1000
-#define NAGENTS 2
-#define MEMORY 2
+#define NAGENTS 3
+#define MEMORY 3
 
 float hvalues[MAZEWIDTH * MAZEHEIGHT][NAGENTS];
 int agent_expansions[NAGENTS];

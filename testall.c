@@ -213,6 +213,13 @@ void generate_maze(int RUN1) {
                 startx = 14;
             }
 
+            if (a == 2){
+                goaly = 2;
+                goalx = 2;
+                starty = 2;
+                startx = 13;
+            }
+
             // Marca el inicio y objetivo sin obstaculo
             maze1[starty][startx].obstacle = 0;
             maze1[goaly][goalx].obstacle = 0;

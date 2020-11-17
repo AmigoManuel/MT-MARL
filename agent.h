@@ -9,12 +9,12 @@
 // int blockedAgent[MAZEWIDTH][MAZEHEIGHT][NAGENTS][100];
 // int mostProbPositionY[NAGENTS][NAGENTS][100]; //Max lookahead 100
 
-int track[NAGENTS][NAGENTS][MEMORY][2];
+int track[NAGENTS][NAGENTS][MEMORY][3];
 int obsNextCell[NAGENTS][NAGENTS][DIRECTIONS+1];
 int lastMove[NAGENTS][NAGENTS];
 int realDepth[NAGENTS];
 float nextCellProb[NAGENTS][NAGENTS][DIRECTIONS+1];
-int mostProbPositionXY[NAGENTS][NAGENTS][100][2]; //Max lookahead 100
+int mostProbPositionXY[NAGENTS][NAGENTS][100][3]; //Max lookahead 100
 int lastMobileCellDist[NAGENTS];
 int lastMobileCellX[NAGENTS];
 int lastMobileCellY[NAGENTS]; 
