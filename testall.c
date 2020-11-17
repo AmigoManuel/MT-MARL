@@ -215,7 +215,7 @@ void generate_maze(int RUN1) {
 
             if (a == 2) {
                 goaly = 5;
-                goalx = 10;
+                goalx = 11;
                 starty = 5;
                 startx = 1;
             }
