@@ -175,7 +175,7 @@ void generate_maze(int RUN1) {
     //read_gamemap("./mapa_prueba2.map2"); 
     //read_gamemap("./mapa_bloques.map2");
     //read_gamemap("./GameMaps/den520d.map2");
-    read_gamemap("./GameMaps/test4.map2");
+    read_gamemap("./GameMaps/test5.map2");
     //read_gamemap("./GameMaps/ost003d.map2");
     //read_gamemap("./GameMaps/brc202d.map2");
     //read_gamemap("./GameMaps/lak201d.map2");
@@ -211,13 +211,6 @@ void generate_maze(int RUN1) {
                 goalx = 1;
                 starty = 4;
                 startx = 14;
-            }
-
-            if (a == 2) {
-                goaly = 5;
-                goalx = 11;
-                starty = 5;
-                startx = 1;
             }
 
             // Marca el inicio y objetivo sin obstaculo
