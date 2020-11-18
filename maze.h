@@ -11,7 +11,8 @@ typedef struct cell1 cell1;
 /* Definición de celda */
 struct cell1 {
     // Coordenadas
-    int x, y;
+    int x;
+    int y;
     // Indicador de obstaculo
     short obstacle;
     // Indica que tiene un obstaculo

@@ -1,5 +1,6 @@
 #include "include.h"
 #include "maze.h"
+#include "heap.h"
 
 int mazeiteration = 0;
 int goaly;// = GOALY;

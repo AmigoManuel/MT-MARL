@@ -4312,8 +4312,6 @@ void call_rtaastar() {
                 }
             }
         }
-
-
     }
 
     return;

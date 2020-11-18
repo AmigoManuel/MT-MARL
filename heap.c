@@ -186,7 +186,6 @@ cell1 *topheap3() {
 /* Limpia el heap */
 void emptyheap3() {
     int i;
-
     for (i = 1; i <= heapsize3; ++i)
         heap3[i]->heapindex3 = 0;
     heapsize3 = 0;
@@ -195,12 +194,12 @@ void emptyheap3() {
 /* pop sobre el heap, retorna una cell1 */
 cell1 *popheap3() {
     cell1 *thiscell;
-
-    if (heapsize3 == 0)
-        return NULL;
+    if (heapsize3 == 0) return NULL;
     thiscell = heap3[1];
     thiscell->heapindex3 = 0;
     percolatedown3(1, heap3[heapsize3--]);
+    printf("%d\n", thiscell->x);
+    printf("%d\n", thiscell->y);
     return thiscell;
 }
 
