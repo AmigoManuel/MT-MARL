@@ -249,8 +249,6 @@ void generate_maze(int RUN1) {
                 startx = 10;
             }
 
-            
-
             // Marca el inicio y objetivo sin obstaculo
             maze1[starty][startx].obstacle = 0;
             maze1[goaly][goalx].obstacle = 0;

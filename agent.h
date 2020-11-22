@@ -42,9 +42,11 @@ int agentMovingTo[MAZEWIDTH][MAZEHEIGHT][NAGENTS][100][NAGENTS];
  
  
 
- */int canSee[NAGENTS][NAGENTS];
- int role[NAGENTS][NAGENTS];
- float backupH[MAZEWIDTH*MAZEHEIGHT][NAGENTS];
+ */
+
+int canSee[NAGENTS][NAGENTS];
+int role[NAGENTS][NAGENTS];
+float backupH[MAZEWIDTH*MAZEHEIGHT][NAGENTS];
  
 
 #endif
