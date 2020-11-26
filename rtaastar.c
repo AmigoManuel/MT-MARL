@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
 
 #include "agent.h"
@@ -10,6 +11,7 @@
 #include "math.h"
 #include "maze.h"
 #include "stdio.h"
+#include "testall.h"
 
 #ifdef TESTRTAASTAR
 #define MAZEITERATIONS 1000000
@@ -1079,7 +1081,7 @@ void determine_constraints(int a, int lookahead, int formula,
             }
             printf(
                 " ªªªª****ªªªªª***** My time %i vs conflict time %i, "
-                "ConflictCost at time %i is: %f, deadlock at %i is: %i  \n",
+                "ConflictCost at time %i is: %f, deadlock at %i is: %f  \n",
                 step, future, step,
                 conflictCost[a][currentCell->y][currentCell->x][step], step,
                 deadlock[a][currentCell->y][currentCell->x][step]);
@@ -1239,7 +1241,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
           hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
    // Checking mobility:
 
-   printf("CHECKING SURROUNDINGS FOR OBSTACLES:\n",
+   printf("CHECKING SURROUNDINGS FOR OBSTACLES: %f\n",
           hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
    printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y, position[a]->x,
           maze1[position[a]->y][position[a]->x].obstacle);
@@ -1260,7 +1262,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
                        maze1[position[a]->y][(position[a]->x) - 1].obstacle +
                        maze1[(position[a]->y) - 1][position[a]->x].obstacle);
    // printf("Mobility : %i \n",mobility);
-   printf("CHECKING SURROUNDINGS FOR AGENTS:\n",
+   printf("CHECKING SURROUNDINGS FOR AGENTS: %f\n",
           hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
    // Should compute here which of the neighboring cells are occupied by other
    // agents
@@ -1460,7 +1462,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
                 hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a]);
          printf(" G : %f\n", tmpcell1->g);
 
-         printf("\nLEARNING NEW HEURISTICS OF FOUND PATH..\n", tmpcell1->g);
+         printf("\nLEARNING NEW HEURISTICS OF FOUND PATH.. %f\n", tmpcell1->g);
          cellpas = tmpcell1;
          for (d = 0; d < cont_closed; d++) {
             hvalues[MAZEWIDTH * CLOSED[d]->y + CLOSED[d]->x][a] =
@@ -1558,7 +1560,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
       // End Previous code
 
-      d = random() % DIRECTIONS;
+      d = rand() % DIRECTIONS;
       for (i = 0; i < DIRECTIONS; ++i) {
          if (tmpcell1->move[d]) {
             printf(
@@ -1773,7 +1775,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
                for (int b = 2; b <= lookahead; b++) {
                   path[a][b] = path[a][1];  // NULL; //should enter here when
                                             // agent wants to stay here
-                  printf("MY %i nd step is same as before\n");  // NULL!!\n",
+                  printf("MY %i nd step is same as before\n", b);  // NULL!!\n",
                                                                 // b);
                }
             }
@@ -1881,7 +1883,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
             // getchar();
          }
          if (sizeheap2() == 0) {
-            printf(" VACIOOOOO size %i\n", flag_success1, sizeheap2());
+            printf(" VACIOOOOO size %i\n", sizeheap2());
             // getchar();
             return (0);
          }
@@ -2156,7 +2158,8 @@ int compute_constraintpath(int a, int lookahead) {
          // tmpcell1->searchtree = tmpcell1->tmpsearchtree;
       }
 
-      printf("A* top a:%d [%d,%d] It:%d LA:%d\n", a, tmpcell1->y, tmpcell1->x,
+      printf("A* top a:%d [%d,%d] It:%lld LA:%d\n", 
+               a, tmpcell1->y, tmpcell1->x,
              mazeiteration1, lookahead);
 
       // This next block of code (if statement) should not be executed in this
@@ -2173,7 +2176,7 @@ int compute_constraintpath(int a, int lookahead) {
                 hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a]);
          printf(" G : %f\n", tmpcell1->g);
 
-         printf("\nLEARNING NEW HEURISTICS OF FOUND PATH..\n", tmpcell1->g);
+         printf("\nLEARNING NEW HEURISTICS OF FOUND PATH.. %f\n", tmpcell1->g);
          cellpas = tmpcell1;
          for (d = 0; d < cont_closed; d++) {
             // hvalues[MAZEWIDTH*CLOSED[d]->y + CLOSED[d]->x][a] =
@@ -2260,7 +2263,7 @@ int compute_constraintpath(int a, int lookahead) {
 
       // End Previous code
 
-      d = random() % DIRECTIONS;
+      d = rand() % DIRECTIONS;
       for (i = 0; i < DIRECTIONS; ++i) {
          if (tmpcell1->move[d]) {
             printf(
@@ -2388,7 +2391,7 @@ int compute_constraintpath(int a, int lookahead) {
                              .agentMovingTo[a][pathlength[a]][j] > 0) {
                         printf(
                             "This guy -> %i  (total %i) inGoal?: %i or "
-                            "(%i-%i)=%i \n",
+                            "(%f-%i)=%f \n",
                             j + 1, numConflicts, goal_reached[j],
                             hvalues[MAZEWIDTH * position[j]->y + position[j]->x]
                                    [j],
@@ -2801,7 +2804,7 @@ int compute_constraintpath(int a, int lookahead) {
                for (int b = 2; b <= lookahead; b++) {
                   path[a][b] = path[a][1];  // NULL; //should enter here when
                                             // agent wants to stay here
-                  printf("MY %i nd step is same as before\n");  // NULL!!\n",
+                  printf("MY %i nd step is same as before\n", b);  // NULL!!\n",
                                                                 // b);
                }
             }
@@ -2903,7 +2906,7 @@ int compute_constraintpath(int a, int lookahead) {
             // getchar();
          }
          if (sizeheap2() == 0) {
-            printf(" VACIOOOOO size %i\n", flag_success1, sizeheap2());
+            printf(" VACIOOOOO size %i\n", sizeheap2());
             // getchar();
             return (0);
          }
@@ -4159,7 +4162,7 @@ void computePrediction(int a, int i, int lookahead) {
 void randommove(int a) {
    cell1 *tmpcell1 = position[a];
    ++agent_expansions[a];
-   d = random() % DIRECTIONS;
+   d = rand() % DIRECTIONS;
 
    int i;
    for (i = 0; i < DIRECTIONS; ++i) {
@@ -4596,7 +4599,7 @@ void call_rtaastar() {
                conflictType[a][j] = -1;
             }
          }
-         printf("case == [%d] ___________________________________\n", RUN1);
+         printf("case == [%ld] ___________________________________\n", RUN1);
          srand(5 * RUN1 + 100);
          generate_maze(RUN1);
          gettimeofday(&tv11, NULL);
@@ -4608,7 +4611,7 @@ void call_rtaastar() {
 
          gettimeofday(&tv22, NULL);
          // printf("Agents Remaining: %i at RUN %i \n", finish_all,RUN1);
-         printf("Agents Remaining: %i at RUN %i \n", finish_all, RUN1);
+         printf("Agents Remaining: %i at RUN %ld \n", finish_all, RUN1);
          badpredictions[i] = badpredictions[i] + badp;
          totalpredictions[i] = totalpredictions[i] + totp;
          avg_finish[i] =
@@ -4660,7 +4663,7 @@ void call_rtaastar() {
          if ((salida = fopen("Output-mrtaa-1-step", "a")) == NULL) {
             printf("No se puede abrir el archivo de salida");
          }
-         fprintf(salida, "%d %f %d %d %d %f %d %d %d %d", lookahead,
+         fprintf(salida, "%d %f %d %d %lld %f %d %ld %lld %ld", lookahead,
                  solution_cost, NAGENTS, NAGENTS - finish_all, searches_astar1,
                  (time_astar - time_astar_initialize1) * 1000, time_step - 1,
                  RUN1, statexpanded1, statpercolated2);

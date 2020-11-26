@@ -79,4 +79,9 @@ cell1 *robotall;
 int mazeiteration, searchiteration;
 int RUN;
 
+void initialization_h_values_2D();
+void preprocessmaze_astar();
+void postprocessmaze_astar();
+void newrandommaze_astar();
+
 #endif

@@ -1,15 +1,19 @@
-#include "stdio.h"
-#include "include.h"
-#include "heap.h"
-#include "maze.h"
-#include "rtaastar.h"
-#include "lss-lrta.h"
-#include "math.h"
-#include "agent.h"
+#include "testall.h"
 
+#include <ctype.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <unistd.h>
+
+#include "agent.h"
+#include "heap.h"
+#include "include.h"
+#include "lss-lrta.h"
+#include "math.h"
+#include "maze.h"
+#include "rtaastar.h"
+#include "stdio.h"
+#include "rtaastar.h"
 
 #ifdef EIGHTCONNECTED
 #define HA(from,to) (  (14) * min(abs((from)->y - (to)->y), abs((from)->x - (to)->x))) + ((10) * ( max(abs((from)->y - (to)->y), abs((from)->x - (to)->x )) - min( abs((from)->y - (to)->y), abs((from)->x - (to)->x )))     )
@@ -20,12 +24,12 @@
 /* Lectura de mapa desde fichero externo 
  * @param filename string con el nombre del fichero */
 void read_gamemap(const char *filename) {
-    FILE *f;
+    FILE *fp;
     int y, x, w, z;
     // Abre el archivo
-    f = fopen(filename, "r");
+    fp = fopen(filename, "r");
     // Si no encuentra el archivo
-    if (f == NULL) {
+    if (fp == NULL) {
         printf("No se puede abrir el fichero.\n");
         exit(1);
     }
@@ -45,7 +49,7 @@ void read_gamemap(const char *filename) {
             }
             // Lee una entrada del fichero
             char what;
-            fscanf(f, "%c", &what);
+            fscanf(fp, "%c", &what);
             // Identifica que hay en esa casilla y toupper convierte un lowercase a uppercase
             switch (toupper(what)) {
                 case 'O':
@@ -61,9 +65,9 @@ void read_gamemap(const char *filename) {
             }
             maze1[y][x].overexpanded = 0; // Marca la casilla como sin expandir
         }
-        fscanf(f, "\n");
+        fscanf(fp, "\n");
     }
-    fclose(f);
+    fclose(fp);
 }
 
 /* Utils para cola */
@@ -108,7 +112,7 @@ int IsValid(int y, int x, int y0, int x0, int d) {
  * @param gx el valor de destino en x
  * @param cont contador 
  * @return boolean - Si el problema es nuevo o no */
-isnewproblem(int sy, int sx, int gy, int gx, int cont) {
+int isnewproblem(int sy, int sx, int gy, int gx, int cont) {
     int i;
     // printf("cont:%d\n",cont);
     // Por cada elemento en el contador
@@ -122,7 +126,6 @@ isnewproblem(int sy, int sx, int gy, int gx, int cont) {
     }
     // Caso contrario si es nuevo problema
     return 1;
-
 }
 
 /* Generate maze with solution */
