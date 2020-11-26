@@ -566,16 +566,13 @@ void determine_constraints(int a, int lookahead, int formula,
                 "%d], but who??\n",
                 future, currentCell->y, currentCell->x);  // cont_closed
             // Mayor valor heuristico presente entre los agentes
-            printf("*********************************LEEME*******************");
+            printf("*********************************LEEME*******************\n");
             printf("position[a]->y: %d\n", position[a]->y);
             printf("position[a]->x: %d\n", position[a]->x);
             printf("a: %d\n", a);
-            printf("[%d]",
-                   hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
-            printf("backupH: %d\n",
-                   backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
-            float maxH =
-                backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a];
+            printf("hvalues: %d\n",hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
+            printf("backupH: %d\n", backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
+            float maxH = backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a];
             // Suma de valores heuristicos
             float sumH = 0;
 
@@ -591,6 +588,12 @@ void determine_constraints(int a, int lookahead, int formula,
                   if ((goal_reached[j])) {
                      // El agente se encuentra en su objetivo
                      // no es relevante
+                     printf("a: %d\n", a);
+                     printf("future: %d\n", future);
+                     printf("path[%d][%d]->y: %d\n", a, future, path[j][future]->y);
+                     printf("path[%d][%d]->x: %d\n", a, future, path[j][future]->x);
+                     printf("goal reached");
+                     getchar();
                      continue;
                   }
 
@@ -598,13 +601,12 @@ void determine_constraints(int a, int lookahead, int formula,
                   numConflicts++;
 
                   printf("a: %d\n", a);
-                  printf("%d\n", goal_reached[j]);
-                  printf("%d\n", future);
-                  printf("%d\n", path[j][future]->y);
-                  printf("%d\n", path[j][future]->x);
+                  printf("future: %d\n", future);
+                  printf("path[%d][%d]->y: %d\n", a, future, path[j][future]->y);
+                  printf("path[%d][%d]->x: %d\n", a, future, path[j][future]->x);
+                  getchar();
 
-                  printf(
-                      "His previous position at [%d %d] had a degree of %i \n",
+                  printf("His previous position at [%d %d] had a degree of %i \n",
                       path[j][future]->y, path[j][future]->x,
                       maze1[path[j][future]->y][path[j][future]->x].degree[j]);
                   printf("My info %i vs other agent's info %i \n", formula,
@@ -624,7 +626,7 @@ void determine_constraints(int a, int lookahead, int formula,
                      // heuristic if((int)(hvalues[MAZEWIDTH*position[j]->y +
                      // position[j]->x][j])+1 >
                      //(int)(hvalues[MAZEWIDTH*position[a]->y +
-                     //position[a]->x][a])+2)
+                     // position[a]->x][a])+2)
 
                      if (formula < agentInfo[j]) {
                         maxInfo = j;
@@ -688,9 +690,7 @@ void determine_constraints(int a, int lookahead, int formula,
                      if ((a != j) && (idealPath[j][l] != NULL)) {
                         printf("Agent %i: [%d %d], H: %.1f, step %i \n", j + 1,
                                idealPath[j][l]->y, idealPath[j][l]->x,
-                               hvalues[MAZEWIDTH * position[j]->y +
-                                       position[j]->x][j],
-                               l);
+                               hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j],l);
 
                         // Si encuentra una intersección entre a y j sobre la
                         // iteración l
@@ -1581,7 +1581,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
          if (tmpcell1->move[d] &&
              (!tmpcell1->move[d]
                    ->obstacle))  //&& tmpcell1->move[d]->overexpanded !=
-                                 //mazeiteration1)
+                                 // mazeiteration1)
          {
             initialize_state(tmpcell1->move[d]);
             printf("\nA* generation a:%d [%d,%d] from [%d %d], %.1f >= %.1f   ",
@@ -1606,9 +1606,9 @@ int compute_shortestpath_astar(int a, int lookahead) {
             if ((tmpcell1->move[d]->g >=
                  tmpcell1->g +
                      tmpcell1->cost[d]))  //||((d==4)&&(tmpcell1->move[d]->g ==
-                                          //tmpcell1->g + tmpcell1->cost[d])))
+                                          // tmpcell1->g + tmpcell1->cost[d])))
                                           ////way to check if state has been
-                                          //visited before
+                                          // visited before
             {
                tmpcell1->move[d]->tmpdepth[a] = newdepth;
                pathlength[a] = tmpcell1->move[d]->tmpdepth[a];
@@ -1848,8 +1848,9 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
             if ((cellpas->blocked[pathlength[a]] != 1) ||
                 ((cellpas->blocked[pathlength[a]] == 1) &&
-                 (cellpas == mazestart1)))  //&&(pathlength[a]>0))||((mazestart1->trace->blocked[pathlength[a]]
-                                            //== 1)&&(pathlength[a]==0)))
+                 (cellpas ==
+                  mazestart1)))  //&&(pathlength[a]>0))||((mazestart1->trace->blocked[pathlength[a]]
+                                 //== 1)&&(pathlength[a]==0)))
             {
                printf(" GOT IT %i \n", flag_success1);
                printf("PATHLENGHT; %i \n", pathlength[a]);
@@ -2159,8 +2160,8 @@ int compute_constraintpath(int a, int lookahead) {
              mazeiteration1, lookahead);
 
       // This next block of code (if statement) should not be executed in this
-      // path planning, as we do not want to overwrite previously found heuristic
-      // values
+      // path planning, as we do not want to overwrite previously found
+      // heuristic values
 
       if ((tmpcell1 == mazegoal1) ||
           (cont_closed == lookahead)) {  // open_size = opensize2() + open_size;
@@ -2324,9 +2325,9 @@ int compute_constraintpath(int a, int lookahead) {
             if ((tmpcell1->move[d]->g >=
                  tmpcell1->g +
                      tmpcell1->cost[d]))  //||((d==4)&&(tmpcell1->move[d]->g ==
-                                          //tmpcell1->g + tmpcell1->cost[d])))
+                                          // tmpcell1->g + tmpcell1->cost[d])))
                                           ////way to check if state has been
-                                          //visited before
+                                          // visited before
             {
                tmpcell1->move[d]->tmpdepth[a] = newdepth;
                pathlength[a] = tmpcell1->move[d]->tmpdepth[a];
@@ -2373,13 +2374,13 @@ int compute_constraintpath(int a, int lookahead) {
                       tmpcell1->move[d]->x);  // cont_closed
 
                   int numConflicts = 0;
-                  float maxH =
-                      backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)]
-                             [a];  // backupH[MAZEWIDTH*(tmpcell1->move[d]->y) +
-                                   // (tmpcell1->move[d]->x)][a];//hvalues[MAZEWIDTH*(position[a]->y)
-                                   // +
-                                   // (position[a]->x)][a];//[MAZEWIDTH*(tmpcell1->y)
-                                   // + (tmpcell1->x)][a];
+                  float maxH = backupH
+                      [MAZEWIDTH * (position[a]->y) + (position[a]->x)]
+                      [a];  // backupH[MAZEWIDTH*(tmpcell1->move[d]->y) +
+                            // (tmpcell1->move[d]->x)][a];//hvalues[MAZEWIDTH*(position[a]->y)
+                            // +
+                            // (position[a]->x)][a];//[MAZEWIDTH*(tmpcell1->y)
+                            // + (tmpcell1->x)][a];
                   float sumH = 0;
 
                   for (int j = 0; j < NAGENTS; ++j) {
@@ -2571,13 +2572,13 @@ int compute_constraintpath(int a, int lookahead) {
                       tmpcell1->move[d]->x);
 
                   int numConflicts = 0;
-                  float maxH =
-                      backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)]
-                             [a];  // backupH[MAZEWIDTH*(tmpcell1->move[d]->y) +
-                                   // (tmpcell1->move[d]->x)][a];//hvalues[MAZEWIDTH*(position[a]->y)
-                                   // +
-                                   // (position[a]->x)][a];//[MAZEWIDTH*(tmpcell1->y)
-                                   // + (tmpcell1->x)][a];
+                  float maxH = backupH
+                      [MAZEWIDTH * (position[a]->y) + (position[a]->x)]
+                      [a];  // backupH[MAZEWIDTH*(tmpcell1->move[d]->y) +
+                            // (tmpcell1->move[d]->x)][a];//hvalues[MAZEWIDTH*(position[a]->y)
+                            // +
+                            // (position[a]->x)][a];//[MAZEWIDTH*(tmpcell1->y)
+                            // + (tmpcell1->x)][a];
                   float sumH = 0;
 
                   for (int j = 0; j < NAGENTS; ++j) {
@@ -2869,8 +2870,9 @@ int compute_constraintpath(int a, int lookahead) {
 
             if ((cellpas->blocked[pathlength[a]] != 1) ||
                 ((cellpas->blocked[pathlength[a]] == 1) &&
-                 (cellpas == mazestart1)))  //&&(pathlength[a]>0))||((mazestart1->trace->blocked[pathlength[a]]
-                                            //== 1)&&(pathlength[a]==0)))
+                 (cellpas ==
+                  mazestart1)))  //&&(pathlength[a]>0))||((mazestart1->trace->blocked[pathlength[a]]
+                                 //== 1)&&(pathlength[a]==0)))
             {
                printf(" GOT IT %i \n", flag_success1);
                printf("PATHLENGHT; %i \n", pathlength[a]);
@@ -3762,7 +3764,7 @@ void computePrediction(int a, int i, int lookahead) {
          predict[a][i] = 1;
          //	printf("NICE!! good prediction rate, %.1f from %i and %i \n",
          //(float)good_pred_agents[a][i]/(float)pred_agents[a][i],good_pred_agents[a][i],
-         //pred_agents[a][i]); getchar();
+         // pred_agents[a][i]); getchar();
 
       } else {
          predict[a][i] = 0;
@@ -4243,7 +4245,6 @@ void test_rtaastar(int lookahead, int prunning) {
    while (finish_all && time_step <= MAX_TIME_STEPS) {
       printf("OBSERVING AGENTS\n");
       //			i = random() % NAGENTS;
-
       // For each agent in the problem..
       for (i = 0; i < NAGENTS; i++) {
          if (RUN1 >= 0 && robot_steps1 >= 0) {
@@ -4460,8 +4461,8 @@ void test_rtaastar(int lookahead, int prunning) {
                   //	getchar();
 
                   //	if (RUN1 >= 2 && robot_steps1 >= 0){printf("Angent[%d]
-                  //A* Start [%d,%d] Goal [%d,%d] h:%f step:%d
-                  //nei:%d\n",i,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,count_nei(position[i]));print_grid(position[i]->x,position[i]->y,position[i],goal[i]->x,goal[i]->y);getchar();}
+                  // A* Start [%d,%d] Goal [%d,%d] h:%f step:%d
+                  // nei:%d\n",i,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,count_nei(position[i]));print_grid(position[i]->x,position[i]->y,position[i],goal[i]->x,goal[i]->y);getchar();}
                   if (position[i] == goal[i]) {
                      if (goal_reached[i] == 0) {
                         lastfinish = time_step;
@@ -4732,9 +4733,9 @@ void call_rtaastar() {
          for (int j = 0; j < NAGENTS; j++) {
             if (j != 0) {
                //	printf("Acc to %i, AGENT %i moved UP: %i, DOWN: %i,
-               //LEFT: %i, RIGHT:%i \n", a, j, obsNextCell[a][j][1],
-               //obsNextCell[a][j][3], obsNextCell[a][j][2],
-               //obsNextCell[a][j][0]);
+               // LEFT: %i, RIGHT:%i \n", a, j, obsNextCell[a][j][1],
+               // obsNextCell[a][j][3], obsNextCell[a][j][2],
+               // obsNextCell[a][j][0]);
             }
          }
       }
