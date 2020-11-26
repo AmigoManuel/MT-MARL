@@ -570,8 +570,8 @@ void determine_constraints(int a, int lookahead, int formula,
             printf("position[a]->y: %d\n", position[a]->y);
             printf("position[a]->x: %d\n", position[a]->x);
             printf("a: %d\n", a);
-            printf("hvalues: %d\n",hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
-            printf("backupH: %d\n", backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
+            printf("hvalues: %f\n",hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
+            printf("backupH: %f\n", backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
             float maxH = backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a];
             // Suma de valores heuristicos
             float sumH = 0;
