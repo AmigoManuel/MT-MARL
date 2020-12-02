@@ -249,7 +249,7 @@ void generate_maze(int RUN1) {
             if (a == 2) {
                 goaly = 4;
                 goalx = 3;
-                starty = 4; // starty = 4
+                starty = 5; // starty = 4
                 startx = 10;
             }
 
