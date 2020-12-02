@@ -178,7 +178,7 @@ void generate_maze(int RUN1) {
     //read_gamemap("./mapa_prueba2.map2"); 
     //read_gamemap("./mapa_bloques.map2");
     //read_gamemap("./GameMaps/den520d.map2");
-    read_gamemap("./GameMaps/test5.map2");
+    read_gamemap("./GameMaps/test6.map2");
     //read_gamemap("./GameMaps/ost003d.map2");
     //read_gamemap("./GameMaps/brc202d.map2");
     //read_gamemap("./GameMaps/lak201d.map2");
@@ -202,7 +202,7 @@ void generate_maze(int RUN1) {
 
             /*  Definición de la ubicación de los agentes en el mapa
                 4 agentes sobre test5.map2 */
-            if (a == 0) {
+            /* if (a == 0) {
                 goaly = 4;
                 goalx = 10;
                 starty = 4;
@@ -228,11 +228,11 @@ void generate_maze(int RUN1) {
                 goalx = 1;
                 starty = 2;
                 startx = 14;
-            }
+            } */
 
             /*  Definición de la ubicación de los agentes en el mapa
                 3 agentes sobre test6.map2 */
-            /* if (a == 0) {
+            if (a == 0) {
                 goaly = 2;
                 goalx = 2;
                 starty = 2;
@@ -249,9 +249,9 @@ void generate_maze(int RUN1) {
             if (a == 2) {
                 goaly = 4;
                 goalx = 3;
-                starty = 5; // starty = 4
+                starty = 4; // starty = 4
                 startx = 10;
-            } */
+            }
 
             // Marca el inicio y objetivo sin obstaculo
             maze1[starty][startx].obstacle = 0;
