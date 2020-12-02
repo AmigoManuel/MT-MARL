@@ -337,13 +337,11 @@ int compare_path(int a, int j, int myConflictStep, int otherConflictStep,
 void determine_constraints(int a, int lookahead, int formula,
                            cell1 *currentCell, int initialState) {
    
-   for (int a = 0; a < NAGENTS; a++)
-   {
-      for (int future = 0; future < 120; future++)
-      {
+   // Inicializa los valores sobre path evitando referencias a null
+   for (int a = 0; a < NAGENTS; a++){
+      for (int future = 0; future < 120; future++){
          path[a][future] = currentCell;
       }
-      
    }
    
                            
