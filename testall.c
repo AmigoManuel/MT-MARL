@@ -1,7 +1,9 @@
 #include "testall.h"
 
 #include <ctype.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/time.h>
 #include <unistd.h>
 
@@ -20,6 +22,17 @@
 #else
 #define HA(from, to) ((10)* ( abs( (from)->y - (to)->y  ) + abs( (from)->x - (to)->x )   ))
 #endif
+
+//"../../../../Conferences/Maps/GameMapswc3/darkforest.map2"
+//"./mapa_prueba2.map2"
+//"./mapa_bloques.map2"
+//"./GameMaps/den520d.map2"
+//"./GameMaps/ost003d.map2"
+//"./GameMaps/brc202d.map2"
+//"./GameMaps/lak201d.map2"
+//"./GameMaps/bidi.map2"
+char map_path[50] = "./GameMaps/test6.map2";
+char locations_path[50] = "./GameMaps/test6.loc2";
 
 /* Lectura de mapa desde fichero externo 
  * @param filename string con el nombre del fichero */
@@ -70,6 +83,42 @@ void read_gamemap(const char *filename) {
     fclose(fp);
 }
 
+// Lectura de fichero locations para los agentes
+int **read_agents_locations(const char *filename) {
+    char param[50];
+    int value;
+    int a;
+    
+    int **agent_locations;
+    agent_locations = malloc(sizeof(int*) * NAGENTS);
+    for (int i = 0; i < 4; i++) {
+        agent_locations[i] = malloc(sizeof(int *) * 4);
+    }
+
+    FILE *fp = NULL;
+    fp = fopen(filename, "r+");
+    
+    if (fp != NULL) {
+        while (fscanf(fp, "%s", param) == 1) {
+            if (fscanf(fp, "%d", &value) == 1) {
+                if (strcmp(param, "a") == 0)
+                    a = value;
+                else if (strcmp(param, "goaly") == 0)
+                    agent_locations[a][0] = value;
+                else if (strcmp(param, "goalx") == 0)
+                    agent_locations[a][1] = value;
+                else if (strcmp(param, "starty") == 0)
+                    agent_locations[a][2] = value;
+                else if (strcmp(param, "startx") == 0)
+                    agent_locations[a][3] = value;
+            }
+        }
+    }
+    fclose(fp);
+    fp = NULL;
+    return agent_locations;
+}
+
 /* Utils para cola */
 #define QUEUE_SIZE 600000
 #define QUEUE_PUSH(y, x) { queuey[pf1] = (y); queuex[pf1] = (x); pf1 = (pf1+1)%QUEUE_SIZE; n++; }
@@ -88,20 +137,6 @@ int IsValid(int y, int x, int y0, int x0, int d) {
     // Verifica si x e y se encuentran entre MAZEWIDTH y MAZEHEIGHT
     if ((y < 0) || (y >= MAZEHEIGHT) || (x < 0) || (x >= MAZEWIDTH)) return 0;
     if (maze1[y][x].obstacle) return 0;
-    // No se permiten movimientos diagonales
-    /*	if(d % 2 != 0) { //elimina movimientos diagonales no posibles
-		yprevd = y0 + dy[d-1];
-        xprevd = x0 + dx[d-1];
-		if (d == 7) {
-            ypostd = y0;
-            xpostd = x0 + 1;
-        }else{
-            ypostd = y0 + dy[d+1];
-             xpostd = x0 + dx[d+1];
-        }		
-		if(maze1[yprevd][xprevd].obstacle || maze1[ypostd][xpostd].obstacle)
-			return 0;
-	}*/
     return 1;
 }
 
@@ -173,21 +208,17 @@ void generate_maze(int RUN1) {
     }
     #else
     
-    /* Mapas de prueba */
-    //read_gamemap("../../../../Conferences/Maps/GameMapswc3/darkforest.map2");
-    //read_gamemap("./mapa_prueba2.map2"); 
-    //read_gamemap("./mapa_bloques.map2");
-    //read_gamemap("./GameMaps/den520d.map2");
-    read_gamemap("./GameMaps/test6.map2");
-    //read_gamemap("./GameMaps/ost003d.map2");
-    //read_gamemap("./GameMaps/brc202d.map2");
-    //read_gamemap("./GameMaps/lak201d.map2");
-    //read_gamemap("./GameMaps/bidi.map2");
+    // Lectura del mapa
+    read_gamemap(map_path);
     
     #endif
     #endif
     // FIXME: Nunca utiliza la variable porc
     porc = (MAZEWIDTH * 0.1);
+    
+    // Dentro de agent_locations se almacenan los goals y starts de cada agente
+    int **agent_locations = read_agents_locations(locations_path);
+    
     for (int a = 0; a < NAGENTS; a++) {
         out = 1;
         while (out) {
@@ -200,58 +231,10 @@ void generate_maze(int RUN1) {
                     maze1[y][x].g = 0;
                 }
 
-            /*  Definición de la ubicación de los agentes en el mapa
-                4 agentes sobre test5.map2 */
-            /* if (a == 0) {
-                goaly = 4;
-                goalx = 10;
-                starty = 4;
-                startx = 1;
-            }
-
-            if (a == 1) {
-                goaly = 4;
-                goalx = 1;
-                starty = 4;
-                startx = 14;
-            }
-
-            if (a == 2) {
-                goaly = 2;
-                goalx = 10;
-                starty = 2;
-                startx = 1;
-            }
-
-            if (a == 3) {
-                goaly = 2;
-                goalx = 1;
-                starty = 2;
-                startx = 14;
-            } */
-
-            /*  Definición de la ubicación de los agentes en el mapa
-                3 agentes sobre test6.map2 */
-            if (a == 0) {
-                goaly = 2;
-                goalx = 2;
-                starty = 2;
-                startx = 11;
-            }
-
-            if (a == 1) {
-                goaly = 3;
-                goalx = 2;
-                starty = 1;
-                startx = 10;
-            }
-
-            if (a == 2) {
-                goaly = 4;
-                goalx = 3;
-                starty = 5; // starty = 4
-                startx = 10;
-            }
+            goaly = agent_locations[a][0];
+            goalx = agent_locations[a][1];
+            starty = agent_locations[a][2];
+            startx = agent_locations[a][3];
 
             // Marca el inicio y objetivo sin obstaculo
             maze1[starty][startx].obstacle = 0;
@@ -300,6 +283,10 @@ void generate_maze(int RUN1) {
 
 
 int main(int argc, char *argv[]) {
+
+    //map_path = argv[2];
+    //locations_path = argv[3];
+
     #ifdef UNKNOWN
     #ifdef DECREASE
         printf("Error!   Unknown maze is not allowed to decrease yet \n");
