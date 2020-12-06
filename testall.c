@@ -284,10 +284,12 @@ void generate_maze(int RUN1) {
 
 int main(int argc, char *argv[]) {
 
-    // Lectura de map y locations mediante parametros
-    if (argc == 3) {
-        strcpy(map_path, argv[1]);
-        strcpy(locations_path, argv[2]);
+    // agentes, map y locations mediante parametros
+    if (argc == 4) {
+        #undef NAGENTS
+        #define NAGENTS atoi(argv[1])
+        strcpy(map_path, argv[2]);
+        strcpy(locations_path, argv[3]);
     }
 
     #ifdef UNKNOWN
