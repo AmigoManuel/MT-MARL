@@ -286,8 +286,11 @@ int main(int argc, char *argv[]) {
 
     // agentes, map y locations mediante parametros
     if (argc == 4) {
+        int val = atoi(argv[1]);
+
         #undef NAGENTS
-        #define NAGENTS atoi(argv[1])
+        #define NAGENTS val
+        
         strcpy(map_path, argv[2]);
         strcpy(locations_path, argv[3]);
     }

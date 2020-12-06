@@ -599,12 +599,6 @@ void determine_constraints(int a, int lookahead, int formula,
                   if ((goal_reached[j])) {
                      // El agente se encuentra en su objetivo
                      // no es relevante
-                     printf("a: %d\n", a);
-                     printf("future: %d\n", future);
-                     printf("path[%d][%d]->y: %d\n", j, future, path[j][future]->y);
-                     printf("path[%d][%d]->x: %d\n", j, future, path[j][future]->x);
-                     printf("goal reached");
-                     getchar();
                      continue;
                   }
 
@@ -624,7 +618,6 @@ void determine_constraints(int a, int lookahead, int formula,
                   printf("future: %d\n", future);
                   printf("path[%d][%d]->y: %d\n", j, future, path[j][future]->y);
                   printf("path[%d][%d]->x: %d\n", j, future, path[j][future]->x);
-                  getchar();
 
                   printf("His previous position at [%d %d] had a degree of %i \n",
                       path[j][future]->y, path[j][future]->x,
@@ -1399,10 +1392,6 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
    // As a new path will be computed, need to reset path to NULL
    for (int l = 0; l < lookahead; ++l) {
-      printf("\033[01;33m");
-      printf("path[%d][%d] = NULL\n", a, l);
-      printf("\033[0m");
-      getchar();
       path[a][l] = NULL;
    }
    // getchar();
@@ -1758,15 +1747,10 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
          if (pathlength[a] < lookahead) {
             for (int i = pathlength[a] + 1; i <= lookahead; i++) {
-               printf("\033[01;33m");
-               printf("path[%d][%d] = NULL\n", a, i);
-               printf("\033[0m");
-               getchar();
                path[a][i] = NULL;
                if (pasada == 1) {
                   idealPath[a][i] = path[a][i];
                }
-
                printf("\nMarking path[%i][%i] to NULL", a, i);
             }
          }
@@ -2056,10 +2040,6 @@ int compute_constraintpath(int a, int lookahead) {
    }
 
    for (int l = 0; l < lookahead; ++l) {
-      printf("\033[01;33m");
-      printf("path[%d][%d] = NULL\n", a, l);
-      printf("\033[0m");
-      getchar();
       path[a][l] = NULL;
    }
    // getchar();
@@ -2801,10 +2781,6 @@ int compute_constraintpath(int a, int lookahead) {
 
          if (pathlength[a] < lookahead) {
             for (int i = pathlength[a] + 1; i <= lookahead; i++) {
-               printf("\033[01;33m");
-               printf("path[%d][%d] = NULL\n", a, i);
-               printf("\033[0m");
-               getchar();
                path[a][i] = NULL;
                if (pasada == 1) {
                   // idealPath[a][i]=path[a][i];
