@@ -29,6 +29,7 @@ char locations_path[50] = "./GameMaps/test6.loc2";
 /* Lectura de mapa desde fichero externo */
 void read_gamemap(const char *filename) {
     FILE *f;
+    int count;
     int y, x;
     // Abre el archivo
     f = fopen(filename, "r");
@@ -44,7 +45,7 @@ void read_gamemap(const char *filename) {
         for (x = 0; x < MAZEWIDTH; x++) {
             // Lee una entrada del fichero
             char what;
-            fscanf(f, "%c", &what);
+            count = fscanf(f, "%c", &what);
             // Identifica que hay en esa casilla
             // toupper convierte un lowercase a uppercase
             switch (toupper(what)) {
@@ -64,7 +65,7 @@ void read_gamemap(const char *filename) {
             // TODO: Ver que significa overexpanded
             maze1[y][x].overexpanded = 0;
         }
-        fscanf(f, "\n");
+        count = fscanf(f, "\n");
     }
     fclose(f);
 }

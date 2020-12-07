@@ -38,6 +38,7 @@ char locations_path[50] = "./GameMaps/test6.loc2";
  * @param filename string con el nombre del fichero */
 void read_gamemap(const char *filename) {
     FILE *fp;
+    int count;
     int y, x, w, z;
     // Abre el archivo
     fp = fopen(filename, "r");
@@ -62,7 +63,7 @@ void read_gamemap(const char *filename) {
             }
             // Lee una entrada del fichero
             char what;
-            fscanf(fp, "%c", &what);
+            count = fscanf(fp, "%c", &what);
             // Identifica que hay en esa casilla y toupper convierte un lowercase a uppercase
             switch (toupper(what)) {
                 case 'O':
@@ -78,7 +79,7 @@ void read_gamemap(const char *filename) {
             }
             maze1[y][x].overexpanded = 0; // Marca la casilla como sin expandir
         }
-        fscanf(fp, "\n");
+        count = fscanf(fp, "\n");
     }
     fclose(fp);
 }
@@ -285,9 +286,9 @@ void generate_maze(int RUN1) {
 int main(int argc, char *argv[]) {
 
     // map y locations mediante parametros
-    if (argc == 4) {
-        strcpy(map_path, argv[2]);
-        strcpy(locations_path, argv[3]);
+    if (argc == 3) {
+        strcpy(map_path, argv[1]);
+        strcpy(locations_path, argv[2]);
     }
 
     #ifdef UNKNOWN

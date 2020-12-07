@@ -10,4 +10,4 @@ dstarlite:  $(OBJ)
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm *.o
+	rm -f *.o
