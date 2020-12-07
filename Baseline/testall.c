@@ -11,7 +11,7 @@
 #include "lss-lrta.h"
 #include "math.h"
 
-
+#include <ctype.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -35,6 +35,7 @@ void read_gamemap(const char *filename) {
     }
     //rewind (f);
     // Itera por el alto y ancho definidos del laberinto
+
     for (y = 0; y < MAZEHEIGHT; y++) {
         for (x = 0; x < MAZEWIDTH; x++) {
             // Lee una entrada del fichero
@@ -88,7 +89,7 @@ int IsValid(int y, int x, int y0, int x0, int d) {
 
 /* TODO: Verificar bien que hace esta función */
 /* Al parecer verifica si el siguiente movimiento no se ha realizado antes */
-isnewproblem(int sy, int sx, int gy, int gx, int cont) {
+int isnewproblem(int sy, int sx, int gy, int gx, int cont) {
     int i;
     // printf("cont:%d\n",cont);
     // Por cada elemento en el contador
@@ -112,7 +113,9 @@ void generate_maze(int RUN1) {
     int queuey[QUEUE_SIZE], queuex[QUEUE_SIZE], pi1 = 0, pf1 = 0, n = 0, i;
     int goaly, goalx, startx, starty;
     // printf("entro\n");
-    // Define instancia de laberinto
+    
+    
+    /* // Define instancia de laberinto
     if (maze1 == NULL) {
         // Rerva espacio en memoria
         maze1 = (cell1 **) calloc(MAZEHEIGHT, sizeof(cell1 *));
@@ -125,11 +128,9 @@ void generate_maze(int RUN1) {
             }
         }
     }
-
     // TODO: Ver que significa exactamente un ifdef y ifndef
     #ifdef RANDOMMAZE
     #ifndef GAMEMAP
-
     // Por cada casilla
     for (y = 0; y < MAZEHEIGHT; ++y) {
         for (x = 0; x < MAZEWIDTH; ++x) {
@@ -144,8 +145,7 @@ void generate_maze(int RUN1) {
             maze1[y][x].obstacle = (random() % 10000 < 10000 * MAZEDENSITY);
         }
     }
-    
-    #else
+    #else */
 
     //read_gamemap("../../../../Conferences/Maps/GameMapswc3/darkforest.map2");
     //read_gamemap("./mapa_prueba2.map2");
@@ -155,8 +155,6 @@ void generate_maze(int RUN1) {
     //read_gamemap("./GameMaps/brc202d.map2");
     read_gamemap("./GameMaps/test5.map2");
 
-    #endif
-    #endif
     // FIXME: Nunca utiliza la variable porc
     porc = (MAZEWIDTH * 0.1);
     // Itera sobre cada agente

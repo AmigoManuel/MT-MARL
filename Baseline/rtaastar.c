@@ -10,6 +10,7 @@
 #include "include.h"
 #include "math.h"
 #include "rtaastar.h"
+#include "testall.h"
 
 
 #include <stdlib.h>
@@ -305,7 +306,7 @@ void test_rtaastar(int lookahead, int prunning) {
             //		  if (position[i]->trace || position[i]->trace
 
             if (RUN1 >= 0 && robot_steps1 >= 0) {
-                printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%d time_step:%d terminado:%d\n", i + 1,
+                printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%lld time_step:%d terminado:%d\n", i + 1,
                        position[i]->y, position[i]->x, goal[i]->y, goal[i]->x, position[i]->h, robot_steps1, time_step,
                        NAGENTS - finish_all);
                 Multi_print_grid();
@@ -376,7 +377,7 @@ void call_rtaastar() {
             lookahead = look[i];
             printf("lookahead == [%d] ___________________________________\n", lookahead);
             for (RUN1 = 0; RUN1 < RUNS; ++RUN1) {
-                printf("case == [%d] ___________________________________\n", RUN1);
+                printf("case == [%ld] ___________________________________\n", RUN1);
                 srand(5 * RUN1 + 100);
                 generate_maze(RUN1);
                 gettimeofday(&tv11, NULL);
@@ -397,7 +398,7 @@ void call_rtaastar() {
                 if ((salida = fopen("Output-mrtaa-1-step", "a")) == NULL) {
                     printf("No se puede abrir el archivo de salida");
                 }
-                fprintf(salida, "%d %f %d %d %d %f %d %d %d %d", lookahead, solution_cost, NAGENTS,
+                fprintf(salida, "%d %f %d %d %lld %f %d %ld %lld %ld", lookahead, solution_cost, NAGENTS,
                         NAGENTS - finish_all, searches_astar1, (time_astar - time_astar_initialize1) * 1000,
                         time_step - 1, RUN1, statexpanded1, statpercolated2);
 

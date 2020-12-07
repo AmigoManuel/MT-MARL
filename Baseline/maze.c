@@ -2,8 +2,10 @@
 // Xiaoxun Sun & Sven Koenig @ USC 2009
 // All rights reserved
 /////////////////////////////////////////////////////////////////////
-#include "include.h"
 #include "maze.h"
+#include "include.h"
+
+#include <math.h>
 
 int mazeiteration = 0;
 int goaly;// = GOALY;

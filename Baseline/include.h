@@ -36,8 +36,8 @@
 //#define MAZEWIDTH  252
 //#define MAZEHEIGHT  163
 
-#define MAZEWIDTH  32
-#define MAZEHEIGHT  32
+#define MAZEWIDTH  16
+#define MAZEHEIGHT  7
 
 
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */

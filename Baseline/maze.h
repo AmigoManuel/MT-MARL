@@ -44,4 +44,6 @@ cell1 *robotall;
 int mazeiteration, searchiteration;
 int RUN;
 
+void newrandommaze_astar();
+
 #endif
