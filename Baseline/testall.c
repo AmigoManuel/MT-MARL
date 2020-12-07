@@ -15,12 +15,16 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <string.h>
 
 #ifdef EIGHTCONNECTED
 #define HA(from,to) (  (14) * min(abs((from)->y - (to)->y), abs((from)->x - (to)->x))) + ((10) * ( max(abs((from)->y - (to)->y), abs((from)->x - (to)->x )) - min( abs((from)->y - (to)->y), abs((from)->x - (to)->x )))     )
 #else
 #define HA(from, to) ((10)* ( abs( (from)->y - (to)->y  ) + abs( (from)->x - (to)->x )   ))
 #endif
+
+char map_path[50] = "./GameMaps/test6.map2";
+char locations_path[50] = "./GameMaps/test6.loc2";
 
 /* Lectura de mapa desde fichero externo */
 void read_gamemap(const char *filename) {
@@ -63,6 +67,42 @@ void read_gamemap(const char *filename) {
         fscanf(f, "\n");
     }
     fclose(f);
+}
+
+// Lectura de fichero locations para los agentes
+int **read_agents_locations(const char *filename) {
+    char param[50];
+    int value;
+    int a;
+
+    int **agent_locations;
+    agent_locations = malloc(sizeof(int *) * NAGENTS);
+    for (int i = 0; i < 4; i++) {
+        agent_locations[i] = malloc(sizeof(int *) * 4);
+    }
+
+    FILE *fp = NULL;
+    fp = fopen(filename, "r+");
+
+    if (fp != NULL) {
+        while (fscanf(fp, "%s", param) == 1) {
+            if (fscanf(fp, "%d", &value) == 1) {
+                if (strcmp(param, "a") == 0)
+                    a = value;
+                else if (strcmp(param, "goaly") == 0)
+                    agent_locations[a][0] = value;
+                else if (strcmp(param, "goalx") == 0)
+                    agent_locations[a][1] = value;
+                else if (strcmp(param, "starty") == 0)
+                    agent_locations[a][2] = value;
+                else if (strcmp(param, "startx") == 0)
+                    agent_locations[a][3] = value;
+            }
+        }
+    }
+    fclose(fp);
+    fp = NULL;
+    return agent_locations;
 }
 
 /* Utils para cola */
@@ -115,7 +155,7 @@ void generate_maze(int RUN1) {
     // printf("entro\n");
     
     
-    /* // Define instancia de laberinto
+    // Define instancia de laberinto
     if (maze1 == NULL) {
         // Rerva espacio en memoria
         maze1 = (cell1 **) calloc(MAZEHEIGHT, sizeof(cell1 *));
@@ -128,7 +168,7 @@ void generate_maze(int RUN1) {
             }
         }
     }
-    // TODO: Ver que significa exactamente un ifdef y ifndef
+    /* // TODO: Ver que significa exactamente un ifdef y ifndef
     #ifdef RANDOMMAZE
     #ifndef GAMEMAP
     // Por cada casilla
@@ -153,10 +193,14 @@ void generate_maze(int RUN1) {
     //read_gamemap("./GameMaps/den520d.map2");
     //read_gamemap("./GameMaps/ost003d.map2");
     //read_gamemap("./GameMaps/brc202d.map2");
-    read_gamemap("./GameMaps/test5.map2");
+    read_gamemap(map_path);
 
     // FIXME: Nunca utiliza la variable porc
     porc = (MAZEWIDTH * 0.1);
+
+    // Dentro de agent_locations se almacenan los goals y starts de cada agente
+    int **agent_locations = read_agents_locations(locations_path);
+
     // Itera sobre cada agente
     for (int a = 0; a < NAGENTS; a++) {
         out = 1;
@@ -177,10 +221,14 @@ void generate_maze(int RUN1) {
                 startx = (random() % ((MAZEWIDTH + 1) / 2)) * 2;*/
                 
                 // Determina un inicio y un goal aleatorios
-                goaly = random() % MAZEHEIGHT;
+                /* goaly = random() % MAZEHEIGHT;
                 goalx = random() % MAZEWIDTH;
                 starty = random() % MAZEHEIGHT;
-                startx = random() % MAZEWIDTH;
+                startx = random() % MAZEWIDTH; */
+                goaly = agent_locations[a][0];
+                goalx = agent_locations[a][1];
+                starty = agent_locations[a][2];
+                startx = agent_locations[a][3];
                 // Si el goal no es un obstaculo,
                 // el inicio no es un obstaculo,
                 // el inicio_x/y no esta en goal_x/y y
@@ -235,6 +283,13 @@ void generate_maze(int RUN1) {
 /*----------------------------------------------------------------------------------*/
 
 int main(int argc, char *argv[]) {
+
+    // map y locations mediante parametros
+    if (argc == 3) {
+        strcpy(map_path, argv[1]);
+        strcpy(locations_path, argv[2]);
+    }
+
     #ifdef UNKNOWN
     #ifdef DECREASE
         printf("Error!   Unknown maze is not allowed to decrease yet \n");
