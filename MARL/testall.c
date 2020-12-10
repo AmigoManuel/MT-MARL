@@ -92,7 +92,7 @@ int **read_agents_locations(const char *filename) {
     
     int **agent_locations;
     agent_locations = malloc(sizeof(int*) * NAGENTS);
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < NAGENTS; i++) {
         agent_locations[i] = malloc(sizeof(int *) * 4);
     }
 
@@ -115,6 +115,8 @@ int **read_agents_locations(const char *filename) {
             }
         }
     }
+
+    printf("valores de localización leidos");
     fclose(fp);
     fp = NULL;
     return agent_locations;
