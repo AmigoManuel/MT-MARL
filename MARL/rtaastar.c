@@ -3026,7 +3026,7 @@ void observe_new_agents(
                        [mostProbPositionXY[a][i][z - 1][0]]
                            .fromTransition[a][z]--;
                   // betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]--;
-
+   
                   maze1[mostProbPositionXY[a][i][z][1]]
                        [mostProbPositionXY[a][i][z][0]]
                            .agentMovingTo[a][z][i] = 0;
@@ -3052,10 +3052,10 @@ void observe_new_agents(
             }
          }
 
-         for (int z = 0; z < lookahead; z++) {
+         /* for (int z = 0; z < lookahead; z++) {
             mostProbPositionXY[a][i][z][1] = -2;
             mostProbPositionXY[a][i][z][0] = -2;
-         }
+         } */
       }
       printf(" [4 4] at T 0: %i and mostProb [%d %d]\n",
              maze1[4][4].blockedAgent[0][0], mostProbPositionXY[a][i][0][1],
@@ -3178,10 +3178,10 @@ void observe_agent2(int a, int i, int lookahead, cell1 *previous) {
          }
       }
 
-      for (int z = 0; z < lookahead; z++) {
+      /* for (int z = 0; z < lookahead; z++) {
          mostProbPositionXY[a][i][z][1] = -2;
          mostProbPositionXY[a][i][z][0] = -2;
-      }
+      } */
    }
 }
 
@@ -3287,10 +3287,10 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
          }
       }
 
-      for (int z = 0; z < lookahead; z++) {
+      /* for (int z = 0; z < lookahead; z++) {
          mostProbPositionXY[a][i][z][1] = -2;
          mostProbPositionXY[a][i][z][0] = -2;
-      }
+      } */
    }
 }
 
