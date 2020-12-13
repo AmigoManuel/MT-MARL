@@ -989,6 +989,10 @@ void determine_constraints(int a, int lookahead, int formula,
                       "be)  (total %i) at time %i \n",
                       j + 1, numConflicts, future);
 
+                  if (idealPath[j][future] == NULL) {
+                     printf("ES NULL");
+                     getchar();
+                  }
                   printf(
                       "His previous position at [%d %d] had a degree of %i \n",
                       idealPath[j][future]->y, idealPath[j][future]->x,
