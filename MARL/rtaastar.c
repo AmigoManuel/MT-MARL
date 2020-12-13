@@ -976,7 +976,7 @@ void determine_constraints(int a, int lookahead, int formula,
             for (int j = 0; j < NAGENTS; ++j) {
                // Si sobre la celda actual es posible mover a sobre j en future
                if (maze1[currentCell->y][currentCell->x]
-                       .agentMovingTo[a][future][j] > 0) {
+                       .agentMovingTo[a][future][j] > 0 && idealPath[j][future] != NULL) {
                   // si el agente j se encuentra en el goal
                   if (goal_reached[j]) {
                      // pasa de j y continua
@@ -989,10 +989,6 @@ void determine_constraints(int a, int lookahead, int formula,
                       "be)  (total %i) at time %i \n",
                       j + 1, numConflicts, future);
 
-                  if (idealPath[j][future] == NULL) {
-                     printf("ES NULL");
-                     getchar();
-                  }
                   printf(
                       "His previous position at [%d %d] had a degree of %i \n",
                       idealPath[j][future]->y, idealPath[j][future]->x,
