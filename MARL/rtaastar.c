@@ -1039,6 +1039,11 @@ void determine_constraints(int a, int lookahead, int formula,
                   // TODO:
                   determine_role(&role[a][j], maxInfo, a, j, &cell_role);
                }
+               else{
+                  printf("Salto un paso");
+                  getchar();
+               }
+               
             }
          }
          printf(" ªªªª****ªªªªª*****A THE AGENT WITH MAX INFO IS %i\n",
