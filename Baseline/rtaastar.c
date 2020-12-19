@@ -281,6 +281,12 @@ void randommove(int a) {
 
 }
 
+// Conserva al agente en su ubicación actual
+void stay_in_place(int a) {
+    cell1 *tmpcell = position[a];
+    tmpcell->blocked = 0;
+}
+
 
 /* ------------------------------------------------------------------------------*/
 void test_rtaastar(int lookahead, int prunning) {
@@ -317,8 +323,10 @@ void test_rtaastar(int lookahead, int prunning) {
             }
 
 #ifdef RANDOMMOVES
-            if (goal_reached[i]) randommove(i);
-            else {
+            if (goal_reached[i]) {
+                //randommove(i);
+                stay_in_place(i);
+            } else {
 #else
                 if (position[i] != goal[i]){
 #endif
