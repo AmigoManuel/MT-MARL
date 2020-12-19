@@ -24,7 +24,7 @@
 #endif
 
 char map_path[50] = "./GameMaps/test6.map2";
-char locations_path[50] = "./GameMaps/test6.loc2";
+char locations_path[50] = "./GameMaps/test6_10.loc2";
 
 /* Lectura de mapa desde fichero externo */
 void read_gamemap(const char *filename) {
