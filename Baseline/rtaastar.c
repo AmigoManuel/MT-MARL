@@ -21,8 +21,9 @@
 #define MAZEITERATIONS 1000000
 unsigned long int targetdiscount[MAZEITERATIONS];
 #define MAXSEARCHES 100000000
-// unsigned long int pathlengths[MAXSEARCHES];
-int pathlengths[NAGENTS];
+// unsigned long int travel_distance[MAXSEARCHES];
+int travel_distance[NAGENTS];
+int completion_time[NAGENTS];
 
 // Xiaoxun: this is for 8-connected grids, with sqrt(2) as the cost for diagonal movements
 #ifdef EIGHTCONNECTED
@@ -273,7 +274,7 @@ void randommove(int a) {
         if (tmpcell1->move[d] && (!tmpcell1->move[d]->obstacle) && (!tmpcell1->move[d]->blocked)) {
             tmpcell1->blocked = 0;
             position[a] = tmpcell1->move[d];
-            pathlengths[a]++;
+            travel_distance[a]++;
             position[a]->blocked = 1;
             return;
         }
@@ -304,8 +305,10 @@ void test_rtaastar(int lookahead, int prunning) {
     current = mazestart1;
     finish_all = NAGENTS;
     time_step = 1;
+    // Inicialización de metricas
     for (int a = 0; a < NAGENTS; a++){
-        pathlengths[a] = 0;
+        travel_distance[a] = 0;
+        completion_time[a] = 0;
     }
     while (finish_all && time_step <= MAX_TIME_STEPS) {
 
@@ -330,6 +333,8 @@ void test_rtaastar(int lookahead, int prunning) {
             if (goal_reached[i]) {
                 //randommove(i);
                 stay_in_place(i);
+                // queda el primer time_step con el que logre llegar
+                if(completion_time[i] == 0) completion_time[i] = time_step;
             } else {
 #else
                 if (position[i] != goal[i]){
@@ -349,11 +354,14 @@ void test_rtaastar(int lookahead, int prunning) {
                     previous->trace = NULL;
                     previous->blocked = 0;
                     position[i]->blocked = 1;
-                    pathlengths[i]++;
+                    travel_distance[i]++;
                     //	if (RUN1 >= 2 && robot_steps1 >= 0){printf("Angent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%d nei:%d\n",i,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,count_nei(position[i]));print_grid(position[i]->x,position[i]->y,position[i],goal[i]->x,goal[i]->y);getchar();}
                     if (position[i] == goal[i]) {
                         goal_reached[i] = 1;
                         solution_cost += agent_cost[i];
+                        // El ultimo no alcanza a escribirse dentro del if(goal_rached[i])
+                        // por eso se escribe al acabar la ultima iteración.
+                        completion_time[i] = time_step;
                         finish_all--;
 #ifndef RANDOMMOVES
                         position[i]->obstacle = 1;
@@ -361,7 +369,11 @@ void test_rtaastar(int lookahead, int prunning) {
                         if (finish_all == 0) {
                             printf("Travel distance por agente\n");
                             for (int a; a < NAGENTS; a++) {
-                                printf("[%d->%d]\n", a, pathlengths[a]);
+                                printf("[%d->%d]\n", a, travel_distance[a]);
+                            }
+                            printf("Completion time por agente\n");
+                            for (int a; a < NAGENTS; a++) {
+                                printf("[%d->%d]\n", a, completion_time[a]);
                             }
                             return;
                         }
