@@ -21,7 +21,8 @@
 #define MAZEITERATIONS 1000000
 unsigned long int targetdiscount[MAZEITERATIONS];
 #define MAXSEARCHES 100000000
-unsigned long int pathlengths[MAXSEARCHES];
+// unsigned long int pathlengths[MAXSEARCHES];
+int pathlengths[NAGENTS];
 
 // Xiaoxun: this is for 8-connected grids, with sqrt(2) as the cost for diagonal movements
 #ifdef EIGHTCONNECTED
@@ -34,7 +35,6 @@ unsigned long int pathlengths[MAXSEARCHES];
 #define QUEUE2_SIZE 100000
 #define QUEUE2_PUSH(x) {queue[pf2] = (x); (x)->heapindex = pf2; pf2 = (pf2+1)%QUEUE2_SIZE; n2++; }
 #define QUEUE2_POP(x) {(x) = queue[pi2];(x)->heapindex = -1; pi2 = (pi2+1)%QUEUE2_SIZE; n2--; }
-
 
 long int max_expansions = 0;
 long int counter = 0;
@@ -273,6 +273,7 @@ void randommove(int a) {
         if (tmpcell1->move[d] && (!tmpcell1->move[d]->obstacle) && (!tmpcell1->move[d]->blocked)) {
             tmpcell1->blocked = 0;
             position[a] = tmpcell1->move[d];
+            pathlengths[a]++;
             position[a]->blocked = 1;
             return;
         }
@@ -303,6 +304,9 @@ void test_rtaastar(int lookahead, int prunning) {
     current = mazestart1;
     finish_all = NAGENTS;
     time_step = 1;
+    for (int a = 0; a < NAGENTS; a++){
+        pathlengths[a] = 0;
+    }
     while (finish_all && time_step <= MAX_TIME_STEPS) {
 
 //			i = random() % NAGENTS;
@@ -345,6 +349,7 @@ void test_rtaastar(int lookahead, int prunning) {
                     previous->trace = NULL;
                     previous->blocked = 0;
                     position[i]->blocked = 1;
+                    pathlengths[i]++;
                     //	if (RUN1 >= 2 && robot_steps1 >= 0){printf("Angent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%d nei:%d\n",i,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,count_nei(position[i]));print_grid(position[i]->x,position[i]->y,position[i],goal[i]->x,goal[i]->y);getchar();}
                     if (position[i] == goal[i]) {
                         goal_reached[i] = 1;
@@ -353,7 +358,13 @@ void test_rtaastar(int lookahead, int prunning) {
 #ifndef RANDOMMOVES
                         position[i]->obstacle = 1;
 #endif
-                        if (finish_all == 0) return;
+                        if (finish_all == 0) {
+                            printf("Travel distance por agente\n");
+                            for (int a; a < NAGENTS; a++) {
+                                printf("[%d->%d]\n", a, pathlengths[a]);
+                            }
+                            return;
+                        }
                         //	printf("** LLEGO time_step:%d** %d finish:%d cost:%f total cost:%f\n",time_step,i,NAGENTS-finish_all,agent_cost[i],total_cost);
                     }
                 }
