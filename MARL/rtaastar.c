@@ -1038,10 +1038,10 @@ void determine_constraints(int a, int lookahead, int formula,
                         }
                         // TODO:
                         determine_role(&role[a][j], maxInfo, a, j, &cell_role);
-                    } else {
+                    } /* else {
                         printf("Salto un paso");
                         getchar();
-                    }
+                    } */
                 }
             }
             printf(" ªªªª****ªªªªª*****A THE AGENT WITH MAX INFO IS %i\n",
@@ -4408,8 +4408,12 @@ void test_rtaastar(int lookahead, int prunning) {
 
                             continue;
                         }
+                        // Asigna nueva posición al agente
                         position[i] = position[i]->trace;
+                        // Determina el costo del movimiento y lo agrega al costo total 
                         agent_cost[i] += euclidian(previous, position[i]);
+                        /* printf("\n%d -> %f", i, agent_cost[i]);
+                        getchar(); */
                         robot_steps1++;
                         previous->trace = NULL;
                         previous->blocked[0] = 0;
@@ -4502,15 +4506,14 @@ void test_rtaastar(int lookahead, int prunning) {
                             if (finish_all == 0) {
                                 Multi_print_grid();
 
-                                total_cost = 0;
-                                for (int ag = 0; ag < NAGENTS; ag++) {
-                                    total_cost = total_cost + agent_cost[ag];
-                                    printf("Agent %i COST: %f \n", ag + 1,
-                                           agent_cost[ag]);
+                                printf("Costo por agente\n");
+                                for (int a=0; a < NAGENTS; a++){
+                                    total_cost += agent_cost[a];
+                                    printf("agent [%d] -> costo total: %f\n", a+1, agent_cost[a]);
                                 }
-                                // printf("\nTOTAL COST %f, ",total_cost);
-                                printf("AVG COST %f, ", total_cost / (float)NAGENTS);
-                                printf("FINISH TIME %i TIMESTEPS\n", time_step);
+                                printf("Costo promedio: %f\n", total_cost/NAGENTS);
+                                printf("Tiempo en acabar: %d\n", time_step);
+                                getchar();
 
                                 return;
                             }
