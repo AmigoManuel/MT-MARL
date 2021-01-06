@@ -66,6 +66,7 @@ short active_prune = 0; //active the prune when there is an obstacle/border in t
 cell1 *CLOSED[10000];
 double f_value = 0;
 double total_cost = 0;
+double total_time = 0;
 
 float time_astar_initialize1 = 0;
 float time_astar_first1 = 0;
@@ -367,14 +368,24 @@ void test_rtaastar(int lookahead, int prunning) {
                         position[i]->obstacle = 1;
 #endif
                         if (finish_all == 0) {
-                            printf("Travel distance por agente\n");
+
+                            total_cost = 0;
+                            printf("Costo por agente\n");
                             for (int a; a < NAGENTS; a++) {
-                                printf("[%d->%d]\n", a, travel_distance[a]);
+                                total_cost += travel_distance[a];
+                                printf("agent [%d] -> costo total: %d\n", a + 1, travel_distance[a]);
                             }
+                            total_time = 0;
                             printf("Completion time por agente\n");
                             for (int a; a < NAGENTS; a++) {
-                                printf("[%d->%d]\n", a, completion_time[a]);
+                                total_time += completion_time[a];
+                                printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
                             }
+                            printf("Costo promedio: %f\n", total_cost / NAGENTS);
+                            printf("Tiempo en acabar: %d\n", time_step);
+                            printf("Tiempo promedio: %f\n", total_time / NAGENTS);
+
+                            getchar();
                             return;
                         }
                         //	printf("** LLEGO time_step:%d** %d finish:%d cost:%f total cost:%f\n",time_step,i,NAGENTS-finish_all,agent_cost[i],total_cost);

@@ -82,6 +82,7 @@ cell1 *idealPath[NAGENTS][200];
 int learningCutoff[NAGENTS];
 double f_value = 0;
 double total_cost = 0;
+double total_time_cost = 0;
 
 float time_astar_initialize1 = 0;
 float time_astar_first1 = 0;
@@ -106,6 +107,7 @@ int pathlength[NAGENTS];
 int pred_agents[NAGENTS][NAGENTS];
 int good_pred_agents[NAGENTS][NAGENTS];
 int predict[NAGENTS][NAGENTS];
+int completion_time[NAGENTS];
 
 cell1 *tmpcell1;
 cell1 *tmpcell2;
@@ -4486,6 +4488,7 @@ void test_rtaastar(int lookahead, int prunning) {
                         if (position[i] == goal[i]) {
                             if (goal_reached[i] == 0) {
                                 lastfinish = time_step;
+                                completion_time[i] = time_step;
                             }
                             goal_reached[i] = 1;
                             solution_cost += agent_cost[i];
@@ -4506,13 +4509,21 @@ void test_rtaastar(int lookahead, int prunning) {
                             if (finish_all == 0) {
                                 Multi_print_grid();
 
+                                total_cost = 0;
                                 printf("Costo por agente\n");
                                 for (int a=0; a < NAGENTS; a++){
                                     total_cost += agent_cost[a];
                                     printf("agent [%d] -> costo total: %f\n", a+1, agent_cost[a]);
                                 }
-                                printf("Costo promedio: %f\n", total_cost/NAGENTS);
+                                total_time_cost = 0;
+                                printf("Completion time por agente\n");
+                                for (int a; a < NAGENTS; a++) {
+                                    total_time_cost += completion_time[a];
+                                    printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
+                                }
+                                printf("Costo promedio: %f\n", total_cost / NAGENTS);
                                 printf("Tiempo en acabar: %d\n", time_step);
+                                printf("Tiempo promedio: %f\n", total_time_cost /  NAGENTS);
                                 getchar();
 
                                 return;
