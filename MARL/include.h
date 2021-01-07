@@ -38,14 +38,14 @@
 
 //#define MAZEWIDTH  10
 //#define MAZEHEIGHT  6
-#define MAZEWIDTH  16
-#define MAZEHEIGHT  7
+#define MAZEWIDTH  32
+#define MAZEHEIGHT  32
 
 
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */
 
 #define MAX_TIME_STEPS 1000
-#define NAGENTS 10
+#define NAGENTS 100
 // Medida de tiempo que el agente recuerda
 #define MEMORY 3
 
