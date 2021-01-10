@@ -1280,6 +1280,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
     // printf("Mobility : %i \n",mobility);
     printf("CHECKING SURROUNDINGS FOR AGENTS: %f\n",
            hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
+
     // Should compute here which of the neighboring cells are occupied by other
     // agents
 
@@ -1295,6 +1296,10 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
         agentNext++;
     }
+
+    // Esta en una casilla borde e intenta leer una posición fuera del maze
+    printf("sigo con vida %d en (x,y)=(%d,%d)", a, position[a]->x, position[a]->y);
+    //getchar();
 
     if (maze1[(position[a]->y)][(position[a]->x) + 1].blockedAgent[a][0]) {
         printf("Cell [%d %d] has AGENT \n", position[a]->y, position[a]->x + 1);
@@ -4276,7 +4281,7 @@ void test_rtaastar(int lookahead, int prunning) {
                            position[k]->x, role[0][1], role[1][0]);
                 }
                 printf("\n");
-                getchar();
+                //getchar();
             }
 
 #ifdef RANDOMMOVES
