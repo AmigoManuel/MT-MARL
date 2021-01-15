@@ -185,7 +185,7 @@ int goal_acupation(cell1 *auxcell) {
 
 /* Despliega el mapa con los agentes, obstaculos, celdas objetivo y celdas
  * vacías por pantalla */
-void Multi_print_grid() {
+void multi_print_grid() {
     int x, y, x0, xf, y0, yf, w, aoc, goc;
     long int num1, num2, num;
     double n, dif = 0;
@@ -4275,13 +4275,13 @@ void test_rtaastar(int lookahead, int prunning) {
                 // step:%d time_step:%d
                 // terminado:%d\n",i+1,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,time_step,NAGENTS-finish_all);
                 // print the grid
-                Multi_print_grid();
+                multi_print_grid();
                 for (k = 0; k < NAGENTS; k++) {
                     printf("(%d)[%d,%d]....(%i and %i) ", k + 1, position[k]->y,
                            position[k]->x, role[0][1], role[1][0]);
                 }
                 printf("\n");
-                //getchar();
+                // getchar();
             }
 
 #ifdef RANDOMMOVES
@@ -4350,16 +4350,33 @@ void test_rtaastar(int lookahead, int prunning) {
                         // NEED TO CHANGE MODE TO BACKTRACK!!!
                         backtrack[i] = 1;
 
+
                         if (position[i]->parent[i] != NULL) {
                             printf(" BACKTRACKING TO postiion [%d %d]!!!\n",
                                    position[i]->parent[i]->y,
                                    position[i]->parent[i]->x);
+                            previous = position[i];
+
+                            printf("Estoy vivo");
+                            // getchar();
+                            printf(" Me QUIERO MOVER a %d %d \n",
+                                position[i]->parent[i]->y,
+                                position[i]->parent[i]->x);
+                            if ((position[i]->parent[i]->blocked[0]) &&
+                                (position[i]->parent[i]->x != position[i]->x) &&
+                                ((position[i]->parent[i]->y != position[i]->y))) {
+                                printf(" PERO ESTOY BLOQUEADO (look: %i)\n", lookahead);
+
+                                continue;
+                            }
+                            position[i] = position[i]->parent[i];
+                            agent_cost[i] += euclidian(previous, position[i]);
+                            robot_steps1++;
+                            previous->trace = NULL;
+                            previous->blocked[0] = 0;
                         }
 
-                        previous = position[i];
-                        printf(" Me QUIERO MOVER a %d %d \n",
-                               (position[i]->parent[i])->y,
-                               (position[i]->parent[i])->x);
+                        
 
                         /*for(int l=1;l<=lookahead;l++) WHAT TO Do INSTEAD OF THIS?
                   {
@@ -4372,20 +4389,15 @@ void test_rtaastar(int lookahead, int prunning) {
                   }*/
 
                         // printf("REAL DEPTH %i", realDepth[i]);
-
-                        if ((position[i]->parent[i]->blocked[0]) &&
-                            (position[i]->parent[i]->x != position[i]->x) &&
-                            ((position[i]->parent[i]->y != position[i]->y))) {
-                            printf(" PERO ESTOY BLOQUEADO (look: %i)\n", lookahead);
-
-                            continue;
+                        if (position[i]->parent[i] == NULL) {
+                            printf("SOY NULL");
+                        } else {
+                            printf("NO SOY NULL");
                         }
-                        position[i] = position[i]->parent[i];
-                        agent_cost[i] += euclidian(previous, position[i]);
-                        robot_steps1++;
-                        previous->trace = NULL;
-                        previous->blocked[0] = 0;
 
+                        // getchar();
+
+                        // getchar();
                     } else {
                         printf(" SO FAR SO GOOD AGENT %i, at postiion [%d %d]!!!\n",
                                i, position[i]->y, position[i]->x);
@@ -4512,7 +4524,7 @@ void test_rtaastar(int lookahead, int prunning) {
                             // getchar();
 #endif
                             if (finish_all == 0) {
-                                Multi_print_grid();
+                                multi_print_grid();
 
                                 total_cost = 0;
                                 printf("Costo por agente\n");
@@ -4526,7 +4538,7 @@ void test_rtaastar(int lookahead, int prunning) {
                                     total_time_cost += completion_time[a];
                                     printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
                                 }
-                                printf("Costo promedio: %f\n", total_cost / NAGENTS);
+                                 ("Costo promedio: %f\n", total_cost / NAGENTS);
                                 printf("Tiempo en acabar: %d\n", time_step);
                                 printf("Tiempo promedio: %f\n", total_time_cost /  NAGENTS);
                                 getchar();
