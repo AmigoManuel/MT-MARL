@@ -3639,7 +3639,7 @@ void test_rtaastar(int lookahead, int prunning) {
                     printf("(%d)[%d,%d]....(%i and %i) ", k + 1, position[k]->y,position[k]->x, role[0][1], role[1][0]);
                 }
                 printf("\n");
-                // getchar();
+                getchar();
             }
 
 #ifdef RANDOMMOVES

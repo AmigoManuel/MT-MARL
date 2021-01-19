@@ -104,6 +104,7 @@ int **read_agents_locations(const char *filename) {
             if (fscanf(fp, "%d", &value) == 1) {
                 if (strcmp(param, "a") == 0)
                     a = value;
+                    if (a == NAGENTS) break;
                 else if (strcmp(param, "goaly") == 0)
                     agent_locations[a][0] = value;
                 else if (strcmp(param, "goalx") == 0)
