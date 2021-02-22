@@ -249,10 +249,10 @@ void initialize_state(cell1 *tmpcell) {
 int compare_path(int a, int j, int myConflictStep, int otherConflictStep,
                  int lookahead) {
     float neigh_x, neigh_y, mine_x, mine_y;
-    printf("MyConflictStep: %i and Other: %i, real Depth: %i \n", myConflictStep, otherConflictStep, realDepth[a]);
+    // printf("MyConflictStep: %i and Other: %i, real Depth: %i \n", myConflictStep, otherConflictStep, realDepth[a]);
     // En el mejor de los casos es posible ver los siguientes pasos previstos
     if ((myConflictStep < realDepth[a]) && (otherConflictStep < realDepth[j])) {
-        printf("Case 1");
+        // printf("Case 1");
         neigh_x = idealPath[j][otherConflictStep + 1]->x -
                   idealPath[j][otherConflictStep]->x;
         neigh_y = idealPath[j][otherConflictStep + 1]->y -
@@ -264,16 +264,16 @@ int compare_path(int a, int j, int myConflictStep, int otherConflictStep,
     }
 
     if ((myConflictStep < realDepth[a]) && (otherConflictStep == realDepth[i])) {
-        printf("Case 2");
+        // printf("Case 2");
     }
 
     if ((myConflictStep == realDepth[a]) && (otherConflictStep < realDepth[i])) {
-        printf("Case 3");
+        // printf("Case 3");
     }
 
     if ((myConflictStep == realDepth[a]) &&
         (otherConflictStep == realDepth[i])) {
-        printf("Case 4");
+        // printf("Case 4");
         neigh_x = idealPath[j][otherConflictStep]->x -
                   idealPath[j][otherConflictStep - 1]->x;
         neigh_y = idealPath[j][otherConflictStep]->y -
@@ -288,26 +288,26 @@ int compare_path(int a, int j, int myConflictStep, int otherConflictStep,
     float abs_value_mine = sqrtf(mine_x * mine_x + mine_y * mine_y);
     float abs_value_neigh = sqrtf(neigh_x * neigh_x + neigh_y * neigh_y);
     float anglerad = acosf(dot_prod / (float)(abs_value_mine * abs_value_neigh));
-    printf("\nANGLERAD is %f, neigh is [%.1f %.1f] mine is [%.1f %.1f]\n",anglerad, neigh_x, neigh_y, mine_x, mine_y);
+    // printf("\nANGLERAD is %f, neigh is [%.1f %.1f] mine is [%.1f %.1f]\n",anglerad, neigh_x, neigh_y, mine_x, mine_y);
 
     //(anglerad<(3.14159265358979323846f/(float)2)) between 1.5 and 1.6
     if ((anglerad < (3.2f / (float)2)) && (anglerad > (3.0f / (float)2))) {
         // we are going in the same (or at least similar) direction
-        printf("ALERTA de POINT intersection entre agentes %i y %i \n", a + 1,j + 1);
+        // printf("ALERTA de POINT intersection entre agentes %i y %i \n", a + 1,j + 1);
         conflictType[a][j] = 0;
     } // between 3 and 3.2
     else if ((anglerad < 3.2) && (anglerad > 3)) {
         // we are going in the same (or at least similar) direction
-        printf("ALERTA de PATH INTERSECTION entre agentes %i y %i: van hacia lados ""contrarios \n",a + 1, j + 1);
+        // printf("ALERTA de PATH INTERSECTION entre agentes %i y %i: van hacia lados ""contrarios \n",a + 1, j + 1);
         conflictType[a][j] = 1;
 
     } // less than 1
     else if (anglerad < 1) {
         // we are going in the same (or at least similar) direction
-        printf("ALERTA DE SIMILARIDAD (PATH INTERSECTION)  ENTRE AGENTES %i y %i : ""van hacia el mismo lado \n",a + 1, j + 1);
+        // printf("ALERTA DE SIMILARIDAD (PATH INTERSECTION)  ENTRE AGENTES %i y %i : ""van hacia el mismo lado \n",a + 1, j + 1);
         conflictType[a][j] = 1;
     } else {
-        printf(" NON determined type of conflict, assumoing POINT intersection ""entre agentes %i y %i \n",a + 1, j + 1);
+        // printf(" NON determined type of conflict, assumoing POINT intersection ""entre agentes %i y %i \n",a + 1, j + 1);
         conflictType[a][j] = 0;
     }
     return 1;
@@ -343,7 +343,7 @@ void determine_constraints(int a, int lookahead, int formula,
         int distanceFromAgent;
         // Verifica que a sea sobre otro agente y no el mismo
         if (a != j) {
-            printf("Checking constraints between my ideal path and agent %i (me: %i "", other: %i) intended motion:.. \n",j + 1, formula, agentInfo[j]);
+            // printf("Checking constraints between my ideal path and agent %i (me: %i "", other: %i) intended motion:.. \n",j + 1, formula, agentInfo[j]);
             // Determina la distancia entre los agentes a y j
             distanceFromAgent = abs(position[a]->x - position[j]->x) +
                                 abs(position[a]->y - position[j]->y);
@@ -374,7 +374,7 @@ void determine_constraints(int a, int lookahead, int formula,
 
                     // Here I can add the computation of teams
                     if ((a != j) && (idealPath[j][l] != NULL)) {
-                        printf("Agent %i: [%d %d] me: [%d %d], H: %.1f, step %i \n",j + 1, idealPath[j][l]->y, idealPath[j][l]->x,idealPath[a][l]->y, idealPath[a][l]->x,hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j],l);
+                        // printf("Agent %i: [%d %d] me: [%d %d], H: %.1f, step %i \n",j + 1, idealPath[j][l]->y, idealPath[j][l]->x,idealPath[a][l]->y, idealPath[a][l]->x,hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j],l);
 
                         // Si mi posición actual esta en el camino ideal de mi vecino
                         // dentro del paso l (how bad is to stay here)
@@ -384,7 +384,7 @@ void determine_constraints(int a, int lookahead, int formula,
                             // por este agente.
                             position[a]->numConflicts[a] =
                                 position[a]->numConflicts[a] + 1;
-                            printf("Oops! might need to move from CURRENT pos [%d %d], ""total conflicts: %i \n",position[a]->y, position[a]->x,position[a]->numConflicts[a]);
+                            // printf("Oops! might need to move from CURRENT pos [%d %d], ""total conflicts: %i \n",position[a]->y, position[a]->x,position[a]->numConflicts[a]);
                             conflictStepMe = 1;
                             conflictStepOther = l;
                         }
@@ -400,8 +400,8 @@ void determine_constraints(int a, int lookahead, int formula,
                                 (idealPath[a][l + 1]->x == idealPath[j][l + 1]->x)) {
                                 // Mi agente a para la siguiente posición se encuentra
                                 // en el camino el camino del vecino j
-                                printf("Oops! might need to wait/backtrack,  FUTURE ""conflict at position [%d %d] \n",idealPath[a][l + 1]->y, idealPath[a][l + 1]->x);
-                                printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
+                                // printf("Oops! might need to wait/backtrack,  FUTURE ""conflict at position [%d %d] \n",idealPath[a][l + 1]->y, idealPath[a][l + 1]->x);
+                                // printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
                                 // Basado en esta realación se necesita tomar una
                                 // decisión
                                 conflictStepMe = l + 1;
@@ -413,7 +413,7 @@ void determine_constraints(int a, int lookahead, int formula,
                                     // Si entre a y j se encuentran en conflicto para l+2
                                     if ((idealPath[j][l + 2]->y == idealPath[a][l]->y) &&
                                         (idealPath[j][l + 2]->y == idealPath[a][l]->y)) {
-                                        printf("Oops! PATH CONFLICT!!!\n");
+                                        // printf("Oops! PATH CONFLICT!!!\n");
                                         // Marca ambos como en conflicto
                                         conflictType[a][j] = 1;
                                     }
@@ -431,8 +431,8 @@ void determine_constraints(int a, int lookahead, int formula,
                                  (!(idealPath[j][l + 1]->y == idealPath[a][l]->y)))) {
                                 // La siguiente posicion de a se encuentra sobre el
                                 // camino de j
-                                printf("Oops! might need to WAIT, OTHER AGENT IN MY WAY ""at position [%d %d] \n",idealPath[a][l + 1]->y, idealPath[a][l + 1]->x);
-                                printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
+                                // printf("Oops! might need to WAIT, OTHER AGENT IN MY WAY ""at position [%d %d] \n",idealPath[a][l + 1]->y, idealPath[a][l + 1]->x);
+                                // printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
                                 // Basado en esta relación, es necesario tomar una
                                 // desicion
                                 conflictStepMe = l + 1;
@@ -463,8 +463,8 @@ void determine_constraints(int a, int lookahead, int formula,
                                 (idealPath[j][l + 1]->y == idealPath[a][l]->y)) {
                                 // Si la siguiente posicion de a forma parte del camino
                                 // de j
-                                printf("Oops! UNFEASIBLE SWAPPING projected at [%d %d] \n",idealPath[a][l + 1]->y, idealPath[a][l + 1]->x);
-                                printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
+                                // printf("Oops! UNFEASIBLE SWAPPING projected at [%d %d] \n",idealPath[a][l + 1]->y, idealPath[a][l + 1]->x);
+                                // printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
                                 // Basado en esta realacion, necesitamos tomar una
                                 // desicion Conocemos de inmediato que ellos se
                                 // encuetran en celdas opuestas
@@ -492,7 +492,7 @@ void determine_constraints(int a, int lookahead, int formula,
                 }
 
                 // if((path[j][2]!=NULL)&&(path[a][2]!=NULL)&&(conflictStepMe>-1)&&(conflictStepOther>-1))
-                // { printf("Comparing paths....\n"); compare_path(a,j,
+                // { // printf("Comparing paths....\n"); compare_path(a,j,
                 // conflictStepMe, conflictStepOther, lookahead);
                 // }
 
@@ -514,7 +514,7 @@ void determine_constraints(int a, int lookahead, int formula,
     // 0
     for (int future = pathlength[a]; future <= lookahead; ++future) {
         cell_role = -1;
-        printf("*****Checking issues of stayin here [%d %d] at time %i!!: \n",currentCell->y, currentCell->x, future);
+        // printf("*****Checking issues of stayin here [%d %d] at time %i!!: \n",currentCell->y, currentCell->x, future);
 
         // Verificando si mi celda actual se encuetra bloqueada
         // Si me quedo en esta celda a futuro llevara posiblemente a un conflicto
@@ -523,7 +523,7 @@ void determine_constraints(int a, int lookahead, int formula,
             (((maze1[currentCell->y][currentCell->x]
                    .blockedAgent[a][future - 1])) &&
              (future > 0))) {
-            printf("*****Staying here will bring me trouble at time %i!!\n",future);
+            // printf("*****Staying here will bring me trouble at time %i!!\n",future);
 
             // TODO: Definir estás variables
             int canmovehere = 1;
@@ -536,14 +536,14 @@ void determine_constraints(int a, int lookahead, int formula,
             // posicion actual, cuando los cambios actuales dependen del paso sobre
             // el camino
             if (future == pathlength[a]) {
-                printf("\n\n****FUTURE At %i another agent WOULD LIKE TO MOVE to [%d ""%d], but who??\n",future, currentCell->y, currentCell->x); // cont_closed
+                // printf("\n\n****FUTURE At %i another agent WOULD LIKE TO MOVE to [%d ""%d], but who??\n",future, currentCell->y, currentCell->x); // cont_closed
                 // Mayor valor heuristico presente entre los agentes
-                printf("*********************************LEEME*******************\n");
-                printf("position[%d]->y: %d\n", a, position[a]->y);
-                printf("position[%d]->x: %d\n", a, position[a]->x);
-                printf("a: %d\n", a);
-                printf("hvalues: %f\n", hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
-                printf("backupH: %f\n", backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
+                // printf("*********************************LEEME*******************\n");
+                // printf("position[%d]->y: %d\n", a, position[a]->y);
+                // printf("position[%d]->x: %d\n", a, position[a]->x);
+                // printf("a: %d\n", a);
+                // printf("hvalues: %f\n", hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
+                // printf("backupH: %f\n", backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a]);
                 float maxH = backupH[MAZEWIDTH * (position[a]->y) + (position[a]->x)][a];
                 // Suma de valores heuristicos
                 float sumH = 0;
@@ -567,25 +567,25 @@ void determine_constraints(int a, int lookahead, int formula,
                         numConflicts++;
 
                         if (path[j][future] != NULL) {
-                            printf("\033[1;32m");
-                            printf("No es null\n");
-                            printf("\033[0m");
+                            // printf("\033[1;32m");
+                            // printf("No es null\n");
+                            // printf("\033[0m");
                         } else {
-                            printf("\033[1;31m");
-                            printf("Es null\n");
-                            printf("\033[0m");
+                            // printf("\033[1;31m");
+                            // printf("Es null\n");
+                            // printf("\033[0m");
                         }
-                        printf("j: %d\n", j);
-                        printf("future: %d\n", future);
-                        printf("path[%d][%d]->y: %d\n", j, future, path[j][future]->y);
-                        printf("path[%d][%d]->x: %d\n", j, future, path[j][future]->x);
+                        // printf("j: %d\n", j);
+                        // printf("future: %d\n", future);
+                        // printf("path[%d][%d]->y: %d\n", j, future, path[j][future]->y);
+                        // printf("path[%d][%d]->x: %d\n", j, future, path[j][future]->x);
 
-                        printf("His previous position at [%d %d] had a degree of %i \n",path[j][future]->y, path[j][future]->x,maze1[path[j][future]->y][path[j][future]->x].degree[j]);
-                        printf("My info %i vs other agent's info %i \n", formula,agentInfo[j]);
+                        // printf("His previous position at [%d %d] had a degree of %i \n",path[j][future]->y, path[j][future]->x,maze1[path[j][future]->y][path[j][future]->x].degree[j]);
+                        // printf("My info %i vs other agent's info %i \n", formula,agentInfo[j]);
 
                         // Si es un punto de conflicto interseccion
                         if (conflictType[a][j] == 0) {
-                            printf(" POINT conflict, my cost: %i vs his :%i \n",(int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]) + 2,(int)(hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j]) + 1);
+                            // printf(" POINT conflict, my cost: %i vs his :%i \n",(int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]) + 2,(int)(hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j]) + 1);
                             // Former comparison, based only on who has higher
                             // heuristic if((int)(hvalues[MAZEWIDTH*position[j]->y +
                             // position[j]->x][j])+1 >
@@ -600,7 +600,7 @@ void determine_constraints(int a, int lookahead, int formula,
                         // Si es un punto de conflicto 1, uno de ambos debe hacerse a
                         // un lado
                         if (conflictType[a][j] == 1) {
-                            printf(" PATH conflict\n");
+                            // printf(" PATH conflict\n");
                             if (formula < agentInfo[j]) {
                                 maxInfo = j;
                             }
@@ -616,16 +616,16 @@ void determine_constraints(int a, int lookahead, int formula,
 
                             // Si j quiere moverse a mi posicion actual (En mi actual
                             // valor future/pathleght[i])
-                            printf("(1) We are both SCREWED!!, his H is %i, mine is %i ""anddistanceFromStart my distance from start is %i, dist from agent is ""%i, total for comparison: Other %i vs mine %i \n",agentInfo[j] - 20003, formula - 20003,distanceFromStart[a], distanceFromAgent,agentInfo[j] - 20003 - distanceFromAgent,distanceFromStart[a]);
+                            // printf("(1) We are both SCREWED!!, his H is %i, mine is %i ""anddistanceFromStart my distance from start is %i, dist from agent is ""%i, total for comparison: Other %i vs mine %i \n",agentInfo[j] - 20003, formula - 20003,distanceFromStart[a], distanceFromAgent,agentInfo[j] - 20003 - distanceFromAgent,distanceFromStart[a]);
 
                             if (agentInfo[j] - 20003 < formula - 20003) {
-                                printf("I COULD AT LEAST HELP HIM GET TO HIS GOAL!!!\n");
+                                // printf("I COULD AT LEAST HELP HIM GET TO HIS GOAL!!!\n");
                                 // j pasa a ser el maxInfo
                                 maxInfo = j;
                                 // Marca deadlock
                                 deadlock[a][currentCell->y][currentCell->x][future] = 1;
                             } else {
-                                printf(" NO WAY, I CANT HELP EVEN IF I WANTED TO\n");
+                                // printf(" NO WAY, I CANT HELP EVEN IF I WANTED TO\n");
                                 // Se conserva a como el maxInfo
                                 maxInfo = a;
                             }
@@ -637,14 +637,14 @@ void determine_constraints(int a, int lookahead, int formula,
                             }
                         }
 
-                        printf("And his path is \n");
+                        // printf("And his path is \n");
 
                         // Itera por las veces que permita el lookahead
                         for (int l = 1; l <= lookahead; l++) {
                             // Si a es distinto de j y mi camino ideal se ecuentra
                             // definido
                             if ((a != j) && (idealPath[j][l] != NULL)) {
-                                printf("Agent %i: [%d %d], H: %.1f, step %i \n", j + 1,idealPath[j][l]->y, idealPath[j][l]->x,hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j], l);
+                                // printf("Agent %i: [%d %d], H: %.1f, step %i \n", j + 1,idealPath[j][l]->y, idealPath[j][l]->x,hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j], l);
 
                                 // Si encuentra una intersección entre a y j sobre la
                                 // iteración l
@@ -653,7 +653,7 @@ void determine_constraints(int a, int lookahead, int formula,
                                     // Asigna el contador de conflictos a la posición
                                     // dada
                                     position[a]->numConflicts[a] = numConflicts;
-                                    printf("BOops! might need to move, total conflicts: %i ""\n",position[a]->numConflicts[a]);
+                                    // printf("BOops! might need to move, total conflicts: %i ""\n",position[a]->numConflicts[a]);
                                 }
 
                                 // FIXME: Este if se encuentra vacío
@@ -668,15 +668,15 @@ void determine_constraints(int a, int lookahead, int formula,
                         // getchar();
 
                         // Despliega valor heuristico de j
-                        printf(" with H of %.1f, (%.1f)  vs ",hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)]       [j],hvalues[MAZEWIDTH * (position[j]->y) + (position[j]->x)]       [j]);
+                        // printf(" with H of %.1f, (%.1f)  vs ",hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)]       [j],hvalues[MAZEWIDTH * (position[j]->y) + (position[j]->x)]       [j]);
 
                         // Despliega valor heuristico de a
-                        printf(" my H of %.1f, (%.1f) ",hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)]       [a],hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)]       [a]); //[MAZEWIDTH*(tmpcell1->y) +//(tmpcell1->x)][a]);
+                        // printf(" my H of %.1f, (%.1f) ",hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)]       [a],hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)]       [a]); //[MAZEWIDTH*(tmpcell1->y) +//(tmpcell1->x)][a]);
 
                         // Despliega la suma de los valores heuristicos
                         sumH = sumH + backupH[MAZEWIDTH * (currentCell->y) +
                                               (currentCell->x)][j];
-                        printf(", SumH is %f \n", sumH);
+                        // printf(", SumH is %f \n", sumH);
 
                         // Si el valor heuristico de j es mayor que el actual mayor
                         if ((hvalues[MAZEWIDTH * (position[j]->y) + (position[j]->x)]
@@ -693,9 +693,9 @@ void determine_constraints(int a, int lookahead, int formula,
                     }
                 }
                 // El agente con la maxima heuristica es
-                printf("The Agent with MAX H, whose H changes by my movement  is %i ",maxHagent + 1);
+                // printf("The Agent with MAX H, whose H changes by my movement  is %i ",maxHagent + 1);
                 // Con un valor heuristico de
-                printf(" with H of %f \n", maxH);
+                // printf(" with H of %f \n", maxH);
             }
 
             // Otro agente ya debiera encontrarse aquí
@@ -704,7 +704,7 @@ void determine_constraints(int a, int lookahead, int formula,
                 (future > 0)) {
                 // El agente future-1 no puede desplazarse a la celda actual, ya que
                 // hay un agente en ella
-                printf("****At %i MIGHT NOT BE ABLE to move to [%d %d], there MIGHT ""ALREADY BE an agent\n",future - 1, currentCell->y, currentCell->x);
+                // printf("****At %i MIGHT NOT BE ABLE to move to [%d %d], there MIGHT ""ALREADY BE an agent\n",future - 1, currentCell->y, currentCell->x);
                 // TODO: Marca como agente wasthere
                 wasthere = 1;
                 // backupH[MAZEWIDTH*(tmpcell1->move[d]->y) +
@@ -726,21 +726,21 @@ void determine_constraints(int a, int lookahead, int formula,
                         // Incrementa el contador de conflictos
                         numConflicts++;
                         // El agente j con una cantidad de numConflicts
-                        printf("This guy -> %i  (total %i)", j + 1, numConflicts);
+                        // printf("This guy -> %i  (total %i)", j + 1, numConflicts);
                         // Un valor heuristico de hvalues
-                        printf(" with H of %.1f, (%.1f)  vs ",hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)]       [j],hvalues[MAZEWIDTH * (position[j]->y) + (position[j]->x)]       [j]);
+                        // printf(" with H of %.1f, (%.1f)  vs ",hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)]       [j],hvalues[MAZEWIDTH * (position[j]->y) + (position[j]->x)]       [j]);
                         // vs el agente a con un valor heuristico de hvalues
-                        printf(" my H of %.1f, (%.1f) ",hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)]       [a],hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)]       [a]);
+                        // printf(" my H of %.1f, (%.1f) ",hvalues[MAZEWIDTH * (currentCell->y) + (currentCell->x)]       [a],hvalues[MAZEWIDTH * (position[a]->y) + (position[a]->x)]       [a]);
                         // Actualiza la suma de valores heuristicos
                         sumH = sumH + backupH[MAZEWIDTH * (currentCell->y) +
                                               (currentCell->x)][j];
-                        printf(", SumH is %f \n", sumH);
+                        // printf(", SumH is %f \n", sumH);
                         // Copied from above
-                        printf("My info %i vs other agent's info %i \n", formula,agentInfo[j]);
+                        // printf("My info %i vs other agent's info %i \n", formula,agentInfo[j]);
 
                         // Si existe un punto de conflicto entre a y j
                         if (conflictType[a][j] == 0) {
-                            printf(" POINT conflict, my cost :  %i vs his :%i \n",(int)(hvalues[MAZEWIDTH * position[a]->y +              position[a]->x][a]) +    2,(int)(hvalues[MAZEWIDTH * position[j]->y +              position[j]->x][j]) +    1);
+                            // printf(" POINT conflict, my cost :  %i vs his :%i \n",(int)(hvalues[MAZEWIDTH * position[a]->y +              position[a]->x][a]) +    2,(int)(hvalues[MAZEWIDTH * position[j]->y +              position[j]->x][j]) +    1);
 
                             // Si el valor heuristico de j es mayor que el de a
                             if ((int)(hvalues[MAZEWIDTH * position[j]->y +
@@ -751,17 +751,17 @@ void determine_constraints(int a, int lookahead, int formula,
                                     2) {
                                 // Actualiza maxInfo a j
                                 maxInfo = j;
-                                printf(" MaxInfo: %i\n", maxInfo);
+                                // printf(" MaxInfo: %i\n", maxInfo);
                             }
                         }
 
                         // Si existe punto de conflicto
                         if (conflictType[a][j] == 1) {
-                            printf(" PATH conflict\n");
+                            // printf(" PATH conflict\n");
                             if (formula < agentInfo[j]) {
                                 // Actualiza maxInfo a j
                                 maxInfo = j;
-                                printf(" MaxInfo: %i\n", maxInfo + 1);
+                                // printf(" MaxInfo: %i\n", maxInfo + 1);
                             }
                         }
 
@@ -772,15 +772,15 @@ void determine_constraints(int a, int lookahead, int formula,
                                 abs(position[a]->x - position[j]->x) +
                                 abs(position[a]->y - position[j]->y);
 
-                            printf("(2) We are both SCREWED!!, his H is %i, mine is %i ""and my distance from start is %i, dist from agent is ""%i, total for comparison: Other %i vs mine %i \n",agentInfo[j] - 20003, formula - 20003,distanceFromStart[a], distanceFromAgent,agentInfo[j] - 20003 - distanceFromAgent,distanceFromStart[a]);
+                            // printf("(2) We are both SCREWED!!, his H is %i, mine is %i ""and my distance from start is %i, dist from agent is ""%i, total for comparison: Other %i vs mine %i \n",agentInfo[j] - 20003, formula - 20003,distanceFromStart[a], distanceFromAgent,agentInfo[j] - 20003 - distanceFromAgent,distanceFromStart[a]);
 
                             // Si el camino sobre j es menor a formula
                             if (agentInfo[j] - 20003 < formula - 20003) {
-                                printf(" I COULD AT LEAST HELP HIM GET TO HIS GOAL!!!\n");
+                                // printf(" I COULD AT LEAST HELP HIM GET TO HIS GOAL!!!\n");
                                 // Asigna j a maxInfo
                                 maxInfo = j;
                             } else {
-                                printf(" NO WAY, I CANT HELP EVEN IF I WANTED TO\n");
+                                // printf(" NO WAY, I CANT HELP EVEN IF I WANTED TO\n");
                                 // De otra forma asigna a a
                                 maxInfo = a;
                             }
@@ -808,8 +808,8 @@ void determine_constraints(int a, int lookahead, int formula,
 
                 // Despliega el agente con maximo valor heuristico y su valor
                 // heuristico asociado
-                printf("The Agent with MAX H, whose H changes by my movement  is %i ",maxHagent + 1);
-                printf(" with H of %f \n", maxH);
+                // printf("The Agent with MAX H, whose H changes by my movement  is %i ",maxHagent + 1);
+                // printf(" with H of %f \n", maxH);
             }
 
             // Tercer caso - hay un agente en la celda actual
@@ -820,15 +820,15 @@ void determine_constraints(int a, int lookahead, int formula,
                 if ((currentCell->x == position[u]->x) &&
                     (currentCell->y == position[u]->y) && (future == 1) &&
                     (u != a)) {
-                    printf("\nOps, agent %i is at the next position position, is it ""its goal?..",u + 1);
+                    // printf("\nOps, agent %i is at the next position position, is it ""its goal?..",u + 1);
 
                     // Si el agente actual esta en su goal lo pasa por encima
                     // ignorandolo
                     if ((goal[u]->y == position[u]->y) &&
                         (goal[u]->x == position[u]->x)) {
-                        printf("\nYES, I can move through");
+                        // printf("\nYES, I can move through");
                     } else {
-                        printf("\n No, Cant move here\n");
+                        // printf("\n No, Cant move here\n");
                         // caso contrario no es posible moverse sobre la celda actual
                         canmovehere = 0;
                     }
@@ -839,7 +839,7 @@ void determine_constraints(int a, int lookahead, int formula,
             if (((maze1[currentCell->y][currentCell->x].blockedAgent[a][0])) &&
                 (!canmovehere)) {
                 // No puedo moverme sobre la celda hay un agente
-                printf("\n****At %i Cant move to [%d %d], there is an agent\n",future, currentCell->y, currentCell->x);
+                // printf("\n****At %i Cant move to [%d %d], there is an agent\n",future, currentCell->y, currentCell->x);
                 // TODO: POR DEFINIR
                 learningCutoff[a] = future - 1;
 
@@ -851,7 +851,7 @@ void determine_constraints(int a, int lookahead, int formula,
                         // Incremeta el contador de conflictos sobre a
                         (currentCell)->numConflicts[a] =
                             (currentCell)->numConflicts[a] + 1;
-                        printf("This guy -> %i, total conflicts %i \n", j + 1,(currentCell)->numConflicts[a]);
+                        // printf("This guy -> %i, total conflicts %i \n", j + 1,(currentCell)->numConflicts[a]);
                         // Actualiza el nuevo camino más largo a j
                         maxInfo = j;
                         // TODO: POR DEFINIR
@@ -875,51 +875,51 @@ void determine_constraints(int a, int lookahead, int formula,
                         }
                         // Incrementa el contador de conflictos
                         numConflicts++;
-                        printf("This guy -> %i wants to move where I am (planning to ""be)  (total %i) at time %i \n",j + 1, numConflicts, future);
+                        // printf("This guy -> %i wants to move where I am (planning to ""be)  (total %i) at time %i \n",j + 1, numConflicts, future);
 
-                        printf("His previous position at [%d %d] had a degree of %i \n",idealPath[j][future]->y, idealPath[j][future]->x,maze1[idealPath[j][future]->y][idealPath[j][future]->x]    .degree[j]);
-                        printf("My info %i vs other agent's info %i \n", formula,agentInfo[j]);
+                        // printf("His previous position at [%d %d] had a degree of %i \n",idealPath[j][future]->y, idealPath[j][future]->x,maze1[idealPath[j][future]->y][idealPath[j][future]->x]    .degree[j]);
+                        // printf("My info %i vs other agent's info %i \n", formula,agentInfo[j]);
                         // Si formula y el camino de j superan el umbral
                         if ((formula > 20000) && (agentInfo[j] > 20000)) {
                             // Determina la distancia entre a y j
                             int distanceFromAgent =
                                 abs(position[a]->x - position[j]->x) +
                                 abs(position[a]->y - position[j]->y);
-                            printf("(3) We are both SCREWED!!, his H is %i, mine is %i ""and my distance from start is %i, dist from agent is ""%i, total for comparison: Other %i vs mine %i \n",agentInfo[j] - 20003, formula - 20003,distanceFromStart[a], distanceFromAgent,agentInfo[j] - 20003 - distanceFromAgent,distanceFromStart[a]);
+                            // printf("(3) We are both SCREWED!!, his H is %i, mine is %i ""and my distance from start is %i, dist from agent is ""%i, total for comparison: Other %i vs mine %i \n",agentInfo[j] - 20003, formula - 20003,distanceFromStart[a], distanceFromAgent,agentInfo[j] - 20003 - distanceFromAgent,distanceFromStart[a]);
 
                             // Si el camino sobre j es menor que el determinado
                             // mediante formula
                             if (agentInfo[j] < formula) {
-                                printf(" I COULD AT LEAST HELP HIM GET TO HIS GOAL!!!\n");
+                                // printf(" I COULD AT LEAST HELP HIM GET TO HIS GOAL!!!\n");
                                 // Marca j como el mayor camino
                                 maxInfo = j;
                                 // Marca deadlock en a sobre la celda actual en el paso
                                 // future
                                 deadlock[a][currentCell->y][currentCell->x][future] = 1;
                             } else {
-                                printf(" NO WAY, I CANT HELP EVEN IF I WANTED TO\n");
+                                // printf(" NO WAY, I CANT HELP EVEN IF I WANTED TO\n");
                                 maxInfo = a;
                             }
                         } else {
                             if (formula < agentInfo[j]) {
                                 maxInfo = j;
-                                // printf("MAX INFO: %i, role(%i, %i): %i %i\n",j+1,a+1,
+                                // // printf("MAX INFO: %i, role(%i, %i): %i %i\n",j+1,a+1,
                                 // j+1,role[a][j],role[1][0]);
                             } else {
                                 maxInfo = a;
-                                // printf("MAX INFO: %i, role(%i, %i): %i %i\n",a+1,a+1,
+                                // // printf("MAX INFO: %i, role(%i, %i): %i %i\n",a+1,a+1,
                                 // j+1,role[a][j],role[1][0]);
                             }
                         }
                         // TODO:
                         determine_role(&role[a][j], maxInfo, a, j, &cell_role);
                     } /* else {
-                        printf("Salto un paso");
+                        // printf("Salto un paso");
                         getchar();
                     } */
                 }
             }
-            printf(" ªªªª****ªªªªª*****A THE AGENT WITH MAX INFO IS %i\n",maxInfo + 1);
+            // printf(" ªªªª****ªªªªª*****A THE AGENT WITH MAX INFO IS %i\n",maxInfo + 1);
             // if(maxInfo!=a)
             // if(role[i][j]<0.9)
             if (cell_role == 0) {
@@ -927,14 +927,14 @@ void determine_constraints(int a, int lookahead, int formula,
                 if (initialState == 0) {
                     step = pathlength[a];
                 }
-                printf(" My step (of pathlength) is now %i\n", step);
+                // printf(" My step (of pathlength) is now %i\n", step);
                 if (conflictCost[a][currentCell->y][currentCell->x][step] ==
                     0) //<  (float)1/(float)(future-pathlength[a]+1))
                 {
-                    printf("CCost of current cell is %.1f\n", conflictCost[a][currentCell->y][currentCell->x][step]);
+                    // printf("CCost of current cell is %.1f\n", conflictCost[a][currentCell->y][currentCell->x][step]);
                     // If the neighbor tried to move to my "current" cell
                     if (!wasthere) {
-                        printf(" %f  + %f= %f\n",(deadlock[a][currentCell->y][currentCell->x][step]),(float)1 / (float)(future - step + 2),(deadlock[a][currentCell->y][currentCell->x][step]) +(float)1 / (float)(future - step + 2));
+                        // printf(" %f  + %f= %f\n",(deadlock[a][currentCell->y][currentCell->x][step]),(float)1 / (float)(future - step + 2),(deadlock[a][currentCell->y][currentCell->x][step]) +(float)1 / (float)(future - step + 2));
                         conflictCost[a][currentCell->y][currentCell->x][step] =
                             (deadlock[a][currentCell->y][currentCell->x][step]) +
                             (float)1 / (float)(future - step + 2);
@@ -942,8 +942,8 @@ void determine_constraints(int a, int lookahead, int formula,
                             1) {
                             conflictCost[a][currentCell->y][currentCell->x][step] = 1;
                         }
-                        printf("CASE A!!\n");
-                        printf("New CCost of current cell is %.1f\n",conflictCost[a][currentCell->y][currentCell->x][step]);
+                        // printf("CASE A!!\n");
+                        // printf("New CCost of current cell is %.1f\n",conflictCost[a][currentCell->y][currentCell->x][step]);
                     } else // if the neighbor was there when the agent tried to move
                            // to the cell
                     {
@@ -954,29 +954,29 @@ void determine_constraints(int a, int lookahead, int formula,
                             1) {
                             conflictCost[a][currentCell->y][currentCell->x][step] = 1;
                         }
-                        printf("CASE B!!\n");
+                        // printf("CASE B!!\n");
                     }
-                    // printf(" ªªªª****ªªªªª***** My time %i vs conflict time %i,
+                    // // printf(" ªªªª****ªªªªª***** My time %i vs conflict time %i,
                     // ConflictCost at time %i is: %f \n", pathlength[a], future,
                     // pathlength[a],
                     // conflictCost[a][currentCell->y][currentCell->x][pathlength[a]]);
                 }
-                printf(" ªªªª****ªªªªª***** My time %i vs conflict time %i, ""ConflictCost at time %i is: %f, deadlock at %i is: %f  \n",step, future, step,conflictCost[a][currentCell->y][currentCell->x][step], step,deadlock[a][currentCell->y][currentCell->x][step]);
+                // printf(" ªªªª****ªªªªª***** My time %i vs conflict time %i, ""ConflictCost at time %i is: %f, deadlock at %i is: %f  \n",step, future, step,conflictCost[a][currentCell->y][currentCell->x][step], step,deadlock[a][currentCell->y][currentCell->x][step]);
             }
         }
     }
 }
 
 void determine_role(int *roleij, int maxInfo, int a, int j, int *cell_role) {
-    // printf("Inside, role is %i", *roleij);
+    // // printf("Inside, role is %i", *roleij);
     // meaning that it has not been set yet
     if (*roleij == -1) {
         if (maxInfo == a) {
-            // printf("This is me\n");
+            // // printf("This is me\n");
             *roleij = 1;
         } else {
             *roleij = 0;
-            // printf("I defer\n");
+            // // printf("I defer\n");
         }
     }
     // Meaning that there is already a relation between the agents a and j
@@ -985,14 +985,14 @@ void determine_role(int *roleij, int maxInfo, int a, int j, int *cell_role) {
 
     if (*roleij == 0) {
         *cell_role = 0;
-        // printf("I defer2\n");
+        // // printf("I defer2\n");
     }
 
     if ((*roleij == 1) && (*cell_role != 0)) {
         *cell_role = 1;
-        // printf("This is me2\n");
+        // // printf("This is me2\n");
     }
-    printf("Role between %i and %i is %i, cell_role is %i\n", a + 1, j + 1,*roleij, *cell_role);
+    // printf("Role between %i and %i is %i, cell_role is %i\n", a + 1, j + 1,*roleij, *cell_role);
 }
 
 int compute_shortestpath_astar(int a, int lookahead) {
@@ -1011,7 +1011,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
     if (maze1[position[a]->y][position[a]->x].degree[a] >= 3) {
         // HEEY IF IT IS THE SECOND TIME IT STAYS IN THE STATE; IT COUNTS MORE
         // DEGREES!!!! Need to save the state so that it can be used for swapping
-        printf("Awesome! can use this state for swapping!!!\n");
+        // printf("Awesome! can use this state for swapping!!!\n");
         lastMobileCellDist[a] = 0;
         lastMobileState[a] = &maze1[position[a]->y][position[a]->x];
 
@@ -1021,21 +1021,21 @@ int compute_shortestpath_astar(int a, int lookahead) {
         }
     }
 
-    printf(" COMPUTING FOR %i (%i), at [%d %d] w degree %i, lastMobile at %i!!!\n",a + 1, pathlength[a], position[a]->y, position[a]->x,maze1[position[a]->y][position[a]->x].degree[a], lastMobileCellDist[a]);
+    // printf(" COMPUTING FOR %i (%i), at [%d %d] w degree %i, lastMobile at %i!!!\n",a + 1, pathlength[a], position[a]->y, position[a]->x,maze1[position[a]->y][position[a]->x].degree[a], lastMobileCellDist[a]);
 
     // Show previous cell
     if (position[a]->parent[a] != NULL) {
-        printf("parent: [%d %d]!!!\n", position[a]->parent[a]->y,position[a]->parent[a]->x);
+        // printf("parent: [%d %d]!!!\n", position[a]->parent[a]->y,position[a]->parent[a]->x);
         // position[a]->parent[a]=position[a]->searchtree;
     }
 
     // Show last mobile state
     if (lastMobileState[a] != NULL) {
-        printf(" lastMobile at [%d %d] ", lastMobileState[a]->y,lastMobileState[a]->x);
+        // printf(" lastMobile at [%d %d] ", lastMobileState[a]->y,lastMobileState[a]->x);
     }
 
     // For each cell in the map
-    printf("Checking predicted occupied states up to %i..", lookahead);
+    // printf("Checking predicted occupied states up to %i..", lookahead);
     for (int y = 0; y < MAZEHEIGHT; ++y) {
         for (int x = 0; x < MAZEWIDTH; ++x) {
             maze1[y][x].numConflicts[a] = 0;
@@ -1049,20 +1049,20 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
                 // if the cell is blocked at time z
                 if (maze1[y][x].blockedAgent[a][z] > 0) {
-                    printf(" BUSY [%d %d] at T %i\n", y, x, z);
+                    // printf(" BUSY [%d %d] at T %i\n", y, x, z);
                     if (maze1[y][x].toTransition[a][z] >
                         0) //(toTransition[x][y][a][z]>0)
                     {
-                        printf(" TO [%d %d] at T %i: %i by agents: ", y, x, z,maze1[y][x].toTransition[a][z]);
+                        // printf(" TO [%d %d] at T %i: %i by agents: ", y, x, z,maze1[y][x].toTransition[a][z]);
 
                         for (int j = 0; j < NAGENTS; ++j) {
                             if (maze1[y][x].agentMovingTo
                                     [a][z][j]) //(agentMovingTo[x][y][a][z][j]>0)
                             {
-                                printf(" %i, ", j + 1);
+                                // printf(" %i, ", j + 1);
                             }
                         }
-                        printf("\n");
+                        // printf("\n");
                     }
                 }
 
@@ -1080,13 +1080,13 @@ int compute_shortestpath_astar(int a, int lookahead) {
                                     if ((z == 1) && (position[j]->x == x) &&
                                         (position[j]->y == y) &&
                                         (maze1[q][e].agentMovingTo[a][z][j] == 1)) {
-                                        printf(" TRANSITION BETWEEN [%d %d] and [%d %d] at ""T %i, so To should be %i\n",y, x, q, e, z,maze1[q][e].toTransition[a][z]);
+                                        // printf(" TRANSITION BETWEEN [%d %d] and [%d %d] at ""T %i, so To should be %i\n",y, x, q, e, z,maze1[q][e].toTransition[a][z]);
                                     }
 
                                     if ((z > 1) &&
                                         (maze1[y][x].agentMovingTo[a][z - 1][j] == 1) &&
                                         (maze1[q][e].agentMovingTo[a][z][j] == 1)) {
-                                        printf(" TRANSITION BETWEEN [%d %d] and [%d %d] at ""T %i, so To should be %i\n",y, x, q, e, z,maze1[q][e].toTransition[a][z]);
+                                        // printf(" TRANSITION BETWEEN [%d %d] and [%d %d] at ""T %i, so To should be %i\n",y, x, q, e, z,maze1[q][e].toTransition[a][z]);
                                     }
                                 }
                             }
@@ -1099,22 +1099,22 @@ int compute_shortestpath_astar(int a, int lookahead) {
     // End fo going through the maze
 
     // Recap statistics: H, M and H+(2M+3)
-    printf("My H currently is %.1f \n",hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
+    // printf("My H currently is %.1f \n",hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
     // Checking mobility:
 
-    printf("CHECKING SURROUNDINGS FOR OBSTACLES: %f\n",hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
-    printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y, position[a]->x,maze1[position[a]->y][position[a]->x].obstacle);
-    printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y + 1,position[a]->x, maze1[(position[a]->y) + 1][position[a]->x].obstacle);
-    printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y,position[a]->x + 1,maze1[position[a]->y][(position[a]->x) + 1].obstacle);
-    printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y,position[a]->x - 1,maze1[position[a]->y][(position[a]->x) - 1].obstacle);
-    printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y - 1,position[a]->x,maze1[(position[a]->y) - 1][(position[a]->x)].obstacle);
+    // printf("CHECKING SURROUNDINGS FOR OBSTACLES: %f\n",hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
+    // printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y, position[a]->x,maze1[position[a]->y][position[a]->x].obstacle);
+    // printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y + 1,position[a]->x, maze1[(position[a]->y) + 1][position[a]->x].obstacle);
+    // printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y,position[a]->x + 1,maze1[position[a]->y][(position[a]->x) + 1].obstacle);
+    // printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y,position[a]->x - 1,maze1[position[a]->y][(position[a]->x) - 1].obstacle);
+    // printf("Cell [%d %d] has obstacle? : %i \n", position[a]->y - 1,position[a]->x,maze1[(position[a]->y) - 1][(position[a]->x)].obstacle);
 
     int mobility = 4 - (maze1[(position[a]->y) + 1][position[a]->x].obstacle +
                         maze1[position[a]->y][(position[a]->x) + 1].obstacle +
                         maze1[position[a]->y][(position[a]->x) - 1].obstacle +
                         maze1[(position[a]->y) - 1][position[a]->x].obstacle);
-    // printf("Mobility : %i \n",mobility);
-    printf("CHECKING SURROUNDINGS FOR AGENTS: %f\n",hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
+    // // printf("Mobility : %i \n",mobility);
+    // printf("CHECKING SURROUNDINGS FOR AGENTS: %f\n",hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
 
     // Should compute here which of the neighboring cells are occupied by other
     // agents
@@ -1122,68 +1122,68 @@ int compute_shortestpath_astar(int a, int lookahead) {
     int agentNext = 0;
 
     if (maze1[(position[a]->y) + 1][position[a]->x].blockedAgent[a][0]) {
-        printf("Cell [%d %d] has AGENT \n", position[a]->y + 1, position[a]->x);
+        // printf("Cell [%d %d] has AGENT \n", position[a]->y + 1, position[a]->x);
         agentNext++;
     }
 
     if (maze1[(position[a]->y) - 1][position[a]->x].blockedAgent[a][0]) {
-        printf("Cell [%d %d] has AGENT \n", position[a]->y - 1, position[a]->x);
+        // printf("Cell [%d %d] has AGENT \n", position[a]->y - 1, position[a]->x);
 
         agentNext++;
     }
 
     // Esta en una casilla borde e intenta leer una posición fuera del maze
-    printf("sigo con vida %d en (x,y)=(%d,%d)", a, position[a]->x, position[a]->y);
+    // printf("sigo con vida %d en (x,y)=(%d,%d)", a, position[a]->x, position[a]->y);
     //getchar();
 
     if (maze1[(position[a]->y)][(position[a]->x) + 1].blockedAgent[a][0]) {
-        printf("Cell [%d %d] has AGENT \n", position[a]->y, position[a]->x + 1);
+        // printf("Cell [%d %d] has AGENT \n", position[a]->y, position[a]->x + 1);
         agentNext++;
     }
 
     if (maze1[(position[a]->y)][(position[a]->x) - 1].blockedAgent[a][0]) {
-        printf("Cell [%d %d] has AGENT \n", position[a]->y, position[a]->x - 1);
+        // printf("Cell [%d %d] has AGENT \n", position[a]->y, position[a]->x - 1);
         agentNext++;
     }
 
     int agentMobility = 4 - agentNext;
-    printf("Agent Mobility : %i \n", agentMobility);
+    // printf("Agent Mobility : %i \n", agentMobility);
 
     int somethingNext = 0;
 
     if ((maze1[(position[a]->y) + 1][position[a]->x].blockedAgent[a][0]) ||
         (maze1[(position[a]->y) + 1][position[a]->x].obstacle)) {
-        printf("Cell [%d %d] has SOMETHING \n", position[a]->y + 1,position[a]->x);
+        // printf("Cell [%d %d] has SOMETHING \n", position[a]->y + 1,position[a]->x);
         somethingNext++;
     }
 
     if ((maze1[(position[a]->y) - 1][position[a]->x].blockedAgent[a][0]) ||
         (maze1[(position[a]->y) - 1][position[a]->x].obstacle)) {
-        printf("Cell [%d %d] has SOMETHING \n", position[a]->y - 1,position[a]->x);
+        // printf("Cell [%d %d] has SOMETHING \n", position[a]->y - 1,position[a]->x);
 
         somethingNext++;
     }
 
     if ((maze1[(position[a]->y)][(position[a]->x) + 1].blockedAgent[a][0]) ||
         (maze1[(position[a]->y)][(position[a]->x) + 1].obstacle)) {
-        printf("Cell [%d %d] has SOMETHING \n", position[a]->y,position[a]->x + 1);
+        // printf("Cell [%d %d] has SOMETHING \n", position[a]->y,position[a]->x + 1);
         somethingNext++;
     }
 
     if ((maze1[(position[a]->y)][(position[a]->x) - 1].blockedAgent[a][0]) ||
         (maze1[(position[a]->y)][(position[a]->x) - 1].obstacle)) {
-        printf("Cell [%d %d] has SOMETHING \n", position[a]->y,position[a]->x - 1);
+        // printf("Cell [%d %d] has SOMETHING \n", position[a]->y,position[a]->x - 1);
         somethingNext++;
     }
 
     int netMobility = 4 - somethingNext;
 
-    printf("NET Mobility : %i \n", netMobility);
+    // printf("NET Mobility : %i \n", netMobility);
 
     distanceFromStart[a] = abs(position[a]->x - initialCellX[a]) +
                            abs(position[a]->y - initialCellY[a]);
 
-    printf("Distance from Start Cell: %i \n", distanceFromStart[a]);
+    // printf("Distance from Start Cell: %i \n", distanceFromStart[a]);
 
     if (mobility > 2) // If the agent can step out of the other's way
     {
@@ -1202,25 +1202,25 @@ int compute_shortestpath_astar(int a, int lookahead) {
         }
     }
 
-    printf("My M currently is %i \n", lastMobileCellDist[a]);
+    // printf("My M currently is %i \n", lastMobileCellDist[a]);
 
     // Compute my formula..
     int formula =
         (int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]) +
         (2 * (lastMobileCellDist[a]) + 3);
 
-    printf("My formula is %i and my pathlenght is %i ((H:) %i + 2* ""(lastmobilecell) %i +3)\n",formula, pathlength[a],(int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]),lastMobileCellDist[a]);
+    // printf("My formula is %i and my pathlenght is %i ((H:) %i + 2* ""(lastmobilecell) %i +3)\n",formula, pathlength[a],(int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]),lastMobileCellDist[a]);
 
     agentInfo[a] = formula;
 
     // Review path while there is a desired cell
     for (int l = 1; l <= lookahead; l++) {
         if (idealPath[a][l] != NULL) {
-            printf("My current IDEAL path at pos %i is [%d %d]\n", l,idealPath[a][l]->y, idealPath[a][l]->x);
+            // printf("My current IDEAL path at pos %i is [%d %d]\n", l,idealPath[a][l]->y, idealPath[a][l]->x);
         }
 
         if (idealPath[1][l] != NULL) {
-            printf("Agent 2 IDEAL path at pos %i is [%d %d]\n", l,idealPath[1][l]->y, idealPath[1][l]->x);
+            // printf("Agent 2 IDEAL path at pos %i is [%d %d]\n", l,idealPath[1][l]->y, idealPath[1][l]->x);
         }
     }
 
@@ -1232,7 +1232,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
     mazestart1 = position[a]; // Current position
     mazegoal1 = goal[a];      // New position
-    //	printf("a:%d [%d,%d]\n",a, position[a]->y,position[a]->x);
+    //	// printf("a:%d [%d,%d]\n",a, position[a]->y,position[a]->x);
 
     mazeiteration1++;
     emptyheap2();
@@ -1257,15 +1257,15 @@ int compute_shortestpath_astar(int a, int lookahead) {
     while (topheap2() != NULL) {
         // If in the middle of the search...
         if (cont_closed > 0) {
-            printf("\n****GETTING NEW NODE FROM THE STACK!! ");
-            printf("\nThe previously analyzed node has degree %i ",tmpcell1->degree[a]);
+            // printf("\n****GETTING NEW NODE FROM THE STACK!! ");
+            // printf("\nThe previously analyzed node has degree %i ",tmpcell1->degree[a]);
         }
         tmpcell3 = tmpcell1;
         tmpcell1 = topheap2();
 
         // If in the middle of the search...
         if (cont_closed > 0) {
-            printf("\nThe next node to expand is [%d %d] with depth %i (or %i) from ""parent [%d %d] (cont %i)",tmpcell1->y, tmpcell1->x, tmpcell1->tmpdepth[a], newdepth,tmpcell3->y, tmpcell3->x, cont_closed);
+            // printf("\nThe next node to expand is [%d %d] with depth %i (or %i) from ""parent [%d %d] (cont %i)",tmpcell1->y, tmpcell1->x, tmpcell1->tmpdepth[a], newdepth,tmpcell3->y, tmpcell3->x, cont_closed);
 
             // Update search settings
             if (cont_closed == lookahead) {
@@ -1274,21 +1274,21 @@ int compute_shortestpath_astar(int a, int lookahead) {
             }
 
             if (newdepth != tmpcell1->depth[a]) {
-                printf("Strange..");
+                // printf("Strange..");
                 // getchar();
             }
             tmpcell1->depth[a] = tmpcell1->tmpdepth[a];
             tmpcell1->searchtree =
                 tmpcell1->tmpsearchtree[tmpcell1->depth[a]]; // tmpcell3;
 
-            // printf("The parent of [%d %d] is [%d %d] at depth %i..",
+            // // printf("The parent of [%d %d] is [%d %d] at depth %i..",
             // tmpcell1->y, tmpcell1->x,tmpcell1->searchtree->y,
             // tmpcell1->searchtree->x, tmpcell1->move[d]->depth[a]);
             // getchar();
             // tmpcell1->searchtree = tmpcell1->tmpsearchtree;
         }
 
-        //   printf("A* top a:%d [%d,%d] It:%d LA:%d\n",a,
+        //   // printf("A* top a:%d [%d,%d] It:%d LA:%d\n",a,
         //   tmpcell1->y,tmpcell1->x, mazeiteration1,lookahead);
 
         // WHEN AT THE END OF THE SEARCH:
@@ -1298,10 +1298,10 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
             f_value =
                 hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a] + tmpcell1->g;
-            printf(" \n\nH value of [%d %d]: %f,", tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a]);
-            printf(" G : %f\n", tmpcell1->g);
+            // printf(" \n\nH value of [%d %d]: %f,", tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a]);
+            // printf(" G : %f\n", tmpcell1->g);
 
-            printf("\nLEARNING NEW HEURISTICS OF FOUND PATH.. %f\n", tmpcell1->g);
+            // printf("\nLEARNING NEW HEURISTICS OF FOUND PATH.. %f\n", tmpcell1->g);
             cellpas = tmpcell1;
             for (d = 0; d < cont_closed; d++) {
                 hvalues[MAZEWIDTH * CLOSED[d]->y + CLOSED[d]->x][a] =
@@ -1309,15 +1309,15 @@ int compute_shortestpath_astar(int a, int lookahead) {
                         f_value - CLOSED[d]->g);
 
                 // max(CLOSED[d]->h,f_value - CLOSED[d]->g);
-                printf("Updating H of [%d %d] = %.1f, d: %i, size %i \n",CLOSED[d]->y, CLOSED[d]->x,hvalues[MAZEWIDTH * CLOSED[d]->y + CLOSED[d]->x][a], d,sizeheap2());
+                // printf("Updating H of [%d %d] = %.1f, d: %i, size %i \n",CLOSED[d]->y, CLOSED[d]->x,hvalues[MAZEWIDTH * CLOSED[d]->y + CLOSED[d]->x][a], d,sizeheap2());
             }
 
-            printf(" Final destination : [%d %d]", cellpas->y, cellpas->x);
+            // printf(" Final destination : [%d %d]", cellpas->y, cellpas->x);
             // getchar();
 
             flag_success1 = 1;
             tmpcell1 = popheap2();
-            printf("\n(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:%d [%d,%d] ""\n",a, tmpcell1->y, tmpcell1->x);
+            // printf("\n(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:%d [%d,%d] ""\n",a, tmpcell1->y, tmpcell1->x);
             break;
         }
 
@@ -1345,11 +1345,11 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
         if (cont_closed > 1) // Second to last step
         {
-            printf("\n\n****** FROM CELL [%d %d] at time %i, H: %.1f, degree: %i\n ",tmpcell1->y, tmpcell1->x, tmpcell1->depth[a],hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a],tmpcell1->degree[a]);
+            // printf("\n\n****** FROM CELL [%d %d] at time %i, H: %.1f, degree: %i\n ",tmpcell1->y, tmpcell1->x, tmpcell1->depth[a],hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a],tmpcell1->degree[a]);
         }
 
         if (cont_closed == 1) { // First state
-            printf("\n\n******FROM CELL [%d %d] at time 0, H: %.1f, degree: %i\n ",tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a],tmpcell1->degree[a]);
+            // printf("\n\n******FROM CELL [%d %d] at time 0, H: %.1f, degree: %i\n ",tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a],tmpcell1->degree[a]);
 
             // First time the agent computes next cell, determines constraints:
             determine_constraints(a, lookahead, formula, tmpcell1, 1);
@@ -1358,7 +1358,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
         newdepth = tmpcell1->depth[a] + 1;
         ++agent_expansions[a];
 
-        // printf("MaxSim: %.1f ", maxSimil);
+        // // printf("MaxSim: %.1f ", maxSimil);
 
         // Previous code
         /*  d = random() % DIRECTIONS;
@@ -1369,7 +1369,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
       tmpcell1->move[d]->overexpanded != mazeiteration1)
          {
             initialize_state(tmpcell1->move[d]);
-      //        printf("A* generation a:%d [%d,%d] %d\n",a,
+      //        // printf("A* generation a:%d [%d,%d] %d\n",a,
       tmpcell1->move[d]->y,tmpcell1->move[d]->x, d); if(tmpcell1->move[d]->g >
       tmpcell1->g + tmpcell1->cost[d])
             {
@@ -1389,17 +1389,17 @@ int compute_shortestpath_astar(int a, int lookahead) {
         d = rand() % DIRECTIONS;
         for (i = 0; i < DIRECTIONS; ++i) {
             if (tmpcell1->move[d]) {
-                printf("\n********************************************************");
+                // printf("\n********************************************************");
 
                 if (!((tmpcell1->x == tmpcell1->move[d]->x) &&
                       (tmpcell1->y == tmpcell1->move[d]->y))) {
                     tmpcell1->degree[a] = tmpcell1->degree[a] + 1;
                 }
-                printf("\nThinking about moving to [%d %d]..(degree of parent %i) \n",tmpcell1->move[d]->y, tmpcell1->move[d]->x,tmpcell1->degree[a]);
+                // printf("\nThinking about moving to [%d %d]..(degree of parent %i) \n",tmpcell1->move[d]->y, tmpcell1->move[d]->x,tmpcell1->degree[a]);
 
             } else {
-                // printf("\nDirection..%i\n", i);
-                // printf("It REALLY is blocked by obstacle\n" );
+                // // printf("\nDirection..%i\n", i);
+                // // printf("It REALLY is blocked by obstacle\n" );
             }
 
             if (tmpcell1->move[d] &&
@@ -1408,7 +1408,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
                                    // mazeiteration1)
             {
                 initialize_state(tmpcell1->move[d]);
-                printf("\nA* generation a:%d [%d,%d] from [%d %d], %.1f >= %.1f   ",a, tmpcell1->move[d]->y, tmpcell1->move[d]->x, tmpcell1->y,tmpcell1->x, tmpcell1->move[d]->g,tmpcell1->g + tmpcell1->cost[d]);
+                // printf("\nA* generation a:%d [%d,%d] from [%d %d], %.1f >= %.1f   ",a, tmpcell1->move[d]->y, tmpcell1->move[d]->x, tmpcell1->y,tmpcell1->x, tmpcell1->move[d]->g,tmpcell1->g + tmpcell1->cost[d]);
 
                 float goaldirX = ((float)goal[a]->x - (tmpcell1->x));
                 float goaldirY = ((float)goal[a]->y - (tmpcell1->y));
@@ -1433,10 +1433,10 @@ int compute_shortestpath_astar(int a, int lookahead) {
                 {
                     tmpcell1->move[d]->tmpdepth[a] = newdepth;
                     pathlength[a] = tmpcell1->move[d]->tmpdepth[a];
-                    // printf("\nThinking about moving to [%d %d]..\n",
+                    // // printf("\nThinking about moving to [%d %d]..\n",
                     // tmpcell1->move[d]->y,tmpcell1->move[d]->x);
-                    printf("***INCREASING PATHLENGTH to %i !!\n", pathlength[a]);
-                    printf("\nThinking about moving to [%d %d] in my pathlength %i..\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x, pathlength[a]);
+                    // printf("***INCREASING PATHLENGTH to %i !!\n", pathlength[a]);
+                    // printf("\nThinking about moving to [%d %d] in my pathlength %i..\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x, pathlength[a]);
                     tmpcell1->move[d]->g_backup = (tmpcell1->g + tmpcell1->cost[d]);
                     tmpcell1->move[d]->g = (tmpcell1->g + tmpcell1->cost[d]);
 
@@ -1454,23 +1454,23 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
                     if (0) //(maxInfo!=a)//(maxHagent!=a)
                     {
-                        printf(" I DONT have the max H, I defer to the other agent, ""cutoff at %i \n",pathlength[a] - 1);
+                        // printf(" I DONT have the max H, I defer to the other agent, ""cutoff at %i \n",pathlength[a] - 1);
                         learningCutoff[a] = pathlength[a] - 1;
 
                         // getchar();
                     } else {
-                        printf("[%d %d] G es %.1f +", tmpcell1->move[d]->y,tmpcell1->move[d]->x, tmpcell1->move[d]->g);
-                        printf(" H  es %f, ",hvalues[MAZEWIDTH * tmpcell1->move[d]->y + tmpcell1->move[d]->x][a]);
-                        printf(" F es %f\n",tmpcell1->move[d]->g + hvalues[MAZEWIDTH * tmpcell1->move[d]->y + tmpcell1->move[d]->x][a]);
+                        // printf("[%d %d] G es %.1f +", tmpcell1->move[d]->y,tmpcell1->move[d]->x, tmpcell1->move[d]->g);
+                        // printf(" H  es %f, ",hvalues[MAZEWIDTH * tmpcell1->move[d]->y + tmpcell1->move[d]->x][a]);
+                        // printf(" F es %f\n",tmpcell1->move[d]->g + hvalues[MAZEWIDTH * tmpcell1->move[d]->y + tmpcell1->move[d]->x][a]);
                         //   getchar();
 
                         for (int j = 0; j < NAGENTS; ++j) {
                             if (canSee[a][j] > 0) {
-                                /*   printf("CAN SEEE %i \n", j+1);
-               printf("The heuristic of my neighbor %i is %f " ,
+                                /*   // printf("CAN SEEE %i \n", j+1);
+               // printf("The heuristic of my neighbor %i is %f " ,
                j+1,hvalues[MAZEWIDTH*position[j]->y + position[j]->x][j]);
-               printf(" and mine at [%d %d] is ",tmpcell1->y,tmpcell1->x);
-               printf(" %f \n" ,hvalues[MAZEWIDTH*tmpcell1->y + tmpcell1->x][a]
+               // printf(" and mine at [%d %d] is ",tmpcell1->y,tmpcell1->x);
+               // printf(" %f \n" ,hvalues[MAZEWIDTH*tmpcell1->y + tmpcell1->x][a]
                );
               */
                                 if (hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a] <
@@ -1484,14 +1484,14 @@ int compute_shortestpath_astar(int a, int lookahead) {
                             tmpcell1;
 
                         // tmpcell1->move[d]->tmpsearchtree = tmpcell1;
-                        printf("Mi parent is [%d %d] at depth %i..", tmpcell1->y,tmpcell1->x, tmpcell1->move[d]->tmpdepth[a]);
+                        // printf("Mi parent is [%d %d] at depth %i..", tmpcell1->y,tmpcell1->x, tmpcell1->move[d]->tmpdepth[a]);
                         // getchar();
                         tmpcell1->move[d]->pathlength = tmpcell1->pathlength + 1;
 
                         //   pathlength[a]= abs(tmpcell1->move[d]->x-mazestart1->x)+
                         //   abs(tmpcell1->move[d]->y-mazestart1->y);
 
-                        //     printf("PARENT OF [%d %d] is [%d %d]
+                        //     // printf("PARENT OF [%d %d] is [%d %d]
                         //     ...\n",tmpcell1->move[d]->y,tmpcell1->move[d]->x,
                         //     tmpcell1->y, tmpcell1->x);
 
@@ -1510,7 +1510,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
                                              tmpcell1->move[d]->x][a]) *
                                 BASE -
                             (tempG);
-                        printf(" Adding [%d %d] with f %f to the heap ...\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x,tempG + hvalues[MAZEWIDTH * tmpcell1->move[d]->y + tmpcell1->move[d]->x][a]);
+                        // printf(" Adding [%d %d] with f %f to the heap ...\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x,tempG + hvalues[MAZEWIDTH * tmpcell1->move[d]->y + tmpcell1->move[d]->x][a]);
                         insertheap2(tmpcell1->move[d]);
                     }
                 }
@@ -1526,12 +1526,12 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
         do {
             pasada = pasada + 1;
-            printf("Pasada numero %i ", pasada);
+            // printf("Pasada numero %i ", pasada);
             pathlength[a] =
                 abs(cellpas->x - mazestart1->x) + abs(cellpas->y - mazestart1->y);
 
             pathlength[a] = cellpas->depth[a];
-            printf("\n\nBACKTRACKING PATH of lenght %i for agent %d", pathlength[a], a + 1);
+            // printf("\n\nBACKTRACKING PATH of lenght %i for agent %d", pathlength[a], a + 1);
             realDepth[a] = pathlength[a];
 
             if (pathlength[a] < lookahead) {
@@ -1540,36 +1540,36 @@ int compute_shortestpath_astar(int a, int lookahead) {
                     if (pasada == 1) {
                         idealPath[a][i] = path[a][i];
                     }
-                    printf("\nMarking path[%i][%i] to NULL", a, i);
+                    // printf("\nMarking path[%i][%i] to NULL", a, i);
                 }
             }
 
             lastStepDepth = pathlength[a];
 
             //  path[a][pathlength[a]+1]=NULL;
-            printf("\nTO Cell [%d %d] %i", cellpas->y, cellpas->x, co);
+            // printf("\nTO Cell [%d %d] %i", cellpas->y, cellpas->x, co);
 
             cellpas->trace =
                 NULL; // tracing back a path from the goal back to the start
 
             if ((pathlength[a] > 0) && (co == 0)) {
                 path[a][pathlength[a]] = cellpas;
-                // printf("At [%d %d] at time %i \n", path[a][pathlength[a]]->y,
+                // // printf("At [%d %d] at time %i \n", path[a][pathlength[a]]->y,
                 // path[a][pathlength[a]]->x, pathlength[a]);
                 if (pasada == 1) {
                     idealPath[a][pathlength[a]] = path[a][pathlength[a]];
-                    printf("IDEAL PATH [%d %d] at time %i, degree %i \n",idealPath[a][pathlength[a]]->y,idealPath[a][pathlength[a]]->x, pathlength[a],maze1[idealPath[a][pathlength[a]]->y][idealPath[a][pathlength[a]]->x].degree[a]);
+                    // printf("IDEAL PATH [%d %d] at time %i, degree %i \n",idealPath[a][pathlength[a]]->y,idealPath[a][pathlength[a]]->x, pathlength[a],maze1[idealPath[a][pathlength[a]]->y][idealPath[a][pathlength[a]]->x].degree[a]);
                 }
             }
             // path[a][pathlength[a]]=cellpas;
 
             if (cellpas == mazestart1) {
-                printf("Did I finish backtracking? %i ", pathlength[a]);
+                // printf("Did I finish backtracking? %i ", pathlength[a]);
                 if (pathlength[a] == 1) {
                     for (int b = 2; b <= lookahead; b++) {
                         path[a][b] = path[a][1];                        // NULL; //should enter here when
                                                                         // agent wants to stay here
-                        printf("MY %i nd step is same as before\n", b); // NULL!!\n",
+                        // printf("MY %i nd step is same as before\n", b); // NULL!!\n",
                                                                         // b);
                     }
                 }
@@ -1600,23 +1600,23 @@ int compute_shortestpath_astar(int a, int lookahead) {
                 if ((pathlength[a] > 0) && (co == 0)) {
                     path[a][pathlength[a]] = cellpas;
 
-                    // printf("Att [%d %d] at time %i \n", path[a][pathlength[a]]->y,
+                    // // printf("Att [%d %d] at time %i \n", path[a][pathlength[a]]->y,
                     // path[a][pathlength[a]]->x, pathlength[a]);
                     if (pasada == 1) {
                         idealPath[a][pathlength[a]] = path[a][pathlength[a]];
-                        printf("IDEAL PATH [%d %d] at time %i, degree %i \n",idealPath[a][pathlength[a]]->y,idealPath[a][pathlength[a]]->x, pathlength[a],maze1[idealPath[a][pathlength[a]]->y][idealPath[a][pathlength[a]]->x].degree[a]);
+                        // printf("IDEAL PATH [%d %d] at time %i, degree %i \n",idealPath[a][pathlength[a]]->y,idealPath[a][pathlength[a]]->x, pathlength[a],maze1[idealPath[a][pathlength[a]]->y][idealPath[a][pathlength[a]]->x].degree[a]);
                     }
                 }
             }
-            printf("Nope..");
+            // printf("Nope..");
 
-            printf(" Got to the start:  [%d %d]. \n First move [%d %d]\n",cellpas->y, cellpas->x, mazestart1->trace->y,mazestart1->trace->x);
+            // printf(" Got to the start:  [%d %d]. \n First move [%d %d]\n",cellpas->y, cellpas->x, mazestart1->trace->y,mazestart1->trace->x);
             // path[a][1]=mazestart1->trace;
             // getchar();
             if (path[a][2] != NULL) {
-                printf("Second move [%d %d] ..and  %i\n", path[a][2]->y,path[a][2]->x, pathlength[a]);
+                // printf("Second move [%d %d] ..and  %i\n", path[a][2]->y,path[a][2]->x, pathlength[a]);
             }
-            printf("Checking cell [%d %d]...and [%d %d]", cellpas->y, cellpas->x,mazestart1->trace->y, mazestart1->trace->x);
+            // printf("Checking cell [%d %d]...and [%d %d]", cellpas->y, cellpas->x,mazestart1->trace->y, mazestart1->trace->x);
 
             if (mazestart1->trace != NULL) {
                 if ((mazestart1->trace->blocked[pathlength[a]] != 1) ||
@@ -1626,11 +1626,11 @@ int compute_shortestpath_astar(int a, int lookahead) {
                       1))) //&&(pathlength[a]>0))||((mazestart1->trace->blocked[pathlength[a]]
                            //== 1)&&(pathlength[a]==0)))
                 {
-                    printf(" GOT IT %i \n", flag_success1);
+                    // printf(" GOT IT %i \n", flag_success1);
                     break;
                 }
             } else {
-                printf(" GOT IT %i???? [%d %d]\n", flag_success1, cellpas->y,cellpas->x);
+                // printf(" GOT IT %i???? [%d %d]\n", flag_success1, cellpas->y,cellpas->x);
 
                 if ((cellpas->blocked[pathlength[a]] != 1) ||
                     ((cellpas->blocked[pathlength[a]] == 1) &&
@@ -1638,8 +1638,8 @@ int compute_shortestpath_astar(int a, int lookahead) {
                       mazestart1))) //&&(pathlength[a]>0))||((mazestart1->trace->blocked[pathlength[a]]
                                     //== 1)&&(pathlength[a]==0)))
                 {
-                    printf(" GOT IT %i \n", flag_success1);
-                    printf("PATHLENGHT; %i \n", pathlength[a]);
+                    // printf(" GOT IT %i \n", flag_success1);
+                    // printf("PATHLENGHT; %i \n", pathlength[a]);
                     break;
                 }
             }
@@ -1649,7 +1649,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
    {
 
       do{
-      //	printf("construyendo path :%d agente %d\n",++co,a+1);
+      //	// printf("construyendo path :%d agente %d\n",++co,a+1);
          cellpas->trace = NULL;   // tracing back a path from the goal back to
    the start while(cellpas != mazestart1)
          {
@@ -1663,17 +1663,17 @@ int compute_shortestpath_astar(int a, int lookahead) {
    } */
 
             if (sizeheap2() == 1) {
-                printf(" QUEDA UNOOOOOOOOOOOOO size %i\n", sizeheap2());
+                // printf(" QUEDA UNOOOOOOOOOOOOO size %i\n", sizeheap2());
                 // getchar();
             }
             if (sizeheap2() == 0) {
-                printf(" VACIOOOOO size %i\n", sizeheap2());
+                // printf(" VACIOOOOO size %i\n", sizeheap2());
                 // getchar();
                 return (0);
             }
-            printf(" EN [%d %d] and start is [%d %d]\n", cellpas->y, cellpas->x,mazestart1->y, mazestart1->x);
+            // printf(" EN [%d %d] and start is [%d %d]\n", cellpas->y, cellpas->x,mazestart1->y, mazestart1->x);
             cellpas = popheap2();
-            printf(" PARECE QUE ESTOY BLOQUEADO?? NEXT [%d %d] with depth %i anda ""parent [%d %d]\n",cellpas->y, cellpas->x, cellpas->tmpdepth[a],cellpas->tmpsearchtree[cellpas->tmpdepth[a]]->y,cellpas->tmpsearchtree[cellpas->tmpdepth[a]]->x);
+            // printf(" PARECE QUE ESTOY BLOQUEADO?? NEXT [%d %d] with depth %i anda ""parent [%d %d]\n",cellpas->y, cellpas->x, cellpas->tmpdepth[a],cellpas->tmpsearchtree[cellpas->tmpdepth[a]]->y,cellpas->tmpsearchtree[cellpas->tmpdepth[a]]->x);
             // co=co+1;
             // tmpcell1->searchtree =
             // tmpcell1->tmpsearchtree[tmpcell1->depth[a]];//tmpcell3;
@@ -1698,21 +1698,21 @@ int compute_constraintpath(int a, int lookahead) {
 
     float totalPenalty = 0;
     learningCutoff[a] = lookahead;
-    printf(" COMPUTING FOR %i (%i)!!!\n", a + 1, pathlength[a]);
+    // printf(" COMPUTING FOR %i (%i)!!!\n", a + 1, pathlength[a]);
 
     int formula;
 
-    printf("\n\n**********************\n *********************\n Path lenght of ""this agent...%i now in [%d %d]\n",pathlength[a], position[a]->y, position[a]->x);
+    // printf("\n\n**********************\n *********************\n Path lenght of ""this agent...%i now in [%d %d]\n",pathlength[a], position[a]->y, position[a]->x);
 
     if (position[a]->parent[a] != NULL) {
-        printf("Whose parent is [%d %d]\n", position[a]->parent[a]->y,position[a]->parent[a]->x);
+        // printf("Whose parent is [%d %d]\n", position[a]->parent[a]->y,position[a]->parent[a]->x);
     }
     int limitcell = pathlength[a];
     for (int l = pathlength[a]; l >= 0; --l) {
-        printf("Checking the path at position %i, [%d %d], conflictCost: %.1f, ""degree %i, current limit: %i, mark: %i\n",l, idealPath[a][l]->y, idealPath[a][l]->x,conflictCost[a][idealPath[a][l]->y][idealPath[a][l]->x][l],maze1[idealPath[a][l]->y][idealPath[a][l]->x].degree[a], limitcell,maze1[idealPath[a][l]->y][idealPath[a][l]->x].marked[a][l]);
+        // printf("Checking the path at position %i, [%d %d], conflictCost: %.1f, ""degree %i, current limit: %i, mark: %i\n",l, idealPath[a][l]->y, idealPath[a][l]->x,conflictCost[a][idealPath[a][l]->y][idealPath[a][l]->x][l],maze1[idealPath[a][l]->y][idealPath[a][l]->x].degree[a], limitcell,maze1[idealPath[a][l]->y][idealPath[a][l]->x].marked[a][l]);
 
         if (conflictCost[a][idealPath[a][l]->y][idealPath[a][l]->x][l] > 0.49) {
-            printf("Cannot move here, will violate deference constraints\n");
+            // printf("Cannot move here, will violate deference constraints\n");
             limitcell = l - 1;
 
             maze1[idealPath[a][l]->y][idealPath[a][l]->x].marked[a][l] = 1;
@@ -1728,14 +1728,14 @@ int compute_constraintpath(int a, int lookahead) {
             // as it will have to backtrack. If it is the initial state: backtrack!
             if (l != 0) {
                 limitcell = l - 1;
-                printf("Cannot move here, will NOT violate deference constraints but ""the agent does not have enough mobility, limitcell is %i \n",limitcell);
+                // printf("Cannot move here, will NOT violate deference constraints but ""the agent does not have enough mobility, limitcell is %i \n",limitcell);
                 // need to check the degree of this node, If it is less than 3 we
                 // are in trouble and need to go even further back
 
                 maze1[idealPath[a][l]->y][idealPath[a][l]->x].marked[a][l] = 1;
             } else {
                 limitcell = l;
-                printf("It is here, but will need to BACKTRACK for the step %i\n",l + 1);
+                // printf("It is here, but will need to BACKTRACK for the step %i\n",l + 1);
                 // need to check the degree of this node, If it is less than 3 we
                 // are in trouble and need to go even further back
 
@@ -1756,7 +1756,7 @@ int compute_constraintpath(int a, int lookahead) {
             } else {
                 limitcell = l;
             }
-            printf("Can move here (maybe it is here), but will need to move ""somewhere else for the step %i\n",l + 1);
+            // printf("Can move here (maybe it is here), but will need to move ""somewhere else for the step %i\n",l + 1);
             // need to check the degree of this node, If it is less than 3 we are
             // in trouble and need to go even further back
 
@@ -1766,22 +1766,22 @@ int compute_constraintpath(int a, int lookahead) {
     }
 
     if (limitcell < 0) {
-        printf(" If it gets here it means the agent cannot find a solution\n");
+        // printf(" If it gets here it means the agent cannot find a solution\n");
         // in this case, it should act as a movable object. (IMPLEMENT!!!)
 
-        printf("It may need to bactrack %i moves ", lastMobileCellDist[a]);
+        // printf("It may need to bactrack %i moves ", lastMobileCellDist[a]);
 
         if (lastMobileState[a] != NULL) {
-            printf(" to [%d %d] \n", lastMobileState[a]->y, lastMobileState[a]->x);
+            // printf(" to [%d %d] \n", lastMobileState[a]->y, lastMobileState[a]->x);
         }
 
         return (0);
     }
 
-    printf(" After exploring the ideal path, agent can move max until step %i ""which is cell [%d %d] with degree %i\n",limitcell, idealPath[a][limitcell]->y, idealPath[a][limitcell]->x,maze1[idealPath[a][limitcell]->y][idealPath[a][limitcell]->x].degree[a]);
+    // printf(" After exploring the ideal path, agent can move max until step %i ""which is cell [%d %d] with degree %i\n",limitcell, idealPath[a][limitcell]->y, idealPath[a][limitcell]->x,maze1[idealPath[a][limitcell]->y][idealPath[a][limitcell]->x].degree[a]);
 
     if (limitcell > 0) {
-        printf(" For backtracking purposes, I would need to backtrack to [%d %d]\n",idealPath[a][0]->y, idealPath[a][0]->x);
+        // printf(" For backtracking purposes, I would need to backtrack to [%d %d]\n",idealPath[a][0]->y, idealPath[a][0]->x);
     }
 
     for (int l = 0; l < lookahead; ++l) {
@@ -1791,7 +1791,7 @@ int compute_constraintpath(int a, int lookahead) {
 
     // mazestart1 = position[a]; //Current position
 
-    printf("\nNOTHING HERE...first position in plan: [%d %d] vs [%d %d], second ""[%d %d] ",mazestart1->y, mazestart1->x, position[a]->y, position[a]->x,mazestart1->trace->y, mazestart1->trace->x);
+    // printf("\nNOTHING HERE...first position in plan: [%d %d] vs [%d %d], second ""[%d %d] ",mazestart1->y, mazestart1->x, position[a]->y, position[a]->x,mazestart1->trace->y, mazestart1->trace->x);
 
     // New lookahead: lookahead -limitcell, represents how much should the agent
     // compute If new_lookahead = 0, means that the agent is free to move in its
@@ -1799,43 +1799,43 @@ int compute_constraintpath(int a, int lookahead) {
     // int new_lookahead=lookahead-limitcell;
     int new_lookahead = pathlength[a] - limitcell;
 
-    printf("\n New lookahead %i, real Depth %i ", new_lookahead, realDepth[a]);
+    // printf("\n New lookahead %i, real Depth %i ", new_lookahead, realDepth[a]);
 
-    printf("\n Copying unmodified part of the path:\n");
+    // printf("\n Copying unmodified part of the path:\n");
     for (int l = 0; l <= limitcell; ++l) {
         path[a][l] = idealPath[a][l];
-        printf("Path at step %i is [%d %d] ", l, idealPath[a][l]->y,idealPath[a][l]->x);
-        printf(" and its got trace: ");
+        // printf("Path at step %i is [%d %d] ", l, idealPath[a][l]->y,idealPath[a][l]->x);
+        // printf(" and its got trace: ");
         if (mazestart1->trace != NULL) {
-            printf("YES!!!!\n");
+            // printf("YES!!!!\n");
         } else {
-            printf(" NO :( \n");
+            // printf(" NO :( \n");
         }
     }
 
-    printf("\n1 NOTHING HERE...first position in plan: [%d %d] vs [%d %d], second ""[%d %d] ",mazestart1->y, mazestart1->x, position[a]->y, position[a]->x,mazestart1->trace->y, mazestart1->trace->x);
+    // printf("\n1 NOTHING HERE...first position in plan: [%d %d] vs [%d %d], second ""[%d %d] ",mazestart1->y, mazestart1->x, position[a]->y, position[a]->x,mazestart1->trace->y, mazestart1->trace->x);
 
-    printf("\n2 NOTHING HERE...first position in plan: [%d %d] vs [%d %d], second ""[%d %d] ",mazestart1->y, mazestart1->x, position[a]->y, position[a]->x,mazestart1->trace->y, mazestart1->trace->x);
+    // printf("\n2 NOTHING HERE...first position in plan: [%d %d] vs [%d %d], second ""[%d %d] ",mazestart1->y, mazestart1->x, position[a]->y, position[a]->x,mazestart1->trace->y, mazestart1->trace->x);
 
     if (new_lookahead != 0) // || idealPath[a][limitcell]==goal[a])
     {
         // mazestart1 = position[a]; //Current position
         mazestart1 = idealPath[a][limitcell];
         mazegoal1 = goal[a]; // New position
-        //	printf("a:%d [%d,%d]\n",a, position[a]->y,position[a]->x);
-        printf("HOla\n");
+        //	// printf("a:%d [%d,%d]\n",a, position[a]->y,position[a]->x);
+        // printf("HOla\n");
 
-        printf("\n3 NOTHING HERE...first position in plan: [%d %d] vs [%d %d] ",mazestart1->y, mazestart1->x, position[a]->y, position[a]->x);
+        // printf("\n3 NOTHING HERE...first position in plan: [%d %d] vs [%d %d] ",mazestart1->y, mazestart1->x, position[a]->y, position[a]->x);
 
         mazeiteration1++;
 
-        // printf("\n4 NOTHING HERE...first position in plan: [%d %d] vs [%d %d],
+        // // printf("\n4 NOTHING HERE...first position in plan: [%d %d] vs [%d %d],
         // second [%d %d] ",mazestart1->y, mazestart1->x, position[a]->y,
         // position[a]->x,mazestart1->trace->y,mazestart1->trace->x );
 
         emptyheap2();
 
-        // printf("\n5 NOTHING HERE...first position in plan: [%d %d] vs [%d %d],
+        // // printf("\n5 NOTHING HERE...first position in plan: [%d %d] vs [%d %d],
         // second [%d %d] ",mazestart1->y, mazestart1->x, position[a]->y,
         // position[a]->x,mazestart1->trace->y,mazestart1->trace->x );
 
@@ -1864,15 +1864,15 @@ int compute_constraintpath(int a, int lookahead) {
 
     while ((topheap2() != NULL) && (new_lookahead != 0)) {
         if (cont_closed > 0) {
-            printf("\n****GETTING NEW NODE FROM THE STACK!! ");
-            printf("\nThe previously analyzed node has degree %i ",tmpcell1->degree[a]);
+            // printf("\n****GETTING NEW NODE FROM THE STACK!! ");
+            // printf("\nThe previously analyzed node has degree %i ",tmpcell1->degree[a]);
         }
 
         tmpcell3 = tmpcell1;
         tmpcell1 = topheap2();
 
         if (cont_closed > 0) {
-            printf("\nThe next node to expand is [%d %d] with depth %i (or %i) from ""parent [%d %d] (cont %i)",tmpcell1->y, tmpcell1->x, tmpcell1->tmpdepth[a], newdepth,tmpcell3->y, tmpcell3->x, cont_closed);
+            // printf("\nThe next node to expand is [%d %d] with depth %i (or %i) from ""parent [%d %d] (cont %i)",tmpcell1->y, tmpcell1->x, tmpcell1->tmpdepth[a], newdepth,tmpcell3->y, tmpcell3->x, cont_closed);
 
             if (cont_closed == lookahead) {
                 lastStepDepth = tmpcell1->tmpdepth[a];
@@ -1880,21 +1880,21 @@ int compute_constraintpath(int a, int lookahead) {
             }
 
             if (newdepth != tmpcell1->depth[a]) {
-                printf("Strange..");
+                // printf("Strange..");
                 // getchar();
             }
             tmpcell1->depth[a] = tmpcell1->tmpdepth[a];
             tmpcell1->searchtree =
                 tmpcell1->tmpsearchtree[tmpcell1->depth[a]]; // tmpcell3;
 
-            // printf("The parent of [%d %d] is [%d %d] at depth %i..",
+            // // printf("The parent of [%d %d] is [%d %d] at depth %i..",
             // tmpcell1->y, tmpcell1->x,tmpcell1->searchtree->y,
             // tmpcell1->searchtree->x, tmpcell1->move[d]->depth[a]);
             // getchar();
             // tmpcell1->searchtree = tmpcell1->tmpsearchtree;
         }
 
-        printf("A* top a:%d [%d,%d] It:%lld LA:%d\n",a, tmpcell1->y, tmpcell1->x,mazeiteration1, lookahead);
+        // printf("A* top a:%d [%d,%d] It:%lld LA:%d\n",a, tmpcell1->y, tmpcell1->x,mazeiteration1, lookahead);
 
         // This next block of code (if statement) should not be executed in this
         // path planning, as we do not want to overwrite previously found
@@ -1906,10 +1906,10 @@ int compute_constraintpath(int a, int lookahead) {
 
             f_value =
                 hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a] + tmpcell1->g;
-            printf(" \n\nH value of [%d %d]: %f,", tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a]);
-            printf(" G : %f\n", tmpcell1->g);
+            // printf(" \n\nH value of [%d %d]: %f,", tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a]);
+            // printf(" G : %f\n", tmpcell1->g);
 
-            printf("\nLEARNING NEW HEURISTICS OF FOUND PATH.. %f\n", tmpcell1->g);
+            // printf("\nLEARNING NEW HEURISTICS OF FOUND PATH.. %f\n", tmpcell1->g);
             cellpas = tmpcell1;
             for (d = 0; d < cont_closed; d++) {
                 // hvalues[MAZEWIDTH*CLOSED[d]->y + CLOSED[d]->x][a] =
@@ -1917,15 +1917,15 @@ int compute_constraintpath(int a, int lookahead) {
                 // CLOSED[d]->g);
 
                 // max(CLOSED[d]->h,f_value - CLOSED[d]->g);
-                printf("Updating H of [%d %d] = %.1f, d: %i, size %i \n",CLOSED[d]->y, CLOSED[d]->x,hvalues[MAZEWIDTH * CLOSED[d]->y + CLOSED[d]->x][a], d,sizeheap2());
+                // printf("Updating H of [%d %d] = %.1f, d: %i, size %i \n",CLOSED[d]->y, CLOSED[d]->x,hvalues[MAZEWIDTH * CLOSED[d]->y + CLOSED[d]->x][a], d,sizeheap2());
             }
 
-            printf(" Final destination : [%d %d]", cellpas->y, cellpas->x);
+            // printf(" Final destination : [%d %d]", cellpas->y, cellpas->x);
             // getchar();
 
             flag_success1 = 1;
             tmpcell1 = popheap2();
-            printf("\n(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:%d [%d,%d] ""\n",a, tmpcell1->y, tmpcell1->x);
+            // printf("\n(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:%d [%d,%d] ""\n",a, tmpcell1->y, tmpcell1->x);
             break;
         }
 
@@ -1946,16 +1946,16 @@ int compute_constraintpath(int a, int lookahead) {
 
         statexpanded1++;
         if (cont_closed > 1) {
-            printf("\n\n******From Cell [%d %d] at time %i, H: %.1f, degree: %i\n ",tmpcell1->y, tmpcell1->x, tmpcell1->depth[a],hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a],tmpcell1->degree[a]);
+            // printf("\n\n******From Cell [%d %d] at time %i, H: %.1f, degree: %i\n ",tmpcell1->y, tmpcell1->x, tmpcell1->depth[a],hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a],tmpcell1->degree[a]);
         }
 
         if (cont_closed == 1) {
-            printf("\n\n******From Cell [%d %d] at time 0, H: %.1f, degree: %i\n ",tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a],tmpcell1->degree[a]);
+            // printf("\n\n******From Cell [%d %d] at time 0, H: %.1f, degree: %i\n ",tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a],tmpcell1->degree[a]);
         }
         newdepth = tmpcell1->depth[a] + 1;
         ++agent_expansions[a];
 
-        // printf("MaxSim: %.1f ", maxSimil);
+        // // printf("MaxSim: %.1f ", maxSimil);
 
         // Previous code
         /*  d = random() % DIRECTIONS;
@@ -1966,7 +1966,7 @@ int compute_constraintpath(int a, int lookahead) {
       tmpcell1->move[d]->overexpanded != mazeiteration1)
          {
             initialize_state(tmpcell1->move[d]);
-      //        printf("A* generation a:%d [%d,%d] %d\n",a,
+      //        // printf("A* generation a:%d [%d,%d] %d\n",a,
       tmpcell1->move[d]->y,tmpcell1->move[d]->x, d); if(tmpcell1->move[d]->g >
       tmpcell1->g + tmpcell1->cost[d])
             {
@@ -1986,9 +1986,9 @@ int compute_constraintpath(int a, int lookahead) {
         d = rand() % DIRECTIONS;
         for (i = 0; i < DIRECTIONS; ++i) {
             if (tmpcell1->move[d]) {
-                printf("\n********************************************************");
-                printf("\nThinking about moving to [%d %d]..whose ConflictCost is ""%.1f\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x,conflictCost[a][tmpcell1->move[d]->y][tmpcell1->move[d]->x][pathlength[a]]);
-                printf("****\nPROSPECTIVE NODE [%d %d] is at time/depth %i..is it ""MARKED? %i\n ******",tmpcell1->move[d]->y, tmpcell1->move[d]->x, newdepth,maze1[tmpcell1->move[d]->y][tmpcell1->move[d]->x].marked[a][newdepth]);
+                // printf("\n********************************************************");
+                // printf("\nThinking about moving to [%d %d]..whose ConflictCost is ""%.1f\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x,conflictCost[a][tmpcell1->move[d]->y][tmpcell1->move[d]->x][pathlength[a]]);
+                // printf("****\nPROSPECTIVE NODE [%d %d] is at time/depth %i..is it ""MARKED? %i\n ******",tmpcell1->move[d]->y, tmpcell1->move[d]->x, newdepth,maze1[tmpcell1->move[d]->y][tmpcell1->move[d]->x].marked[a][newdepth]);
                 // tmpcell1->move[d]->depth[a],
                 // maze1[tmpcell1->move[d]->y][tmpcell1->move[d]->x].marked[a][tmpcell1->move[d]->depth[a]])
                 // ;
@@ -1996,13 +1996,13 @@ int compute_constraintpath(int a, int lookahead) {
                 // tmpcell1->degree[a]=tmpcell1->degree[a]+1;
 
                 if (tmpcell1->degree[a] >= 3) {
-                    printf("\nThis node has degree greater than 3!!! it can help me ""swap with other agents\n");
+                    // printf("\nThis node has degree greater than 3!!! it can help me ""swap with other agents\n");
                     // Need to store this cell somewhere as a failsafe
                 }
 
             } else {
-                // printf("\nDirection..%i\n", i);
-                // printf("It REALLY is blocked by obstacle\n" );
+                // // printf("\nDirection..%i\n", i);
+                // // printf("It REALLY is blocked by obstacle\n" );
             }
 
             if (tmpcell1->move[d] && (!tmpcell1->move[d]->obstacle) &&
@@ -2012,7 +2012,7 @@ int compute_constraintpath(int a, int lookahead) {
                                              // mazeiteration1)
             {
                 initialize_state(tmpcell1->move[d]);
-                printf("\nA* generation a:%d [%d,%d] from [%d %d], %.1f >= %.1f   ",a, tmpcell1->move[d]->y, tmpcell1->move[d]->x, tmpcell1->y,tmpcell1->x, tmpcell1->move[d]->g,tmpcell1->g + tmpcell1->cost[d]);
+                // printf("\nA* generation a:%d [%d,%d] from [%d %d], %.1f >= %.1f   ",a, tmpcell1->move[d]->y, tmpcell1->move[d]->x, tmpcell1->y,tmpcell1->x, tmpcell1->move[d]->g,tmpcell1->g + tmpcell1->cost[d]);
 
                 float goaldirX = ((float)goal[a]->x - (tmpcell1->x));
                 float goaldirY = ((float)goal[a]->y - (tmpcell1->y));
@@ -2037,10 +2037,10 @@ int compute_constraintpath(int a, int lookahead) {
                 {
                     tmpcell1->move[d]->tmpdepth[a] = newdepth;
                     pathlength[a] = tmpcell1->move[d]->tmpdepth[a];
-                    // printf("\nThinking about moving to [%d %d]..\n",
+                    // // printf("\nThinking about moving to [%d %d]..\n",
                     // tmpcell1->move[d]->y,tmpcell1->move[d]->x);
-                    printf("***INCREASING PATHLENGTH to %i !!\n", pathlength[a]);
-                    printf("\nThinking about moving to [%d %d] in my pathlength %i..\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x, pathlength[a]);
+                    // printf("***INCREASING PATHLENGTH to %i !!\n", pathlength[a]);
+                    // printf("\nThinking about moving to [%d %d] in my pathlength %i..\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x, pathlength[a]);
                     tmpcell1->move[d]->g_backup = (tmpcell1->g + tmpcell1->cost[d]);
                     tmpcell1->move[d]->g = (tmpcell1->g + tmpcell1->cost[d]);
 
@@ -2053,9 +2053,9 @@ int compute_constraintpath(int a, int lookahead) {
                     for (int future = pathlength[a]; future < lookahead; ++future) {
                         if (maze1[tmpcell1->move[d]->y][tmpcell1->move[d]->x]
                                 .blockedAgent[a][future]) {
-                            printf("Staying here will bring me trouble at t %i!!\n",future);
+                            // printf("Staying here will bring me trouble at t %i!!\n",future);
                             // conflictCost[a][currentCell->y][currentCell->x][step]=(float)1/(float)(future-step+2);
-                            printf("QUICK SCORE: %f",conflictCost[a][tmpcell1->move[d]->y][tmpcell1->move[d]->x][pathlength[a]]); //(float)1/(float)(future-pathlength[a]+2));
+                            // printf("QUICK SCORE: %f",conflictCost[a][tmpcell1->move[d]->y][tmpcell1->move[d]->x][pathlength[a]]); //(float)1/(float)(future-pathlength[a]+2));
                         }
                     }
 
@@ -2065,7 +2065,7 @@ int compute_constraintpath(int a, int lookahead) {
                              .blockedAgent[a][pathlength[a]]) &&
                         (pathlength[a] > 0)) // Another agent wants to move here
                     {
-                        printf("\n\n****FUTURE At %i another agent WOULD LIKE TO MOVE ""to [%d %d], but who??\n",pathlength[a], tmpcell1->move[d]->y,tmpcell1->move[d]->x); // cont_closed
+                        // printf("\n\n****FUTURE At %i another agent WOULD LIKE TO MOVE ""to [%d %d], but who??\n",pathlength[a], tmpcell1->move[d]->y,tmpcell1->move[d]->x); // cont_closed
 
                         int numConflicts = 0;
                         float maxH = backupH
@@ -2080,7 +2080,7 @@ int compute_constraintpath(int a, int lookahead) {
                         for (int j = 0; j < NAGENTS; ++j) {
                             if (maze1[tmpcell1->move[d]->y][tmpcell1->move[d]->x]
                                     .agentMovingTo[a][pathlength[a]][j] > 0) {
-                                printf("This guy -> %i  (total %i) inGoal?: %i or ""(%f-%i)=%f \n",j + 1, numConflicts, goal_reached[j],hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j],pathlength[a],(hvalues[MAZEWIDTH * position[j]->y +position[j]->x][j] -pathlength[a]));
+                                // printf("This guy -> %i  (total %i) inGoal?: %i or ""(%f-%i)=%f \n",j + 1, numConflicts, goal_reached[j],hvalues[MAZEWIDTH * position[j]->y + position[j]->x][j],pathlength[a],(hvalues[MAZEWIDTH * position[j]->y +position[j]->x][j] -pathlength[a]));
                                 if ((goal_reached[j]) ||
                                     ((hvalues[MAZEWIDTH * position[j]->y +
                                               position[j]->x][j] -
@@ -2089,11 +2089,11 @@ int compute_constraintpath(int a, int lookahead) {
                                     continue;
                                 }
                                 numConflicts++;
-                                printf("This guy -> %i  (total %i) inGoal?: %i \n",j + 1, numConflicts, goal_reached[j]);
-                                printf("His previous position at [%d %d] had a degree of ""%i \n",path[j][pathlength[a]]->y,path[j][pathlength[a]]->x,maze1[path[j][pathlength[a]]->y][path[j][pathlength[a]]->x].degree[j]);
-                                printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
+                                // printf("This guy -> %i  (total %i) inGoal?: %i \n",j + 1, numConflicts, goal_reached[j]);
+                                // printf("His previous position at [%d %d] had a degree of ""%i \n",path[j][pathlength[a]]->y,path[j][pathlength[a]]->x,maze1[path[j][pathlength[a]]->y][path[j][pathlength[a]]->x].degree[j]);
+                                // printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
                                 if (conflictType[a][j] == 0) {
-                                    printf(" POINT conflict, my cost: %i vs his :%i \n",(int)(hvalues[MAZEWIDTH * position[a]->y +position[a]->x][a]) +2,(int)(hvalues[MAZEWIDTH * position[j]->y +position[j]->x][j]) +1);
+                                    // printf(" POINT conflict, my cost: %i vs his :%i \n",(int)(hvalues[MAZEWIDTH * position[a]->y +position[a]->x][a]) +2,(int)(hvalues[MAZEWIDTH * position[j]->y +position[j]->x][j]) +1);
 
                                     if ((int)(hvalues[MAZEWIDTH * position[j]->y +
                                                       position[j]->x][j]) +
@@ -2106,23 +2106,23 @@ int compute_constraintpath(int a, int lookahead) {
                                 }
 
                                 if (conflictType[a][j] == 1) {
-                                    printf(" PATH conflict\n");
+                                    // printf(" PATH conflict\n");
                                     if (formula < agentInfo[j]) {
                                         maxInfo = j;
                                     }
                                 }
-                                printf("And his path is \n");
+                                // printf("And his path is \n");
 
                                 for (int l = 1; l <= lookahead; l++) {
                                     if ((a != j) && (path[j][l] != NULL)) {
-                                        printf("Agent %i: [%d %d], H: %.1f, step %i \n",j + 1, path[j][l]->y, path[j][l]->x,hvalues[MAZEWIDTH * position[j]->y +position[j]->x][j],l);
+                                        // printf("Agent %i: [%d %d], H: %.1f, step %i \n",j + 1, path[j][l]->y, path[j][l]->x,hvalues[MAZEWIDTH * position[j]->y +position[j]->x][j],l);
 
                                         if ((position[a]->y == path[j][l]->y) &&
                                             (position[a]->x == path[j][l]->x)) {
                                             // conflictsPosition++;
                                             position[a]->numConflicts[a] =
                                                 numConflicts; // position[a]->numConflicts[a]+1;
-                                            printf("COops! might need to move, total ""conflicts: %i \n",position[a]->numConflicts[a]);
+                                            // printf("COops! might need to move, total ""conflicts: %i \n",position[a]->numConflicts[a]);
                                         }
 
                                         if (hvalues[MAZEWIDTH * position[j]->y +
@@ -2135,12 +2135,12 @@ int compute_constraintpath(int a, int lookahead) {
 
                                 // getchar();
 
-                                printf(" with H of %.1f, (%.1f)  vs ",hvalues[MAZEWIDTH * (tmpcell1->move[d]->y) +(tmpcell1->move[d]->x)][j],hvalues[MAZEWIDTH * (position[j]->y) +(position[j]->x)][j]);
+                                // printf(" with H of %.1f, (%.1f)  vs ",hvalues[MAZEWIDTH * (tmpcell1->move[d]->y) +(tmpcell1->move[d]->x)][j],hvalues[MAZEWIDTH * (position[j]->y) +(position[j]->x)][j]);
 
-                                printf(" my H of %.1f, (%.1f) ",hvalues[MAZEWIDTH * (tmpcell1->move[d]->y) +(tmpcell1->move[d]->x)][a],hvalues[MAZEWIDTH * (position[a]->y) +(position[a]->x)][a]); //[MAZEWIDTH*(tmpcell1->y) +//(tmpcell1->x)][a]);
+                                // printf(" my H of %.1f, (%.1f) ",hvalues[MAZEWIDTH * (tmpcell1->move[d]->y) +(tmpcell1->move[d]->x)][a],hvalues[MAZEWIDTH * (position[a]->y) +(position[a]->x)][a]); //[MAZEWIDTH*(tmpcell1->y) +//(tmpcell1->x)][a]);
                                 sumH = sumH + backupH[MAZEWIDTH * (tmpcell1->move[d]->y) +
                                                    (tmpcell1->move[d]->x)][j];
-                                printf(", SumH is %f \n", sumH);
+                                // printf(", SumH is %f \n", sumH);
 
                                 if ((hvalues[MAZEWIDTH * (position[j]->y) +
                                              (position[j]->x)][j] > maxH)) {
@@ -2150,11 +2150,11 @@ int compute_constraintpath(int a, int lookahead) {
                                 }
                             }
                         }
-                        printf("The Agent with MAX H, whose H changes by my movement  ""is %i ",maxHagent + 1);
-                        printf(" with H of %f \n", maxH);
+                        // printf("The Agent with MAX H, whose H changes by my movement  ""is %i ",maxHagent + 1);
+                        // printf(" with H of %f \n", maxH);
                     }
 
-                    // printf(" Bloqueado? %i pathlength %i goal reached %i (agent
+                    // // printf(" Bloqueado? %i pathlength %i goal reached %i (agent
                     // %i) ",
                     // maze1[tmpcell1->move[d]->y][tmpcell1->move[d]->x].blockedAgent[a][0],pathlength[a],goal_reached[i],i+1);
                     int canmovehere = 1;
@@ -2162,14 +2162,14 @@ int compute_constraintpath(int a, int lookahead) {
                         if ((tmpcell1->move[d]->x == position[u]->x) &&
                             (tmpcell1->move[d]->y == position[u]->y) &&
                             (pathlength[a] == 1) && (u != a)) {
-                            printf("\nOps, agent %i is at the next position position, is ""it its goal?..",u + 1);
+                            // printf("\nOps, agent %i is at the next position position, is ""it its goal?..",u + 1);
 
                             if ((goal[u]->y == position[u]->y) &&
                                 (goal[u]->x == position[u]->x)) {
-                                printf("\nYES, I can move through");
+                                // printf("\nYES, I can move through");
 
                             } else {
-                                printf("\n No, Cant move here\n");
+                                // printf("\n No, Cant move here\n");
                                 canmovehere = 0;
                             }
                         }
@@ -2180,7 +2180,7 @@ int compute_constraintpath(int a, int lookahead) {
                          (pathlength[a] == 1)) &&
                         (!canmovehere)) // Another agent IS here (first step)
                     {
-                        printf("\n****At %i Cant move to [%d %d], there is an agent\n",pathlength[a], tmpcell1->move[d]->y,tmpcell1->move[d]->x);
+                        // printf("\n****At %i Cant move to [%d %d], there is an agent\n",pathlength[a], tmpcell1->move[d]->y,tmpcell1->move[d]->x);
 
                         learningCutoff[a] = pathlength[a] - 1;
 
@@ -2189,7 +2189,7 @@ int compute_constraintpath(int a, int lookahead) {
                                 (tmpcell1->move[d]->x == position[j]->x)) {
                                 (tmpcell1->move[d])->numConflicts[a] =
                                     (tmpcell1->move[d])->numConflicts[a] + 1;
-                                printf("This guy -> %i, total conflicts %i \n", j + 1,(tmpcell1->move[d])->numConflicts[a]);
+                                // printf("This guy -> %i, total conflicts %i \n", j + 1,(tmpcell1->move[d])->numConflicts[a]);
                                 maxInfo = j;
                             }
                         }
@@ -2203,7 +2203,7 @@ int compute_constraintpath(int a, int lookahead) {
                         (pathlength[a] >
                          1)) // Another agent might ALREADY be here (> first step)
                     {
-                        printf("****At %i MIGHT NOT BE ABLE to move to [%d %d], there ""MIGHT ALREADY BE an agent\n",pathlength[a] - 1, tmpcell1->move[d]->y,tmpcell1->move[d]->x);
+                        // printf("****At %i MIGHT NOT BE ABLE to move to [%d %d], there ""MIGHT ALREADY BE an agent\n",pathlength[a] - 1, tmpcell1->move[d]->y,tmpcell1->move[d]->x);
 
                         int numConflicts = 0;
                         float maxH = backupH
@@ -2219,24 +2219,24 @@ int compute_constraintpath(int a, int lookahead) {
                             if (maze1[tmpcell1->move[d]->y][tmpcell1->move[d]->x]
                                     .agentMovingTo[a][pathlength[a] - 1][j] > 0) {
                                 numConflicts++;
-                                printf("This guy -> %i  (total %i)", j + 1,numConflicts);
+                                // printf("This guy -> %i  (total %i)", j + 1,numConflicts);
 
                                 // getchar();
 
-                                printf(" with H of %.1f, (%.1f)  vs ",hvalues[MAZEWIDTH * (tmpcell1->move[d]->y) +(tmpcell1->move[d]->x)][j],hvalues[MAZEWIDTH * (position[j]->y) +(position[j]->x)][j]);
+                                // printf(" with H of %.1f, (%.1f)  vs ",hvalues[MAZEWIDTH * (tmpcell1->move[d]->y) +(tmpcell1->move[d]->x)][j],hvalues[MAZEWIDTH * (position[j]->y) +(position[j]->x)][j]);
 
-                                printf(" my H of %.1f, (%.1f) ",hvalues[MAZEWIDTH * (tmpcell1->move[d]->y) +(tmpcell1->move[d]->x)][a],hvalues[MAZEWIDTH * (position[a]->y) +(position[a]->x)][a]); //[MAZEWIDTH*(tmpcell1->y) +
+                                // printf(" my H of %.1f, (%.1f) ",hvalues[MAZEWIDTH * (tmpcell1->move[d]->y) +(tmpcell1->move[d]->x)][a],hvalues[MAZEWIDTH * (position[a]->y) +(position[a]->x)][a]); //[MAZEWIDTH*(tmpcell1->y) +
                                                     //(tmpcell1->x)][a]);
                                 sumH =
                                     sumH + backupH[MAZEWIDTH * (tmpcell1->move[d]->y) +
                                                    (tmpcell1->move[d]->x)][j];
-                                printf(", SumH is %f \n", sumH);
+                                // printf(", SumH is %f \n", sumH);
 
                                 // Copied from above
-                                printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
+                                // printf("My info %i vs other agent's info %i \n",formula, agentInfo[j]);
 
                                 if (conflictType[a][j] == 0) {
-                                    printf(" POINT conflict, my cost :  %i vs his :%i \n",(int)(hvalues[MAZEWIDTH * position[a]->y +position[a]->x][a]) +2,(int)(hvalues[MAZEWIDTH * position[j]->y +position[j]->x][j]) +1);
+                                    // printf(" POINT conflict, my cost :  %i vs his :%i \n",(int)(hvalues[MAZEWIDTH * position[a]->y +position[a]->x][a]) +2,(int)(hvalues[MAZEWIDTH * position[j]->y +position[j]->x][j]) +1);
 
                                     if ((int)(hvalues[MAZEWIDTH * position[j]->y +
                                                       position[j]->x][j]) +
@@ -2245,15 +2245,15 @@ int compute_constraintpath(int a, int lookahead) {
                                                       position[a]->x][a]) +
                                             2) {
                                         maxInfo = j;
-                                        printf(" MaxInfo: %i\n", maxInfo);
+                                        // printf(" MaxInfo: %i\n", maxInfo);
                                     }
                                 }
 
                                 if (conflictType[a][j] == 1) {
-                                    printf(" PATH conflict\n");
+                                    // printf(" PATH conflict\n");
                                     if (formula < agentInfo[j]) {
                                         maxInfo = j;
-                                        printf(" MaxInfo: %i\n", maxInfo + 1);
+                                        // printf(" MaxInfo: %i\n", maxInfo + 1);
                                     }
                                 }
 
@@ -2267,8 +2267,8 @@ int compute_constraintpath(int a, int lookahead) {
                                 }
                             }
                         }
-                        printf("The Agent with MAX H, whose H changes by my movement  ""is %i ",maxHagent + 1);
-                        printf(" with H of %f \n", maxH);
+                        // printf("The Agent with MAX H, whose H changes by my movement  ""is %i ",maxHagent + 1);
+                        // printf(" with H of %f \n", maxH);
                     }
 
                     // After these three checks, we can see if agent can consider
@@ -2276,23 +2276,23 @@ int compute_constraintpath(int a, int lookahead) {
 
                     if (0) //(maxInfo!=a)//(maxHagent!=a)
                     {
-                        printf(" I DONT have the max H, I defer to the other agent, ""cutoff at %i \n",pathlength[a] - 1);
+                        // printf(" I DONT have the max H, I defer to the other agent, ""cutoff at %i \n",pathlength[a] - 1);
                         learningCutoff[a] = pathlength[a] - 1;
 
                         // getchar();
                     } else {
-                        printf("[%d %d] G es %.1f +", tmpcell1->move[d]->y,tmpcell1->move[d]->x, tmpcell1->move[d]->g);
-                        printf(" H  es %f, ",hvalues[MAZEWIDTH * tmpcell1->move[d]->y +tmpcell1->move[d]->x][a]);
-                        printf(" F es %f\n",tmpcell1->move[d]->g +hvalues[MAZEWIDTH * tmpcell1->move[d]->y +tmpcell1->move[d]->x][a]);
+                        // printf("[%d %d] G es %.1f +", tmpcell1->move[d]->y,tmpcell1->move[d]->x, tmpcell1->move[d]->g);
+                        // printf(" H  es %f, ",hvalues[MAZEWIDTH * tmpcell1->move[d]->y +tmpcell1->move[d]->x][a]);
+                        // printf(" F es %f\n",tmpcell1->move[d]->g +hvalues[MAZEWIDTH * tmpcell1->move[d]->y +tmpcell1->move[d]->x][a]);
                         //   getchar();
 
                         for (int j = 0; j < NAGENTS; ++j) {
                             if (canSee[a][j] > 0) {
-                                /*   printf("CAN SEEE %i \n", j+1);
-               printf("The heuristic of my neighbor %i is %f " ,
+                                /*   // printf("CAN SEEE %i \n", j+1);
+               // printf("The heuristic of my neighbor %i is %f " ,
                j+1,hvalues[MAZEWIDTH*position[j]->y + position[j]->x][j]);
-               printf(" and mine at [%d %d] is ",tmpcell1->y,tmpcell1->x);
-               printf(" %f \n" ,hvalues[MAZEWIDTH*tmpcell1->y + tmpcell1->x][a]
+               // printf(" and mine at [%d %d] is ",tmpcell1->y,tmpcell1->x);
+               // printf(" %f \n" ,hvalues[MAZEWIDTH*tmpcell1->y + tmpcell1->x][a]
                );
               */
                                 if (hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a] <
@@ -2306,14 +2306,14 @@ int compute_constraintpath(int a, int lookahead) {
                             tmpcell1;
 
                         // tmpcell1->move[d]->tmpsearchtree = tmpcell1;
-                        printf("Mi parent is [%d %d] at depth %i..", tmpcell1->y,tmpcell1->x, tmpcell1->move[d]->tmpdepth[a]);
+                        // printf("Mi parent is [%d %d] at depth %i..", tmpcell1->y,tmpcell1->x, tmpcell1->move[d]->tmpdepth[a]);
                         // getchar();
                         tmpcell1->move[d]->pathlength = tmpcell1->pathlength + 1;
 
                         //   pathlength[a]= abs(tmpcell1->move[d]->x-mazestart1->x)+
                         //   abs(tmpcell1->move[d]->y-mazestart1->y);
 
-                        //     printf("PARENT OF [%d %d] is [%d %d]
+                        //     // printf("PARENT OF [%d %d] is [%d %d]
                         //     ...\n",tmpcell1->move[d]->y,tmpcell1->move[d]->x,
                         //     tmpcell1->y, tmpcell1->x);
 
@@ -2340,7 +2340,7 @@ int compute_constraintpath(int a, int lookahead) {
                                              tmpcell1->move[d]->x][a]) *
                                 BASE -
                             (tempG);
-                        printf(" Adding [%d %d] with f %f to the heap ...\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x,tempG + hvalues[MAZEWIDTH * tmpcell1->move[d]->y +tmpcell1->move[d]->x][a]);
+                        // printf(" Adding [%d %d] with f %f to the heap ...\n",tmpcell1->move[d]->y, tmpcell1->move[d]->x,tempG + hvalues[MAZEWIDTH * tmpcell1->move[d]->y +tmpcell1->move[d]->x][a]);
                         insertheap2(tmpcell1->move[d]);
                     }
                 }
@@ -2354,12 +2354,12 @@ int compute_constraintpath(int a, int lookahead) {
     if ((flag_success1 == 1) && (new_lookahead != 0)) {
         do {
             pasada = pasada + 1;
-            printf("Pasada numero %i ", pasada);
+            // printf("Pasada numero %i ", pasada);
             pathlength[a] =
                 abs(cellpas->x - mazestart1->x) + abs(cellpas->y - mazestart1->y);
 
             pathlength[a] = cellpas->depth[a];
-            printf("\n\nBACKTRACKING PATH of lenght %i for agent %d",pathlength[a], a + 1);
+            // printf("\n\nBACKTRACKING PATH of lenght %i for agent %d",pathlength[a], a + 1);
             realDepth[a] = pathlength[a];
 
             if (pathlength[a] < lookahead) {
@@ -2369,21 +2369,21 @@ int compute_constraintpath(int a, int lookahead) {
                         // idealPath[a][i]=path[a][i];
                     }
 
-                    printf("\nMarking path[%i][%i] to NULL", a, i);
+                    // printf("\nMarking path[%i][%i] to NULL", a, i);
                 }
             }
 
             lastStepDepth = pathlength[a];
 
             //  path[a][pathlength[a]+1]=NULL;
-            printf("\nTO Cell [%d %d] %i", cellpas->y, cellpas->x, co);
+            // printf("\nTO Cell [%d %d] %i", cellpas->y, cellpas->x, co);
 
             cellpas->trace =
                 NULL; // tracing back a path from the goal back to the start
 
             if ((pathlength[a] > 0) && (co == 0)) {
                 path[a][pathlength[a]] = cellpas;
-                printf("At [%d %d] at time %i \n", path[a][pathlength[a]]->y,path[a][pathlength[a]]->x, pathlength[a]);
+                // printf("At [%d %d] at time %i \n", path[a][pathlength[a]]->y,path[a][pathlength[a]]->x, pathlength[a]);
                 if (pasada == 1) {
                     // idealPath[a][pathlength[a]]=path[a][pathlength[a]];
                 }
@@ -2391,12 +2391,12 @@ int compute_constraintpath(int a, int lookahead) {
             // path[a][pathlength[a]]=cellpas;
 
             if (cellpas == mazestart1) {
-                printf("Did I finish backtracking? %i ", pathlength[a]);
+                // printf("Did I finish backtracking? %i ", pathlength[a]);
                 if (pathlength[a] == 1) {
                     for (int b = 2; b <= lookahead; b++) {
                         path[a][b] = path[a][1];                        // NULL; //should enter here when
                                                                         // agent wants to stay here
-                        printf("MY %i nd step is same as before\n", b); // NULL!!\n",
+                        // printf("MY %i nd step is same as before\n", b); // NULL!!\n",
                                                                         // b);
                     }
                 }
@@ -2427,21 +2427,21 @@ int compute_constraintpath(int a, int lookahead) {
                 if ((pathlength[a] > 0) && (co == 0)) {
                     path[a][pathlength[a]] = cellpas;
 
-                    printf("Att [%d %d] at time %i \n", path[a][pathlength[a]]->y,path[a][pathlength[a]]->x, pathlength[a]);
+                    // printf("Att [%d %d] at time %i \n", path[a][pathlength[a]]->y,path[a][pathlength[a]]->x, pathlength[a]);
                     if (pasada == 1) {
                         // idealPath[a][pathlength[a]]=path[a][pathlength[a]];
                     }
                 }
             }
-            printf("Nope..");
+            // printf("Nope..");
 
-            printf(" Got to the start:  [%d %d]. \n First move [%d %d]\n",cellpas->y, cellpas->x, mazestart1->trace->y,mazestart1->trace->x);
+            // printf(" Got to the start:  [%d %d]. \n First move [%d %d]\n",cellpas->y, cellpas->x, mazestart1->trace->y,mazestart1->trace->x);
             // path[a][1]=mazestart1->trace;
             // getchar();
             if (path[a][2] != NULL) {
-                printf("Second move [%d %d] ..and  %i\n", path[a][2]->y,path[a][2]->x, pathlength[a]);
+                // printf("Second move [%d %d] ..and  %i\n", path[a][2]->y,path[a][2]->x, pathlength[a]);
             }
-            printf("Checking cell [%d %d]...and [%d %d]", cellpas->y, cellpas->x,mazestart1->trace->y, mazestart1->trace->x);
+            // printf("Checking cell [%d %d]...and [%d %d]", cellpas->y, cellpas->x,mazestart1->trace->y, mazestart1->trace->x);
 
             if (mazestart1->trace != NULL) {
                 if ((mazestart1->trace->blocked[pathlength[a]] != 1) ||
@@ -2451,11 +2451,11 @@ int compute_constraintpath(int a, int lookahead) {
                       1))) //&&(pathlength[a]>0))||((mazestart1->trace->blocked[pathlength[a]]
                            //== 1)&&(pathlength[a]==0)))
                 {
-                    printf(" GOT IT %i \n", flag_success1);
+                    // printf(" GOT IT %i \n", flag_success1);
                     break;
                 }
             } else {
-                printf(" GOT IT %i???? [%d %d]\n", flag_success1, cellpas->y,cellpas->x);
+                // printf(" GOT IT %i???? [%d %d]\n", flag_success1, cellpas->y,cellpas->x);
 
                 if ((cellpas->blocked[pathlength[a]] != 1) ||
                     ((cellpas->blocked[pathlength[a]] == 1) &&
@@ -2463,8 +2463,8 @@ int compute_constraintpath(int a, int lookahead) {
                       mazestart1))) //&&(pathlength[a]>0))||((mazestart1->trace->blocked[pathlength[a]]
                                     //== 1)&&(pathlength[a]==0)))
                 {
-                    printf(" GOT IT %i \n", flag_success1);
-                    printf("PATHLENGHT; %i \n", pathlength[a]);
+                    // printf(" GOT IT %i \n", flag_success1);
+                    // printf("PATHLENGHT; %i \n", pathlength[a]);
                     break;
                 }
             }
@@ -2474,7 +2474,7 @@ int compute_constraintpath(int a, int lookahead) {
    {
 
       do{
-      //	printf("construyendo path :%d agente %d\n",++co,a+1);
+      //	// printf("construyendo path :%d agente %d\n",++co,a+1);
          cellpas->trace = NULL;   // tracing back a path from the goal back to
    the start while(cellpas != mazestart1)
          {
@@ -2488,17 +2488,17 @@ int compute_constraintpath(int a, int lookahead) {
    } */
 
             if (sizeheap2() == 1) {
-                printf(" QUEDA UNOOOOOOOOOOOOO size %i\n", sizeheap2());
+                // printf(" QUEDA UNOOOOOOOOOOOOO size %i\n", sizeheap2());
                 // getchar();
             }
             if (sizeheap2() == 0) {
-                printf(" VACIOOOOO size %i\n", sizeheap2());
+                // printf(" VACIOOOOO size %i\n", sizeheap2());
                 // getchar();
                 return (0);
             }
-            printf(" EN [%d %d] and start is [%d %d]\n", cellpas->y, cellpas->x,mazestart1->y, mazestart1->x);
+            // printf(" EN [%d %d] and start is [%d %d]\n", cellpas->y, cellpas->x,mazestart1->y, mazestart1->x);
             cellpas = popheap2();
-            printf(" PARECE QUE ESTOY BLOQUEADO?? NEXT [%d %d] with depth %i anda ""parent [%d %d]\n",cellpas->y, cellpas->x, cellpas->tmpdepth[a],cellpas->tmpsearchtree[cellpas->tmpdepth[a]]->y,cellpas->tmpsearchtree[cellpas->tmpdepth[a]]->x);
+            // printf(" PARECE QUE ESTOY BLOQUEADO?? NEXT [%d %d] with depth %i anda ""parent [%d %d]\n",cellpas->y, cellpas->x, cellpas->tmpdepth[a],cellpas->tmpsearchtree[cellpas->tmpdepth[a]]->y,cellpas->tmpsearchtree[cellpas->tmpdepth[a]]->x);
             // co=co+1;
             // tmpcell1->searchtree =
             // tmpcell1->tmpsearchtree[tmpcell1->depth[a]];//tmpcell3;
@@ -2513,7 +2513,7 @@ int compute_constraintpath(int a, int lookahead) {
 }
 
 void observe_new_agents(
-    int a, int i, int lookahead) { // printf(" seen at [%d %d] ",
+    int a, int i, int lookahead) { // // printf(" seen at [%d %d] ",
                                    // track[a][i][0][1],track[a][i][0][0]);
 
     if (track[a][i][0][0] == -1) // if a hasn't seen agent i before
@@ -2528,7 +2528,7 @@ void observe_new_agents(
             }
 
             // canSee[a][i]=1;
-            printf("Agent %i appeared AGAIN?? [%d %d] can see agent %i at [%d %d]\n",a + 1, position[a]->y, position[a]->x, i + 1, position[i]->y,position[i]->x);
+            // printf("Agent %i appeared AGAIN?? [%d %d] can see agent %i at [%d %d]\n",a + 1, position[a]->y, position[a]->x, i + 1, position[i]->y,position[i]->x);
 
             if (track[a][i][0][0] ==
                 -1) // There is no previous record of the agent
@@ -2544,7 +2544,7 @@ void observe_new_agents(
                 track[a][i][0][1] = position[i]->y;
             }
 
-            printf("Now Computing PRediction......\n");
+            // printf("Now Computing PRediction......\n");
             computePrediction2(a, i, lookahead);
             // updateHistory(a,i,lookahead,position);
             // getchar();
@@ -2563,7 +2563,7 @@ void observe_new_agents(
             track[a][i][0][1] = -1;
 
             for (int z = 0; z < (lookahead); z++) {
-                printf("Checking previous seen position of agent %i at [%d %d] \n",i, mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0]);
+                // printf("Checking previous seen position of agent %i at [%d %d] \n",i, mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0]);
                 if (maze1[mostProbPositionXY[a][i][z][1]]
                          [mostProbPositionXY[a][i][z][0]]
                              .blockedAgent[a][z] >
@@ -2577,7 +2577,7 @@ void observe_new_agents(
                                  .blockedAgent[a][z] -
                         1;
 
-                    printf("(%i) SAW the guy before at [%d %d], not anymore, making ""blocked back to  %i\n",z, mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
+                    // printf("(%i) SAW the guy before at [%d %d], not anymore, making ""blocked back to  %i\n",z, mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
 
                     if (z > 0) {
                         maze1[mostProbPositionXY[a][i][z - 1][1]]
@@ -2593,7 +2593,7 @@ void observe_new_agents(
                              [mostProbPositionXY[a][i][z][0]]
                                  .toTransition[a][z]--;
 
-                        printf("(%i) ANNNd transition between [%d %d] and  [%d %d] back ""to  %i\n",z, mostProbPositionXY[a][i][z - 1][1],mostProbPositionXY[a][i][z - 1][0],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z]);
+                        // printf("(%i) ANNNd transition between [%d %d] and  [%d %d] back ""to  %i\n",z, mostProbPositionXY[a][i][z - 1][1],mostProbPositionXY[a][i][z - 1][0],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z]);
 
                         // betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]
                         // );
@@ -2606,7 +2606,7 @@ void observe_new_agents(
             mostProbPositionXY[a][i][z][0] = -2;
          } */
         }
-        printf(" [4 4] at T 0: %i and mostProb [%d %d]\n",maze1[4][4].blockedAgent[0][0], mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0]);
+        // printf(" [4 4] at T 0: %i and mostProb [%d %d]\n",maze1[4][4].blockedAgent[0][0], mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0]);
     }
 }
 
@@ -2617,18 +2617,18 @@ void observe_agent2(int a, int i, int lookahead, cell1 *previous) {
          ((abs(position[i]->x - position[a]->x) +
            abs(position[i]->y - position[a]->y)) > 0))) {
         canSee[a][i] = 1;
-        printf("Agent %i at [%d %d] can see agent %i at [%d %d]\n", a + 1,position[a]->y, position[a]->x, i + 1, position[i]->y,position[i]->x);
+        // printf("Agent %i at [%d %d] can see agent %i at [%d %d]\n", a + 1,position[a]->y, position[a]->x, i + 1, position[i]->y,position[i]->x);
         totp++;
         if ((mostProbPositionXY[a][i][1][0] == position[i]->x) &&
             (mostProbPositionXY[a][i][1][1] == position[i]->y)) {
-            printf("good prediction!!!");
+            // printf("good prediction!!!");
             goop++;
             evalPrevPrediction(a, i, 1);
         } else {
-            printf("BAD prediction"); // neeed a counter here
+            // printf("BAD prediction"); // neeed a counter here
             badp++;
             evalPrevPrediction(a, i, 0);
-            // printf("increasing one to bad predictions, now is %i with lookahead
+            // // printf("increasing one to bad predictions, now is %i with lookahead
             // %i", badpredictions[lookahead], lookahead);
         }
 
@@ -2645,7 +2645,7 @@ void observe_agent2(int a, int i, int lookahead, cell1 *previous) {
             track[a][i][0][1] = position[i]->y;
         }
 
-        printf("Now Computing PRediction......\n");
+        // printf("Now Computing PRediction......\n");
         computePrediction2(a, i, lookahead);
 
     } else {
@@ -2653,14 +2653,14 @@ void observe_agent2(int a, int i, int lookahead, cell1 *previous) {
         track[a][i][1][0] = track[a][i][0][0];
         track[a][i][1][1] = track[a][i][0][1];
         if (track[a][i][1][0] != -1) {
-            printf("****But I just saw this guy at [%d %d]...%i.\n",mostProbPositionXY[a][i][0][1], mostProbPositionXY[a][i][0][0],maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0]);
+            // printf("****But I just saw this guy at [%d %d]...%i.\n",mostProbPositionXY[a][i][0][1], mostProbPositionXY[a][i][0][0],maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0]);
         }
 
         track[a][i][0][0] = -1;
         track[a][i][0][1] = -1;
 
         for (int z = 0; z < (lookahead); z++) {
-            // printf(" HERE I AM %i %d
+            // // printf(" HERE I AM %i %d
             // %d",!goal_reached[i],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0]);//,maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]
             // );
 
@@ -2677,7 +2677,7 @@ void observe_agent2(int a, int i, int lookahead, cell1 *previous) {
                                  .blockedAgent[a][z] -
                         1;
 
-                    printf("(%i) SAW the guy (%i) before at [%d %d], not anymore, ""making blocked back to  %i\n",z, i, mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
+                    // printf("(%i) SAW the guy (%i) before at [%d %d], not anymore, ""making blocked back to  %i\n",z, i, mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
                     if (z > 0) {
                         //    betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]--;
                         maze1[mostProbPositionXY[a][i][z - 1][1]]
@@ -2694,7 +2694,7 @@ void observe_agent2(int a, int i, int lookahead, cell1 *previous) {
 
                         // agentMovingTo[mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z][i]=0;
 
-                        printf("(%i) ANd transition between [%d %d] and  [%d %d] back ""to  %i\n",z, mostProbPositionXY[a][i][z - 1][1],mostProbPositionXY[a][i][z - 1][0],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z - 1]);
+                        // printf("(%i) ANd transition between [%d %d] and  [%d %d] back ""to  %i\n",z, mostProbPositionXY[a][i][z - 1][1],mostProbPositionXY[a][i][z - 1][0],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z - 1]);
 
                         // betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]
                         // );
@@ -2717,18 +2717,18 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
          ((abs(position[i]->x - position[a]->x) +
            abs(position[i]->y - position[a]->y)) > 0))) {
         canSee[a][i] = 1;
-        printf("Agent %i at [%d %d] can see agent %i at [%d %d]\n", a + 1,position[a]->y, position[a]->x, i + 1, position[i]->y,position[i]->x);
+        // printf("Agent %i at [%d %d] can see agent %i at [%d %d]\n", a + 1,position[a]->y, position[a]->x, i + 1, position[i]->y,position[i]->x);
         totp++;
         if ((mostProbPositionXY[a][i][1][0] == position[i]->x) &&
             (mostProbPositionXY[a][i][1][1] == position[i]->y)) {
-            printf("good prediction!!!");
+            // printf("good prediction!!!");
             goop++;
             evalPrevPrediction(a, i, 1);
         } else {
-            printf("BAD prediction"); // neeed a counter here
+            // printf("BAD prediction"); // neeed a counter here
             badp++;
             evalPrevPrediction(a, i, 0);
-            // printf("increasing one to bad predictions, now is %i with lookahead
+            // // printf("increasing one to bad predictions, now is %i with lookahead
             // %i", badpredictions[lookahead], lookahead);
         }
 
@@ -2736,7 +2736,7 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
 
         updateHistory(a, i, lookahead, previous);
 
-        printf("Now Computing PRediction......\n");
+        // printf("Now Computing PRediction......\n");
         // computePrediction2(a,i, lookahead);
 
     } else {
@@ -2744,7 +2744,7 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
         track[a][i][1][0] = track[a][i][0][0];
         track[a][i][1][1] = track[a][i][0][1];
         if (track[a][i][1][0] != -1) {
-            printf("****But I just saw this guy at [%d %d]...%i.\n",mostProbPositionXY[a][i][0][1], mostProbPositionXY[a][i][0][0],maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0]);
+            // printf("****But I just saw this guy at [%d %d]...%i.\n",mostProbPositionXY[a][i][0][1], mostProbPositionXY[a][i][0][0],maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0]);
         }
 
         track[a][i][0][0] = -1;
@@ -2764,7 +2764,7 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
                                  .blockedAgent[a][z] -
                         1;
 
-                    printf("(%i) SAW the guy (%i) before at [%d %d], not anymore, ""making blocked back to  %i\n",z, i, mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
+                    // printf("(%i) SAW the guy (%i) before at [%d %d], not anymore, ""making blocked back to  %i\n",z, i, mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
                     if (z > 0) {
                         //    betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]--;
                         maze1[mostProbPositionXY[a][i][z - 1][1]]
@@ -2781,7 +2781,7 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
 
                         // agentMovingTo[mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z][i]=0;
 
-                        printf("(%i) ANd transition between [%d %d] and  [%d %d] back ""to  %i\n",z, mostProbPositionXY[a][i][z - 1][1],mostProbPositionXY[a][i][z - 1][0],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z - 1]);
+                        // printf("(%i) ANd transition between [%d %d] and  [%d %d] back ""to  %i\n",z, mostProbPositionXY[a][i][z - 1][1],mostProbPositionXY[a][i][z - 1][0],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z - 1]);
 
                         // betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]
                         // );
@@ -2811,10 +2811,10 @@ void updateHistory(int a, int i, int lookahead, cell1 *previous) {
         track[a][i][0][1] = position[i]->y;
     }
 
-    printf("Agent %i model of agent %i is: \n", a + 1, i + 1);
+    // printf("Agent %i model of agent %i is: \n", a + 1, i + 1);
 
     for (int t = 0; t < MEMORY; t++) {
-        printf("Time %i: [%i %i] \n", t, track[a][i][t][1], track[a][i][t][0]);
+        // printf("Time %i: [%i %i] \n", t, track[a][i][t][1], track[a][i][t][0]);
     }
 
     if (track[a][i][1][0] !=
@@ -2836,7 +2836,7 @@ void updateHistory(int a, int i, int lookahead, cell1 *previous) {
         computePrediction(a, i, lookahead);
     } else {
         for (int z = 0; z < (lookahead); z++) {
-            printf("blocking OBSERVED position [%d %d] at t %i, so now %i \n",position[i]->y, position[i]->x, z,maze1[5][3].blockedAgent[3][0]);
+            // printf("blocking OBSERVED position [%d %d] at t %i, so now %i \n",position[i]->y, position[i]->x, z,maze1[5][3].blockedAgent[3][0]);
             maze1[position[i]->y][position[i]->x].blockedAgent[a][z] =
                 1; // blockedAgent[position[i]->x][position[i]->y][a][z]=1;
             maze1[position[i]->y][position[i]->x].fromTransition[a][z]++;
@@ -2851,7 +2851,7 @@ void updateHistory(int a, int i, int lookahead, cell1 *previous) {
                 maze1[position[i]->y][position[i]->x].agentMovingTo[a][z][i] = 1;
 
                 //	 agentMovingTo[position[i]->x][position[i]->y][a][z][i]=1;
-                printf("Observing AGNET %i moving FROM [%d %d] at t %i TO [%d %d] at ""t %i, total: %i\n",i, position[i]->y, position[i]->x, z - 1, position[i]->y,position[i]->x, z,maze1[position[i]->y][position[i]->x].toTransition[a][z]);
+                // printf("Observing AGNET %i moving FROM [%d %d] at t %i TO [%d %d] at ""t %i, total: %i\n",i, position[i]->y, position[i]->x, z - 1, position[i]->y,position[i]->x, z,maze1[position[i]->y][position[i]->x].toTransition[a][z]);
 
                 //		 toTransition[position[i]->x][position[i]->y][a][z]);
             }
@@ -2867,9 +2867,9 @@ void evalPrevPrediction(int a, int i, int correct) {
     if (correct == 1) {
         good_pred_agents[a][i] = good_pred_agents[a][i] + 1;
     }
-    printf(" - So far, %.2f of accuracy, ", (float)goop / (float)totp);
+    // printf(" - So far, %.2f of accuracy, ", (float)goop / (float)totp);
 
-    printf(" and with neighbor %i, it is %.2f, or %i of total %i\n", i + 1,(float)good_pred_agents[a][i] / (float)pred_agents[a][i],good_pred_agents[a][i], pred_agents[a][i]);
+    // printf(" and with neighbor %i, it is %.2f, or %i of total %i\n", i + 1,(float)good_pred_agents[a][i] / (float)pred_agents[a][i],good_pred_agents[a][i], pred_agents[a][i]);
 
     // getchar();
 }
@@ -2880,33 +2880,33 @@ void updateProbabilities(int a, int i) {
         obsNextCell[a][i][2]++; // Left
         lastMove[a][i] = 2;
 
-        printf("Agent %i moved LEFT %i\n", i + 1, obsNextCell[a][i][2]);
+        // printf("Agent %i moved LEFT %i\n", i + 1, obsNextCell[a][i][2]);
     }
 
     if (track[a][i][1][0] < track[a][i][0][0]) {
         obsNextCell[a][i][0]++; // Right
         lastMove[a][i] = 0;
-        printf("Agent %i moved RIGHT %i\n", i + 1, obsNextCell[a][i][0]);
+        // printf("Agent %i moved RIGHT %i\n", i + 1, obsNextCell[a][i][0]);
     }
 
     if (track[a][i][1][0] == track[a][i][0][0]) {
         if (track[a][i][1][1] == track[a][i][0][1]) {
             obsNextCell[a][i][4]++; // NoOp
             lastMove[a][i] = 4;
-            printf("Agent %i DIDNT MOVE \n", i + 1);
+            // printf("Agent %i DIDNT MOVE \n", i + 1);
         }
     }
 
     if (track[a][i][1][1] > track[a][i][0][1]) {
         obsNextCell[a][i][3]++; // Up
         lastMove[a][i] = 3;
-        printf("Agent %i moved UP %i\n", i + 1, obsNextCell[a][i][3]);
+        // printf("Agent %i moved UP %i\n", i + 1, obsNextCell[a][i][3]);
     }
 
     if (track[a][i][1][1] < track[a][i][0][1]) {
         obsNextCell[a][i][1]++; // Down
         lastMove[a][i] = 1;
-        printf("Agent %i moved DOWN %i\n", i + 1, obsNextCell[a][i][1]);
+        // printf("Agent %i moved DOWN %i\n", i + 1, obsNextCell[a][i][1]);
     }
 
     int total_nextCell = obsNextCell[a][i][2] + obsNextCell[a][i][0] +
@@ -2924,29 +2924,29 @@ void updateProbabilities(int a, int i) {
     nextCellProb[a][i][4] =
         100 * (float)obsNextCell[a][i][4] / (float)total_nextCell;
 
-    printf("Observed Probabilities: DOWN %.1f, UP %.1f, LEFT %.1f , RIGHT %.1f\n",nextCellProb[a][i][1], nextCellProb[a][i][3], nextCellProb[a][i][2],nextCellProb[a][i][0]);
+    // printf("Observed Probabilities: DOWN %.1f, UP %.1f, LEFT %.1f , RIGHT %.1f\n",nextCellProb[a][i][1], nextCellProb[a][i][3], nextCellProb[a][i][2],nextCellProb[a][i][0]);
 }
 
 void computePrediction2(int a, int i, int lookahead) {
-    printf("AGENT %i EEERASING PREVIOUS OBSERVATIONS of %i as in [%d %d] REALDEPTH ""%i, lookahead %i\n",a + 1, i + 1, mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0], realDepth[i], lookahead);
+    // printf("AGENT %i EEERASING PREVIOUS OBSERVATIONS of %i as in [%d %d] REALDEPTH ""%i, lookahead %i\n",a + 1, i + 1, mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0], realDepth[i], lookahead);
 
     for (int z = 0; z < realDepth[i]; z++) //(lookahead); z++)
-    {                                      // printf("Now z is %i and %i\n", z,mostProbPositionXY[a][i][z][0]);
+    {                                      // // printf("Now z is %i and %i\n", z,mostProbPositionXY[a][i][z][0]);
         if (mostProbPositionXY[a][i][z][0] > -2) {
             if (z == 0) {
                 maze1[mostProbPositionXY[a][i][z][1]]
                      [mostProbPositionXY[a][i][z][0]]
                          .blockedAgent[a][z] = 0;
                 // blockedAgent[mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]=0;
-                printf("\nERASING blocking at [%d %d] to %i  ", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
+                // printf("\nERASING blocking at [%d %d] to %i  ", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
 
-                // printf("how about this [%d %d] %i at 0 and this [%d %d] %i at 1
+                // // printf("how about this [%d %d] %i at 0 and this [%d %d] %i at 1
                 // ",mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0],
                 // maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0],
                 // mostProbPositionXY[a][i][1][1],mostProbPositionXY[a][i][1][0]
                 // ,maze1[mostProbPositionXY[a][i][1][1]][mostProbPositionXY[a][i][1][0]].blockedAgent[a][1]);
 
-                printf("Now z is %i and %i\n", mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0]);
+                // printf("Now z is %i and %i\n", mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0]);
             }
 
             if ((z > 0) &&
@@ -2957,13 +2957,13 @@ void computePrediction2(int a, int i, int lookahead) {
                       [mostProbPositionXY[a][i][z][0]]
                           .toTransition[a][z] > 0)) {
                 //(betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]>0))
-                printf("**** [4 4] at T 0: %i \n", maze1[4][4].blockedAgent[0][0]);
+                // printf("**** [4 4] at T 0: %i \n", maze1[4][4].blockedAgent[0][0]);
                 maze1[mostProbPositionXY[a][i][z - 1][1]]
                      [mostProbPositionXY[a][i][z - 1][0]]
                          .fromTransition[a][z - 1]--;
                 // betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]--;
-                printf("\nERASING TRANSITION BETWEEN [%d %d] and [%d %d] to %i  ",mostProbPositionXY[a][i][z - 1][1],mostProbPositionXY[a][i][z - 1][0],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z]);
-                printf(" ***[4 4] at T 0: %i \n", maze1[4][4].blockedAgent[0][0]);
+                // printf("\nERASING TRANSITION BETWEEN [%d %d] and [%d %d] to %i  ",mostProbPositionXY[a][i][z - 1][1],mostProbPositionXY[a][i][z - 1][0],mostProbPositionXY[a][i][z][1],mostProbPositionXY[a][i][z][0],maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z]);
+                // printf(" ***[4 4] at T 0: %i \n", maze1[4][4].blockedAgent[0][0]);
                 // betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]);
                 //	toTransition[mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]--;
 
@@ -2976,7 +2976,7 @@ void computePrediction2(int a, int i, int lookahead) {
                          .agentMovingTo[a][z][i] = 0;
                 // agentMovingTo[mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z][i]=0;
 
-                printf("\nERASING TRANSITION TO [%d %d] to %i (at %i)", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].toTransition[a][z], z);
+                // printf("\nERASING TRANSITION TO [%d %d] to %i (at %i)", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].toTransition[a][z], z);
             }
             if (maze1[mostProbPositionXY[a][i][z][1]]
                      [mostProbPositionXY[a][i][z][0]]
@@ -2998,7 +2998,7 @@ void computePrediction2(int a, int i, int lookahead) {
                              .blockedAgent[a][z] = 0;
                 }
 
-                printf("\n1 No more ToTrans, ERASING BLOCKED [%d %d] at t %i to %i  ",mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0],z,maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
+                // printf("\n1 No more ToTrans, ERASING BLOCKED [%d %d] at t %i to %i  ",mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0],z,maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
             }
         }
 
@@ -3012,18 +3012,18 @@ void computePrediction2(int a, int i, int lookahead) {
 
     mostProbPositionXY[a][i][0][1] = (position[i]->y);
 
-    // printf("\nACCORDING TO AGENT %i, MOST LIKELY DIRECTION FOR AGENT %i,
+    // // printf("\nACCORDING TO AGENT %i, MOST LIKELY DIRECTION FOR AGENT %i,
     // currently at [%d %d], at time 1 IS: ", a+1, i+1, position[i]->y,
-    // position[i]->x); printf(" [%i %i]\n",path[i][2]->y,path[i][2]->x);
+    // position[i]->x); // printf(" [%i %i]\n",path[i][2]->y,path[i][2]->x);
 
     //	blockedAgent[mostProbPositionXY[a][i][0][0]][mostProbPositionXY[a][i][0][1]][a][0]=1;
     maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]]
         .blockedAgent[a][0] = 1;
-    printf("\nblocking NEW OBSERVED position [%d %d] [%d %d] : %i at T 0\n",position[i]->y, position[i]->x, mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0],maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0]);
+    // printf("\nblocking NEW OBSERVED position [%d %d] [%d %d] : %i at T 0\n",position[i]->y, position[i]->x, mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0],maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0]);
 
     for (int t = 1; t < realDepth[i]; t++) //(lookahead);t++)
     {
-        printf(" NOW T is %i\n", t);
+        // printf(" NOW T is %i\n", t);
         // Using comm instead of prediction
         if (path[i][t + 1] != NULL) {
             if (canSee[a][i]) {
@@ -3047,7 +3047,7 @@ void computePrediction2(int a, int i, int lookahead) {
             1;
 
         //	blockedAgent[mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t]=blockedAgent[mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t]+1;
-        printf("BBLOCKING: [%i %i] at time %i: %i \n",mostProbPositionXY[a][i][t][1], mostProbPositionXY[a][i][t][0], t,maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].blockedAgent[a][t]);
+        // printf("BBLOCKING: [%i %i] at time %i: %i \n",mostProbPositionXY[a][i][t][1], mostProbPositionXY[a][i][t][0], t,maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].blockedAgent[a][t]);
 
         if (maze1[mostProbPositionXY[a][i][t - 1][1]]
                  [mostProbPositionXY[a][i][t - 1][0]]
@@ -3069,14 +3069,14 @@ void computePrediction2(int a, int i, int lookahead) {
         maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]]
             .agentMovingTo[a][t][i] = 1;
         // agentMovingTo[mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t][i]=1;
-        printf("TO: [%i %i] at time %i: %i \n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0], t,maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].toTransition[a][t]);
+        // printf("TO: [%i %i] at time %i: %i \n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0], t,maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].toTransition[a][t]);
 
         //	 toTransition[mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t]);
 
-        printf("TRANSITION: [%i %i] to [%i %i] at time %i: %i \n",mostProbPositionXY[a][i][t - 1][1],mostProbPositionXY[a][i][t - 1][0], mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0], t,maze1[mostProbPositionXY[a][i][t - 1][1]][mostProbPositionXY[a][i][t - 1][0]].fromTransition[a][t - 1]);
+        // printf("TRANSITION: [%i %i] to [%i %i] at time %i: %i \n",mostProbPositionXY[a][i][t - 1][1],mostProbPositionXY[a][i][t - 1][0], mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0], t,maze1[mostProbPositionXY[a][i][t - 1][1]][mostProbPositionXY[a][i][t - 1][0]].fromTransition[a][t - 1]);
         // betweenTransition[mostProbPositionXY[a][i][t-1][0]][mostProbPositionXY[a][i][t-1][1]][mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t]);
 
-        // printf("REDUCING POS: [%i %i] at time %i to %i
+        // // printf("REDUCING POS: [%i %i] at time %i to %i
         // \n",mostProbPositionXY[a][i][t-1][1],
         // mostProbPositionXY[a][i][t-1][0],t-1,blockedAgent[mostProbPositionXY[a][i][t-1][0]][mostProbPositionXY[a][i][t][1]][a][t-1]);
         //	blockedAgent[mostProbPositionXY[a][i][t-1][0]][mostProbPositionXY[a][i][t][1]][a][t-1]=0;
@@ -3086,7 +3086,7 @@ void computePrediction2(int a, int i, int lookahead) {
 }
 
 void computePrediction(int a, int i, int lookahead) {
-    printf("AGENT %i ERASING PREVIOUS OBSERVATIONS of %i as in [%d %d]\n", a + 1,i + 1, mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0]);
+    // printf("AGENT %i ERASING PREVIOUS OBSERVATIONS of %i as in [%d %d]\n", a + 1,i + 1, mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0]);
 
     for (int z = 0; z < (lookahead); z++) {
         if (mostProbPositionXY[a][i][z][0] > -2) {
@@ -3095,8 +3095,8 @@ void computePrediction(int a, int i, int lookahead) {
                      [mostProbPositionXY[a][i][z][0]]
                          .blockedAgent[a][z] = 0;
                 // blockedAgent[mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]=0;
-                printf("\nERASING blocking at [%d %d] to %i  ", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
-                printf("how about this [%d %d] %i at 0 and this [%d %d] %i at 1 ", mostProbPositionXY[a][i][0][1], mostProbPositionXY[a][i][0][0], maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0], mostProbPositionXY[a][i][1][1], mostProbPositionXY[a][i][1][0], maze1[mostProbPositionXY[a][i][1][1]][mostProbPositionXY[a][i][1][0]].blockedAgent[a][1]);
+                // printf("\nERASING blocking at [%d %d] to %i  ", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
+                // printf("how about this [%d %d] %i at 0 and this [%d %d] %i at 1 ", mostProbPositionXY[a][i][0][1], mostProbPositionXY[a][i][0][0], maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0], mostProbPositionXY[a][i][1][1], mostProbPositionXY[a][i][1][0], maze1[mostProbPositionXY[a][i][1][1]][mostProbPositionXY[a][i][1][0]].blockedAgent[a][1]);
             }
 
             if ((z > 0) &&
@@ -3112,7 +3112,7 @@ void computePrediction(int a, int i, int lookahead) {
                      [mostProbPositionXY[a][i][z - 1][0]]
                          .fromTransition[a][z - 1]--;
                 // betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]--;
-                printf("\nERASING TRANSITION BETWEEN [%d %d] and [%d %d] to %i  ", mostProbPositionXY[a][i][z - 1][1], mostProbPositionXY[a][i][z - 1][0], mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z]);
+                // printf("\nERASING TRANSITION BETWEEN [%d %d] and [%d %d] to %i  ", mostProbPositionXY[a][i][z - 1][1], mostProbPositionXY[a][i][z - 1][0], mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z - 1][1]][mostProbPositionXY[a][i][z - 1][0]].fromTransition[a][z]);
 
                 // betweenTransition[mostProbPositionXY[a][i][z-1][0]][mostProbPositionXY[a][i][z-1][1]][mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]);
                 //	toTransition[mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z]--;
@@ -3126,7 +3126,7 @@ void computePrediction(int a, int i, int lookahead) {
                          .agentMovingTo[a][z][i] = 0;
                 // agentMovingTo[mostProbPositionXY[a][i][z][0]][mostProbPositionXY[a][i][z][1]][a][z][i]=0;
 
-                printf("\nERASING TRANSITION TO [%d %d] to %i (at %i)", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].toTransition[a][z], z);
+                // printf("\nERASING TRANSITION TO [%d %d] to %i (at %i)", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].toTransition[a][z], z);
             }
             if (maze1[mostProbPositionXY[a][i][z][1]]
                      [mostProbPositionXY[a][i][z][0]]
@@ -3148,7 +3148,7 @@ void computePrediction(int a, int i, int lookahead) {
                              .blockedAgent[a][z] = 0;
                 }
 
-                printf( "\n2 No more ToTrans, ERASING BLOCKED [%d %d] at t %i to %i  ", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], z, maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
+                // printf( "\n2 No more ToTrans, ERASING BLOCKED [%d %d] at t %i to %i  ", mostProbPositionXY[a][i][z][1], mostProbPositionXY[a][i][z][0], z, maze1[mostProbPositionXY[a][i][z][1]][mostProbPositionXY[a][i][z][0]].blockedAgent[a][z]);
             }
         }
 
@@ -3160,15 +3160,15 @@ void computePrediction(int a, int i, int lookahead) {
 
     mostProbPositionXY[a][i][0][0] = (position[i]->x);
     mostProbPositionXY[a][i][0][1] = (position[i]->y);
-    printf("\nACCORDING TO AGENT %i, MOST LIKELY DIRECTION FOR AGENT %i, currently ""at [%d %d], at time 0 IS: ",a + 1, i + 1, position[i]->y, position[i]->x);
-    printf("SAME!!: [%i %i]\n", mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0]);
+    // printf("\nACCORDING TO AGENT %i, MOST LIKELY DIRECTION FOR AGENT %i, currently ""at [%d %d], at time 0 IS: ",a + 1, i + 1, position[i]->y, position[i]->x);
+    // printf("SAME!!: [%i %i]\n", mostProbPositionXY[a][i][0][1],mostProbPositionXY[a][i][0][0]);
 
     //	blockedAgent[mostProbPositionXY[a][i][0][0]][mostProbPositionXY[a][i][0][1]][a][0]=1;
     maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]]
         .blockedAgent[a][0] = 1;
-    printf("blocking NEW OBSERVED position [%d %d] : %i at T 0\n", position[i]->y, position[i]->x, maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0] = 1);
+    // printf("blocking NEW OBSERVED position [%d %d] : %i at T 0\n", position[i]->y, position[i]->x, maze1[mostProbPositionXY[a][i][0][1]][mostProbPositionXY[a][i][0][0]].blockedAgent[a][0] = 1);
 
-    // printf("how about at 4?: %i",
+    // // printf("how about at 4?: %i",
     // blockedAgent[mostProbPositionX[a][i][4]][mostProbPositionY[a][i][4]][a][4]);
 
     if (pred_agents[a][i] > 0) {
@@ -3177,7 +3177,7 @@ void computePrediction(int a, int i, int lookahead) {
 
         if (((float)good_pred_agents[a][i] / (float)pred_agents[a][i]) > 0.9) {
             predict[a][i] = 1;
-            //	printf("NICE!! good prediction rate, %.1f from %i and %i \n",
+            //	// printf("NICE!! good prediction rate, %.1f from %i and %i \n",
             //(float)good_pred_agents[a][i]/(float)pred_agents[a][i],good_pred_agents[a][i],
             // pred_agents[a][i]); getchar();
 
@@ -3188,14 +3188,14 @@ void computePrediction(int a, int i, int lookahead) {
         predict[a][i] = 0;
     }
 
-    // printf("SO: rate, %.1f from %i and %i and predict is %i \n",
+    // // printf("SO: rate, %.1f from %i and %i and predict is %i \n",
     // (float)good_pred_agents[a][i]/(float)pred_agents[a][i],good_pred_agents[a][i],
     // pred_agents[a][i],predict[a][i]); 	getchar();
 
     for (int t = 1; t < (lookahead); t++) {
         float maxProb = -10;
         int mostProb = -1;
-        // printf("Most prob is %.1f", nextCellProb[a][i][0]);
+        // // printf("Most prob is %.1f", nextCellProb[a][i][0]);
         for (int j = 0; j <= DIRECTIONS; j++) {
             if (nextCellProb[a][i][j] > maxProb) {
                 mostProb = j;
@@ -3203,12 +3203,12 @@ void computePrediction(int a, int i, int lookahead) {
             }
         }
 
-        // printf("Most prob is %i ", lastMove[a][i]);
+        // // printf("Most prob is %i ", lastMove[a][i]);
         mostProb = lastMove[a][i];
 
-        // printf("ACCORDING TO AGENT %i, MOST LIKELY DIRECTION FOR AGENT %i,
+        // // printf("ACCORDING TO AGENT %i, MOST LIKELY DIRECTION FOR AGENT %i,
         // currently at [%d %d], at time %i IS: ", a+1, i+1, position[i]->y,
-        // position[i]->x,t); printf("Most prob is %i ", mostProb);
+        // position[i]->x,t); // printf("Most prob is %i ", mostProb);
 
         if (mostProb == 0) {
             if (t == 1) {
@@ -3222,7 +3222,7 @@ void computePrediction(int a, int i, int lookahead) {
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1];
-                        printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     }
                 }
             } else {
@@ -3239,7 +3239,7 @@ void computePrediction(int a, int i, int lookahead) {
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1];
-                        printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     }
                 }
             }
@@ -3249,9 +3249,9 @@ void computePrediction(int a, int i, int lookahead) {
                 (mostProbPositionXY[a][i][t - 1][0] + 1 >= MAZEWIDTH)) {
                 mostProbPositionXY[a][i][t][0] = mostProbPositionXY[a][i][t - 1][0];
                 mostProbPositionXY[a][i][t][1] = mostProbPositionXY[a][i][t - 1][1];
-                printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
             } else {
-                printf("RIGHT!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                // printf("RIGHT!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
             }
         }
 
@@ -3267,7 +3267,7 @@ void computePrediction(int a, int i, int lookahead) {
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1];
-                        printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     }
                 }
 
@@ -3280,13 +3280,13 @@ void computePrediction(int a, int i, int lookahead) {
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1] + 1;
-                        printf("DOWN!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("DOWN!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     } else {
                         mostProbPositionXY[a][i][t][0] =
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1];
-                        printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     }
                 }
             }
@@ -3295,9 +3295,9 @@ void computePrediction(int a, int i, int lookahead) {
                 (mostProbPositionXY[a][i][t - 1][1] + 1 >= MAZEHEIGHT)) {
                 mostProbPositionXY[a][i][t][0] = mostProbPositionXY[a][i][t - 1][0];
                 mostProbPositionXY[a][i][t][1] = mostProbPositionXY[a][i][t - 1][1];
-                printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
             } else {
-                printf("DOWN!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                // printf("DOWN!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
             }
         }
 
@@ -3321,13 +3321,13 @@ void computePrediction(int a, int i, int lookahead) {
    {
       mostProbPositionXY[a][i][t][0]= mostProbPositionXY[a][i][t-1][0];
       mostProbPositionXY[a][i][t][1]= mostProbPositionXY[a][i][t-1][1];
-      printf("STUCKK!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
+      // printf("STUCKK!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
    mostProbPositionXY[a][i][t][0]);
    }
    else
    {
 
-   printf("DOWN!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
+   // printf("DOWN!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
    mostProbPositionXY[a][i][t][0]);}
    }
    */
@@ -3343,7 +3343,7 @@ void computePrediction(int a, int i, int lookahead) {
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1];
-                        printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     }
                 }
             } else {
@@ -3360,7 +3360,7 @@ void computePrediction(int a, int i, int lookahead) {
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1];
-                        printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     }
                 }
             }
@@ -3370,9 +3370,9 @@ void computePrediction(int a, int i, int lookahead) {
                 (mostProbPositionXY[a][i][t - 1][0] - 1 < 0)) {
                 mostProbPositionXY[a][i][t][0] = mostProbPositionXY[a][i][t - 1][0];
                 mostProbPositionXY[a][i][t][1] = mostProbPositionXY[a][i][t - 1][1];
-                printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
             } else {
-                printf("LEFT!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                // printf("LEFT!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
             }
 
             /*
@@ -3397,13 +3397,13 @@ void computePrediction(int a, int i, int lookahead) {
    //(maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].obstacle==1)||
       mostProbPositionXY[a][i][t][0]= mostProbPositionXY[a][i][t-1][0];
       mostProbPositionXY[a][i][t][1]= mostProbPositionXY[a][i][t-1][1];
-      printf("STUCKK!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
+      // printf("STUCKK!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
    mostProbPositionXY[a][i][t][0]);
    }
    else
    {
 
-   printf("LEFT!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
+   // printf("LEFT!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
    mostProbPositionXY[a][i][t][0]);}
    * */
         }
@@ -3420,7 +3420,7 @@ void computePrediction(int a, int i, int lookahead) {
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1];
-                        printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     }
                 }
             } else {
@@ -3432,13 +3432,13 @@ void computePrediction(int a, int i, int lookahead) {
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1] - 1;
-                        printf("UP!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("UP!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     } else {
                         mostProbPositionXY[a][i][t][0] =
                             mostProbPositionXY[a][i][t - 1][0];
                         mostProbPositionXY[a][i][t][1] =
                             mostProbPositionXY[a][i][t - 1][1];
-                        printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                        // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
                     }
                 }
             }
@@ -3447,9 +3447,9 @@ void computePrediction(int a, int i, int lookahead) {
                 (mostProbPositionXY[a][i][t - 1][1] - 1 < 0)) {
                 mostProbPositionXY[a][i][t][0] = mostProbPositionXY[a][i][t - 1][0];
                 mostProbPositionXY[a][i][t][1] = mostProbPositionXY[a][i][t - 1][1];
-                printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                // printf("STUCKK!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
             } else {
-                printf("UP!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+                // printf("UP!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
             }
 
             /*
@@ -3474,19 +3474,19 @@ void computePrediction(int a, int i, int lookahead) {
    {
       mostProbPositionXY[a][i][t][0]= mostProbPositionXY[a][i][t-1][0];
       mostProbPositionXY[a][i][t][1]= mostProbPositionXY[a][i][t-1][1];
-      printf("STUCKK!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
+      // printf("STUCKK!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
    mostProbPositionXY[a][i][t][0]);
    }
    else
    {
 
-   printf("UP!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
+   // printf("UP!!: [%i %i]\n",mostProbPositionXY[a][i][t][1],
    mostProbPositionXY[a][i][t][0]);}
     */
         }
 
         if (mostProb == 4) {
-            // printf("NOTHING !!\n");
+            // // printf("NOTHING !!\n");
             if (t == 1) {
                 mostProbPositionXY[a][i][t][0] = (position[i]->x);
                 mostProbPositionXY[a][i][t][1] = (position[i]->y);
@@ -3494,7 +3494,7 @@ void computePrediction(int a, int i, int lookahead) {
                 mostProbPositionXY[a][i][t][0] = mostProbPositionXY[a][i][t - 1][0];
                 mostProbPositionXY[a][i][t][1] = mostProbPositionXY[a][i][t - 1][1];
             }
-            printf("NOTHING!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
+            // printf("NOTHING!!: [%i %i]\n", mostProbPositionXY[a][i][t][1],mostProbPositionXY[a][i][t][0]);
         }
 
         // Using comm instead of prediction
@@ -3510,7 +3510,7 @@ void computePrediction(int a, int i, int lookahead) {
             1;
 
         //	blockedAgent[mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t]=blockedAgent[mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t]+1;
-        printf("BLOCKING: [%i %i] at time %i: %i \n", mostProbPositionXY[a][i][t][1], mostProbPositionXY[a][i][t][0], t, maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].blockedAgent[a][t]);
+        // printf("BLOCKING: [%i %i] at time %i: %i \n", mostProbPositionXY[a][i][t][1], mostProbPositionXY[a][i][t][0], t, maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].blockedAgent[a][t]);
 
         maze1[mostProbPositionXY[a][i][t - 1][1]]
              [mostProbPositionXY[a][i][t - 1][0]]
@@ -3524,14 +3524,14 @@ void computePrediction(int a, int i, int lookahead) {
         maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]]
             .agentMovingTo[a][t][i] = 1;
         // agentMovingTo[mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t][i]=1;
-        printf("TO: [%i %i] at time %i: %i \n", mostProbPositionXY[a][i][t][1], mostProbPositionXY[a][i][t][0], t, maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].toTransition[a][t]);
+        // printf("TO: [%i %i] at time %i: %i \n", mostProbPositionXY[a][i][t][1], mostProbPositionXY[a][i][t][0], t, maze1[mostProbPositionXY[a][i][t][1]][mostProbPositionXY[a][i][t][0]].toTransition[a][t]);
 
         //	 toTransition[mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t]);
 
-        printf("TRANSITION: [%i %i] to [%i %i] at time %i: %i \n", mostProbPositionXY[a][i][t - 1][1], mostProbPositionXY[a][i][t - 1][0], mostProbPositionXY[a][i][t][1], mostProbPositionXY[a][i][t][0], t, maze1[mostProbPositionXY[a][i][t - 1][1]][mostProbPositionXY[a][i][t - 1][0]].fromTransition[a][t]);
+        // printf("TRANSITION: [%i %i] to [%i %i] at time %i: %i \n", mostProbPositionXY[a][i][t - 1][1], mostProbPositionXY[a][i][t - 1][0], mostProbPositionXY[a][i][t][1], mostProbPositionXY[a][i][t][0], t, maze1[mostProbPositionXY[a][i][t - 1][1]][mostProbPositionXY[a][i][t - 1][0]].fromTransition[a][t]);
         // betweenTransition[mostProbPositionXY[a][i][t-1][0]][mostProbPositionXY[a][i][t-1][1]][mostProbPositionXY[a][i][t][0]][mostProbPositionXY[a][i][t][1]][a][t]);
 
-        // printf("REDUCING POS: [%i %i] at time %i to %i
+        // // printf("REDUCING POS: [%i %i] at time %i to %i
         // \n",mostProbPositionXY[a][i][t-1][1],
         // mostProbPositionXY[a][i][t-1][0],t-1,blockedAgent[mostProbPositionXY[a][i][t-1][0]][mostProbPositionXY[a][i][t][1]][a][t-1]);
         //	blockedAgent[mostProbPositionXY[a][i][t-1][0]][mostProbPositionXY[a][i][t][1]][a][t-1]=0;
@@ -3563,9 +3563,9 @@ void test_rtaastar(int lookahead, int prunning) {
     long int m;
 
     gettimeofday(&tv11c, NULL);
-    printf("\nGENERATING RANDOMMAZE\n");
+    // printf("\nGENERATING RANDOMMAZE\n");
     newrandommaze_astar();
-    printf("\nDONE\n");
+    // printf("\nDONE\n");
     gettimeofday(&tv22c, NULL);
     time_astar_initialize1 += 1.0 * (tv22c.tv_sec - tv11c.tv_sec) +
                               1.0 * (tv22c.tv_usec - tv11c.tv_usec) / 1000000.0;
@@ -3594,7 +3594,7 @@ void test_rtaastar(int lookahead, int prunning) {
                 for (int z = 0; z < (lookahead); ++z) {
                     maze1[y][x].blockedAgent[i][z] = 0;
                     maze1[y][x].fromTransition[i][z] = 0;
-                    // printf(" AHA!!!\n");
+                    // // printf(" AHA!!!\n");
                     // blockedAgent[x][y][i][z]=0;
                     for (j = 0; j < NAGENTS; j++) {
                         maze1[y][x].agentMovingTo[i][z][j] = 0;
@@ -3613,33 +3613,33 @@ void test_rtaastar(int lookahead, int prunning) {
                 // Role=1 means I am not deferent to agent j
                 // Role=0 means taht I am deferent to agent i
 
-                printf("\nWatching %i from %i.. \n", i + 1, j + 1);
-                // printf("OBSERVING AGENTS\n");
+                // printf("\nWatching %i from %i.. \n", i + 1, j + 1);
+                // // printf("OBSERVING AGENTS\n");
 
                 observe_agent(j, i, lookahead, position[i]);
 
-                //	printf("\n now %i\n ", maze1[5][3].blockedAgent[3][0]);
+                //	// printf("\n now %i\n ", maze1[5][3].blockedAgent[3][0]);
             }
         }
     }
 
     // Loop until all agents finish
     while (finish_all && time_step <= MAX_TIME_STEPS) {
-        printf("OBSERVING AGENTS\n");
+        // printf("OBSERVING AGENTS\n");
         //			i = random() % NAGENTS;
         // For each agent in the problem..
         for (i = 0; i < NAGENTS; i++) {
             if (RUN1 >= 0 && robot_steps1 >= 0) {
-                // printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f
+                // // printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f
                 // step:%d time_step:%d
                 // terminado:%d\n",i+1,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,time_step,NAGENTS-finish_all);
                 // print the grid
-                multi_print_grid();
+                // multi_print_grid();
                 for (k = 0; k < NAGENTS; k++) {
-                    printf("(%d)[%d,%d]....(%i and %i) ", k + 1, position[k]->y,position[k]->x, role[0][1], role[1][0]);
+                    // printf("(%d)[%d,%d]....(%i and %i) ", k + 1, position[k]->y,position[k]->x, role[0][1], role[1][0]);
                 }
-                printf("\n");
-                getchar();
+                // printf("\n");
+                // getchar();
             }
 
 #ifdef RANDOMMOVES
@@ -3652,11 +3652,11 @@ void test_rtaastar(int lookahead, int prunning) {
 
                 // First, compute the shortest path, ignoring other agents...
                 if (!compute_shortestpath_astar(i, lookahead)) {
-                    //	printf(" OOOPPS,AGENT %i NEED TO BACKTRACK!!!\n",i);
-                    // printf("***********************************************************************\n");
-                    // printf("*   A*  when mazeiteration1 = %d,    No path possible
+                    //	// printf(" OOOPPS,AGENT %i NEED TO BACKTRACK!!!\n",i);
+                    // // printf("***********************************************************************\n");
+                    // // printf("*   A*  when mazeiteration1 = %d,    No path possible
                     // !!!    *\n", mazeiteration1);
-                    // printf("***********************************************************************\n");
+                    // // printf("***********************************************************************\n");
                     // return;
 
                 } else {
@@ -3671,48 +3671,48 @@ void test_rtaastar(int lookahead, int prunning) {
                                 if (conflictCost[i][idealPath[i][l - 1]->y]
                                                 [idealPath[i][l - 1]->x][l - 1] >=
                                     0.5) {
-                                    // printf("FIRST CASE IS %.1f\n",
+                                    // // printf("FIRST CASE IS %.1f\n",
                                     // conflictCost[i][idealPath[i][l-1]->y][idealPath[i][l-1]->x][l-1]);
                                     conflictCost[i][idealPath[i][l]->y]
                                                 [idealPath[i][l]->x][l] = 1;
                                 }
                             }
 
-                            printf("IDEAL PATH AT POS %i: [%d %d] - CCost %.2f\n", l, idealPath[i][l]->y, idealPath[i][l]->x, conflictCost[i][idealPath[i][l]->y][idealPath[i][l]->x][l]);
+                            // printf("IDEAL PATH AT POS %i: [%d %d] - CCost %.2f\n", l, idealPath[i][l]->y, idealPath[i][l]->x, conflictCost[i][idealPath[i][l]->y][idealPath[i][l]->x][l]);
                             pathlength[i] = l;
                         }
                     }
 
-                    printf("0 SO FAR SO GOOD AGENT %i!!!\n", i);
+                    // printf("0 SO FAR SO GOOD AGENT %i!!!\n", i);
                     previous = position[i];
-                    printf("0 Me QUIERO MOVER a [%d %d]\n", (position[i]->trace)->y,(position[i]->trace)->x);
+                    // printf("0 Me QUIERO MOVER a [%d %d]\n", (position[i]->trace)->y,(position[i]->trace)->x);
 
                     if (position[i]->parent[i] != NULL) {
-                        printf(" desde [%d %d] \n", position[i]->parent[i]->y,position[i]->parent[i]->x);
+                        // printf(" desde [%d %d] \n", position[i]->parent[i]->y,position[i]->parent[i]->x);
                     }
 
-                    printf(" THE PATH LENGHT OF AGENT %i is %i \n", i + 1,pathlength[i]);
+                    // printf(" THE PATH LENGHT OF AGENT %i is %i \n", i + 1,pathlength[i]);
 
                     // getchar();
 
                     // SECOND SEARCH, BASED ON CONSTRAINTS/CONFLICTS:
                     if (!compute_constraintpath(i, lookahead)) {
-                        printf("No solution???? Might need to backtrack %i steps, \n",lastMobileCellDist[i]);
+                        // printf("No solution???? Might need to backtrack %i steps, \n",lastMobileCellDist[i]);
                         // NEED TO CHANGE MODE TO BACKTRACK!!!
                         backtrack[i] = 1;
 
 
                         if (position[i]->parent[i] != NULL) {
-                            printf(" BACKTRACKING TO postiion [%d %d]!!!\n",position[i]->parent[i]->y,position[i]->parent[i]->x);
+                            // printf(" BACKTRACKING TO postiion [%d %d]!!!\n",position[i]->parent[i]->y,position[i]->parent[i]->x);
                             previous = position[i];
 
-                            printf("Estoy vivo");
+                            // printf("Estoy vivo");
                             // getchar();
-                            printf(" Me QUIERO MOVER a %d %d \n",position[i]->parent[i]->y,position[i]->parent[i]->x);
+                            // printf(" Me QUIERO MOVER a %d %d \n",position[i]->parent[i]->y,position[i]->parent[i]->x);
                             if ((position[i]->parent[i]->blocked[0]) &&
                                 (position[i]->parent[i]->x != position[i]->x) &&
                                 ((position[i]->parent[i]->y != position[i]->y))) {
-                                printf(" PERO ESTOY BLOQUEADO (look: %i)\n", lookahead);
+                                // printf(" PERO ESTOY BLOQUEADO (look: %i)\n", lookahead);
 
                                 continue;
                             }
@@ -3729,43 +3729,43 @@ void test_rtaastar(int lookahead, int prunning) {
                   {
                      if(path[i][l]!=NULL)
                   {
-                  printf("PATH AT POS %i: [%d %d]\n", l, path[i][l]->y,
+                  // printf("PATH AT POS %i: [%d %d]\n", l, path[i][l]->y,
                   path[i][l]->x);
                   }
 
                   }*/
 
-                        // printf("REAL DEPTH %i", realDepth[i]);
+                        // // printf("REAL DEPTH %i", realDepth[i]);
                         if (position[i]->parent[i] == NULL) {
-                            printf("SOY NULL");
+                            // printf("SOY NULL");
                         } else {
-                            printf("NO SOY NULL");
+                            // printf("NO SOY NULL");
                         }
 
                         // getchar();
 
                         // getchar();
                     } else {
-                        printf(" SO FAR SO GOOD AGENT %i, at postiion [%d %d]!!!\n",i, position[i]->y, position[i]->x);
+                        // printf(" SO FAR SO GOOD AGENT %i, at postiion [%d %d]!!!\n",i, position[i]->y, position[i]->x);
                         previous = position[i];
 
                         if (position[i]->parent[i] != NULL) {
-                            printf("Whose parent is [%d %d]\n",position[i]->parent[i]->y,position[i]->parent[i]->x);
+                            // printf("Whose parent is [%d %d]\n",position[i]->parent[i]->y,position[i]->parent[i]->x);
                         }
-                        printf(" Me QUIERO MOVER a %d %d \n", (position[i]->trace)->y,(position[i]->trace)->x);
+                        // printf(" Me QUIERO MOVER a %d %d \n", (position[i]->trace)->y,(position[i]->trace)->x);
 
                         for (int l = 1; l <= lookahead; l++) {
                             if (path[i][l] != NULL) {
-                                printf("PATH AT POS %i: [%d %d]\n", l, path[i][l]->y,path[i][l]->x);
+                                // printf("PATH AT POS %i: [%d %d]\n", l, path[i][l]->y,path[i][l]->x);
                             }
                         }
 
-                        printf("REAL DEPTH %i", realDepth[i]);
+                        // printf("REAL DEPTH %i", realDepth[i]);
 
                         if ((position[i]->trace->blocked[0]) &&
                             (position[i]->trace->x != position[i]->x) &&
                             ((position[i]->trace->y != position[i]->y))) {
-                            printf(" PERO ESTOY BLOQUEADO (look: %i)\n", lookahead);
+                            // printf(" PERO ESTOY BLOQUEADO (look: %i)\n", lookahead);
 
                             continue;
                         }
@@ -3773,7 +3773,7 @@ void test_rtaastar(int lookahead, int prunning) {
                         position[i] = position[i]->trace;
                         // Determina el costo del movimiento y lo agrega al costo total 
                         agent_cost[i] += euclidian(previous, position[i]);
-                        /* printf("\n%d -> %f", i, agent_cost[i]);
+                        /* // printf("\n%d -> %f", i, agent_cost[i]);
                         getchar(); */
                         robot_steps1++;
                         previous->trace = NULL;
@@ -3782,27 +3782,27 @@ void test_rtaastar(int lookahead, int prunning) {
                         for (j = 0; j < NAGENTS; j++) {
                         }
                         position[i]->blocked[0] = 1;
-                        printf(" Me movi a %d %d", position[i]->y, position[i]->x);
-                        printf(" con H %.1f \n",hvalues[MAZEWIDTH * position[i]->y + position[i]->x][i]);
+                        // printf(" Me movi a %d %d", position[i]->y, position[i]->x);
+                        // printf(" con H %.1f \n",hvalues[MAZEWIDTH * position[i]->y + position[i]->x][i]);
                         position[i]->parent[i] = previous;
-                        printf(" My new parent is [%d %d]\n",position[i]->parent[i]->y, position[i]->parent[i]->x);
+                        // printf(" My new parent is [%d %d]\n",position[i]->parent[i]->y, position[i]->parent[i]->x);
 
-                        printf(" -------------------------------------------------------""---------------------------\n");
-                        printf(" -------------------------------------------------------""---------------------------\n");
+                        // printf(" -------------------------------------------------------""---------------------------\n");
+                        // printf(" -------------------------------------------------------""---------------------------\n");
                         //	agentVelx[i]=(float)(position[i]->x - previous->x);
                         //	agentVely[i]=(float)(position[i]->y - previous->y);
 
                         for (j = 0; j < NAGENTS; j++) {
-                            // printf(" [4 4] at T 0: %i \n",
+                            // // printf(" [4 4] at T 0: %i \n",
                             // maze1[4][4].blockedAgent[0][0]);
                             if (i != j) {
-                                printf("\nWatching %i from %i..\n", i + 1, j + 1);
-                                printf("OBSERVING MOVING AGENT with lookahaead %i and ""previous [%d %d]\n",lookahead, previous->y, previous->x);
+                                // printf("\nWatching %i from %i..\n", i + 1, j + 1);
+                                // printf("OBSERVING MOVING AGENT with lookahaead %i and ""previous [%d %d]\n",lookahead, previous->y, previous->x);
 
                                 observe_agent2(j, i, lookahead, previous);
 
-                                printf("\nWatching %i from %i.. \n", j + 1, i + 1);
-                                printf("MOVING AGENT OBSERVING\n");
+                                // printf("\nWatching %i from %i.. \n", j + 1, i + 1);
+                                // printf("MOVING AGENT OBSERVING\n");
                                 observe_new_agents(i, j, lookahead); // Previous not used anymore
                             }
                         }
@@ -3824,13 +3824,13 @@ void test_rtaastar(int lookahead, int prunning) {
                   }
 
 
-                  printf("**DV of cell [%d %d]: [%.1f %.1f] for ag.
+                  // printf("**DV of cell [%d %d]: [%.1f %.1f] for ag.
                   %i\n",previous->y,previous->x,previous->vely[i],previous->velx[i],
                   i+1);
                    */
                         //	getchar();
 
-                        //	if (RUN1 >= 2 && robot_steps1 >= 0){printf("Angent[%d]
+                        //	if (RUN1 >= 2 && robot_steps1 >= 0){// printf("Angent[%d]
                         // A* Start [%d,%d] Goal [%d,%d] h:%f step:%d
                         // nei:%d\n",i,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,count_nei(position[i]));print_grid(position[i]->x,position[i]->y,position[i],goal[i]->x,goal[i]->y);getchar();}
                         if (position[i] == goal[i]) {
@@ -3847,27 +3847,27 @@ void test_rtaastar(int lookahead, int prunning) {
                             position[i]->blocked[0] = 0;
                             // position[i]->x=1;
                             // position[i]->y=1;
-                            printf("** LLEGO time_step:%d** %d finish:%d cost:%f total ""cost:%f, now at [%d %d]\n",time_step, i, NAGENTS - finish_all, agent_cost[i],total_cost, position[i]->y, position[i]->x);
+                            // printf("** LLEGO time_step:%d** %d finish:%d cost:%f total ""cost:%f, now at [%d %d]\n",time_step, i, NAGENTS - finish_all, agent_cost[i],total_cost, position[i]->y, position[i]->x);
                             // getchar();
 #endif
                             if (finish_all == 0) {
                                 multi_print_grid();
 
                                 total_cost = 0;
-                                printf("Costo por agente\n");
+                                // printf("Costo por agente\n");
                                 for (int a=0; a < NAGENTS; a++){
                                     total_cost += agent_cost[a];
-                                    printf("agent [%d] -> costo total: %f\n", a+1, agent_cost[a]);
+                                    // printf("agent [%d] -> costo total: %f\n", a+1, agent_cost[a]);
                                 }
                                 total_time_cost = 0;
-                                printf("Completion time por agente\n");
+                                // printf("Completion time por agente\n");
                                 for (int a; a < NAGENTS; a++) {
                                     total_time_cost += completion_time[a];
-                                    printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
+                                    // printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
                                 }
                                  ("Costo promedio: %f\n", total_cost / NAGENTS);
-                                printf("Tiempo en acabar: %d\n", time_step);
-                                printf("Tiempo promedio: %f\n", total_time_cost /  NAGENTS);
+                                // printf("Tiempo en acabar: %d\n", time_step);
+                                // printf("Tiempo promedio: %f\n", total_time_cost /  NAGENTS);
                                 getchar();
 
                                 return;
@@ -3887,15 +3887,15 @@ void test_rtaastar(int lookahead, int prunning) {
         // getchar();
     } // end  while(finish_all)
     if (finish_all != 0) {
-        printf("\nNOT ALL AGENTS WERE ABLE TO REACH THEIR GOALS!!! :( :(  (look: ""%i)\n",lookahead);
-        printf("\nNOT ALL AGENTS WERE ABLE TO REACH THEIR GOALS!!! :( :( \n");
-        printf("\nNOT ALL AGENTS WERE ABLE TO REACH THEIR GOALS!!! :( :( \n");
+        // printf("\nNOT ALL AGENTS WERE ABLE TO REACH THEIR GOALS!!! :( :(  (look: ""%i)\n",lookahead);
+        // printf("\nNOT ALL AGENTS WERE ABLE TO REACH THEIR GOALS!!! :( :( \n");
+        // printf("\nNOT ALL AGENTS WERE ABLE TO REACH THEIR GOALS!!! :( :( \n");
 
         // getchar();
     } else {
-        printf("\nGREAT!!!  ALL AGENTS WERE ABLE TO REACH THEIR GOALS in %i ""TIMESTEPS!!! :) :) \n",time_step);
-        printf("\nGREAT!!!  ALL AGENTS WERE ABLE TO REACH THEIR GOALS in %i ""TIMESTEPS!!! :) :) \n",time_step);
-        printf("\nGREAT!!!  ALL AGENTS WERE ABLE TO REACH THEIR GOALS in %i ""TIMESTEPS!!! :) :) \n",time_step);
+        // printf("\nGREAT!!!  ALL AGENTS WERE ABLE TO REACH THEIR GOALS in %i ""TIMESTEPS!!! :) :) \n",time_step);
+        // printf("\nGREAT!!!  ALL AGENTS WERE ABLE TO REACH THEIR GOALS in %i ""TIMESTEPS!!! :) :) \n",time_step);
+        // printf("\nGREAT!!!  ALL AGENTS WERE ABLE TO REACH THEIR GOALS in %i ""TIMESTEPS!!! :) :) \n",time_step);
         // getchar();
     }
 
@@ -3929,9 +3929,9 @@ void call_rtaastar() {
         avg_score[i] = 0;
         lookahead = look[i];
         last_finish[i] = 0;
-        printf("Now I is %i \n", i);
+        // printf("Now I is %i \n", i);
         int RUN1_agents = 0;
-        printf("lookahead == [%d] ___________________________________\n",lookahead);
+        // printf("lookahead == [%d] ___________________________________\n",lookahead);
 
         badpredictions[i] = 0;
 
@@ -3957,19 +3957,19 @@ void call_rtaastar() {
                     conflictType[a][j] = -1;
                 }
             }
-            printf("case == [%ld] ___________________________________\n", RUN1);
+            // printf("case == [%ld] ___________________________________\n", RUN1);
             srand(5 * RUN1 + 100);
             generate_maze(RUN1);
             gettimeofday(&tv11, NULL);
-            printf("NOW TEST RTA!!! \n");
+            // printf("NOW TEST RTA!!! \n");
             // getchar();
 
             // Call to method, one per iteration
             test_rtaastar(lookahead, prunning);
 
             gettimeofday(&tv22, NULL);
-            // printf("Agents Remaining: %i at RUN %i \n", finish_all,RUN1);
-            printf("Agents Remaining: %i at RUN %ld \n", finish_all, RUN1);
+            // // printf("Agents Remaining: %i at RUN %i \n", finish_all,RUN1);
+            // printf("Agents Remaining: %i at RUN %ld \n", finish_all, RUN1);
             badpredictions[i] = badpredictions[i] + badp;
             totalpredictions[i] = totalpredictions[i] + totp;
             avg_finish[i] =
@@ -3982,23 +3982,23 @@ void call_rtaastar() {
                     (float)(RUN1_agents + 1);
                 RUN1_agents = RUN1_agents + 1;
             }
-            printf("AVG # agents FINISH %f runagents %i\n", avg_finish[i],RUN1_agents);
-            printf("AVG COST %f, ", total_cost / (float)NAGENTS);
+            // printf("AVG # agents FINISH %f runagents %i\n", avg_finish[i],RUN1_agents);
+            // printf("AVG COST %f, ", total_cost / (float)NAGENTS);
             avg_score[i] = avg_score[i] + total_cost / (float)NAGENTS;
             total_time[i] = total_time[i] + time_step;
-            printf("FINISH TIME %i in avg %f TIMESTEPS\n", lastfinish,last_finish[i]);
-            printf(" Bad predictions: %i, Good: %i and total: %i, rate: %.1f \n",badp, goop, totp, (float)goop / (float)totp);
+            // printf("FINISH TIME %i in avg %f TIMESTEPS\n", lastfinish,last_finish[i]);
+            // printf(" Bad predictions: %i, Good: %i and total: %i, rate: %.1f \n",badp, goop, totp, (float)goop / (float)totp);
             ftimes[RUN1] = lastfinish;
             for (int a = 0; a < NAGENTS; a++) {
                 for (int j = 0; j < NAGENTS; j++) {
-                    printf("\nGoodPred for %i with %i: %.2f (%i/%i)", a + 1, j + 1,(float)good_pred_agents[a][j] / (float)pred_agents[a][j],good_pred_agents[a][j], pred_agents[a][j]);
+                    // printf("\nGoodPred for %i with %i: %.2f (%i/%i)", a + 1, j + 1,(float)good_pred_agents[a][j] / (float)pred_agents[a][j],good_pred_agents[a][j], pred_agents[a][j]);
                 }
             }
 
             time_astar += 1.0 * (tv22.tv_sec - tv11.tv_sec) +
                           1.0 * (tv22.tv_usec - tv11.tv_usec) / 1000000.0;
             robotmoves_total1 += robot_steps1;
-            // printf("TOTAL %i FINISH TIME %f o %i TIMESTEPS\n",i,total_time[i],
+            // // printf("TOTAL %i FINISH TIME %f o %i TIMESTEPS\n",i,total_time[i],
             // robotmoves_total1);
             // getchar();
             lastfinish = -1000;
@@ -4014,7 +4014,7 @@ void call_rtaastar() {
 #endif
 
             if ((salida = fopen("Output-mrtaa-1-step", "a")) == NULL) {
-                printf("No se puede abrir el archivo de salida");
+                // printf("No se puede abrir el archivo de salida");
             }
             fprintf(salida, "%d %f %d %d %lld %f %d %ld %lld %ld", lookahead,
                     solution_cost, NAGENTS, NAGENTS - finish_all, searches_astar1,
@@ -4047,7 +4047,7 @@ void call_rtaastar() {
                     good_pred_agents[a][j] = 0;
 
                     if (j != 0) {
-                        // printf("Acc to %i, AGENT %i moved UP: %i, DOWN: %i, LEFT:
+                        // // printf("Acc to %i, AGENT %i moved UP: %i, DOWN: %i, LEFT:
                         // %i, RIGHT:%i \n", a+1, j+1, obsNextCell[a][j][1],
                         // obsNextCell[a][j][3], obsNextCell[a][j][2],
                         // obsNextCell[a][j][0]);
@@ -4065,29 +4065,29 @@ void call_rtaastar() {
         lookahead = look[i];
         float op = 0;
         for (int r = 0; r < RUNS; r++) {
-            // printf(" %f , ", ftimes[r]);
+            // // printf(" %f , ", ftimes[r]);
             op = op + fabs(ftimes[r] - last_finish[i]);
-            // printf("%f\n", op);
+            // // printf("%f\n", op);
         }
 
         float stdv = sqrtf(op / (float)(RUNS - 1));
 
-        // printf("AVG COST FOR LOOK %i: ", lookahead);
-        //  printf("%f\n",  avg_score[i]/(float)RUNS);
+        // // printf("AVG COST FOR LOOK %i: ", lookahead);
+        //  // printf("%f\n",  avg_score[i]/(float)RUNS);
 
-        printf("\naccuracy of pred: %.1f",1 - ((float)badpredictions[i] / (float)totalpredictions[i]));
-        printf(" of %i predictions\n", totalpredictions[i]);
+        // printf("\naccuracy of pred: %.1f",1 - ((float)badpredictions[i] / (float)totalpredictions[i]));
+        // printf(" of %i predictions\n", totalpredictions[i]);
 
-        printf("AVG TIME FOR LOOK %i: ", lookahead);
-        //  printf("RUNS %i ", RUNS);
-        printf("%f\n", last_finish[i]);
-        printf("AVG AGENTS FINISHIN FOR LOOK %i: ", lookahead);
-        printf("%f  std %f \n", avg_finish[i], stdv);
+        // printf("AVG TIME FOR LOOK %i: ", lookahead);
+        //  // printf("RUNS %i ", RUNS);
+        // printf("%f\n", last_finish[i]);
+        // printf("AVG AGENTS FINISHIN FOR LOOK %i: ", lookahead);
+        // printf("%f  std %f \n", avg_finish[i], stdv);
 
         for (int a = 0; a < NAGENTS; a++) {
             for (int j = 0; j < NAGENTS; j++) {
                 if (j != 0) {
-                    //	printf("Acc to %i, AGENT %i moved UP: %i, DOWN: %i,
+                    //	// printf("Acc to %i, AGENT %i moved UP: %i, DOWN: %i,
                     // LEFT: %i, RIGHT:%i \n", a, j, obsNextCell[a][j][1],
                     // obsNextCell[a][j][3], obsNextCell[a][j][2],
                     // obsNextCell[a][j][0]);
