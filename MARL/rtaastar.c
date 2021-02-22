@@ -3624,7 +3624,7 @@ void test_rtaastar(int lookahead, int prunning) {
     }
 
     // Loop until all agents finish
-    while (finish_all && time_step <= MAX_TIME_STEPS) {
+    while (finish_all) {
         // printf("OBSERVING AGENTS\n");
         //			i = random() % NAGENTS;
         // For each agent in the problem..
@@ -3850,6 +3850,20 @@ void test_rtaastar(int lookahead, int prunning) {
                             // printf("** LLEGO time_step:%d** %d finish:%d cost:%f total ""cost:%f, now at [%d %d]\n",time_step, i, NAGENTS - finish_all, agent_cost[i],total_cost, position[i]->y, position[i]->x);
                             // getchar();
 #endif
+                            if (finish_all < 10) {
+                                multi_print_grid();
+                                printf("Quedan por llegar\n");
+                                for (int a = 0; a < NAGENTS; a++)
+                                {
+                                    if (!goal_reached[a])
+                                    {
+                                        printf("agente %d\n", a+1);
+                                    }    
+                                }
+                                
+                                
+                                getchar();
+                            }
                             if (finish_all == 0) {
                                 multi_print_grid();
 
