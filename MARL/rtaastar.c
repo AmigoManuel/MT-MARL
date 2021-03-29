@@ -3626,7 +3626,7 @@ void test_rtaastar(int lookahead, int prunning) {
     }
 
     // Loop until all agents finish
-    while (finish_all) {
+    while (finish_all && time_step <= MAX_TIME_STEPS) {
         if (enable_print) printf("OBSERVING AGENTS\n");
         //			i = random() % NAGENTS;
         // For each agent in the problem..
@@ -3644,13 +3644,13 @@ void test_rtaastar(int lookahead, int prunning) {
                 // getchar();
             }
 
-#ifdef RANDOMMOVES
+            #ifdef RANDOMMOVES
             if (goal_reached[i])
                 randommove(i);
             else {
-#else
+            #else
             if (position[i] != goal[i]) { // While it is not at its goal...
-#endif
+            #endif
 
                 // First, compute the shortest path, ignoring other agents...
                 if (!compute_shortestpath_astar(i, lookahead)) {
@@ -3725,17 +3725,17 @@ void test_rtaastar(int lookahead, int prunning) {
                             previous->blocked[0] = 0;
                         }
 
-                        
+                            
 
-                        /*for(int l=1;l<=lookahead;l++) WHAT TO Do INSTEAD OF THIS?
-                  {
-                     if(path[i][l]!=NULL)
-                  {
-                  if (enable_print) printf("PATH AT POS %i: [%d %d]\n", l, path[i][l]->y,
-                  path[i][l]->x);
-                  }
+                                /*for(int l=1;l<=lookahead;l++) WHAT TO Do INSTEAD OF THIS?
+                        {
+                            if(path[i][l]!=NULL)
+                        {
+                        if (enable_print) printf("PATH AT POS %i: [%d %d]\n", l, path[i][l]->y,
+                        path[i][l]->x);
+                        }
 
-                  }*/
+                        }*/
 
                         // if (enable_print) printf("REAL DEPTH %i", realDepth[i]);
                         if (position[i]->parent[i] == NULL) {
@@ -3809,27 +3809,27 @@ void test_rtaastar(int lookahead, int prunning) {
                             }
                         }
 
-                        // Agent updates DV of its previous position
-                        /*	if((previous->velx[i]<0.0001)&&(previous->vely[i]<0.0001))
-                  {
-                     previous->velx[i]=(float)(position[i]->x - previous->x);
-                     previous->vely[i]=(float)(position[i]->y - previous->y);
+                                    // Agent updates DV of its previous position
+                                    /*	if((previous->velx[i]<0.0001)&&(previous->vely[i]<0.0001))
+                            {
+                                previous->velx[i]=(float)(position[i]->x - previous->x);
+                                previous->vely[i]=(float)(position[i]->y - previous->y);
 
-                  }
-                  else
-                  {
-                     previous->velx[i]=(float)(position[i]->x -
-                  previous->x)*ALPHA + (float)previous->velx[i]*(1-ALPHA);
-                     previous->vely[i]=(float)(position[i]->y -
-                  previous->y)*ALPHA + (float)previous->vely[i]*(1-ALPHA);
+                            }
+                            else
+                            {
+                                previous->velx[i]=(float)(position[i]->x -
+                            previous->x)*ALPHA + (float)previous->velx[i]*(1-ALPHA);
+                                previous->vely[i]=(float)(position[i]->y -
+                            previous->y)*ALPHA + (float)previous->vely[i]*(1-ALPHA);
 
-                  }
+                            }
 
 
-                  if (enable_print) printf("**DV of cell [%d %d]: [%.1f %.1f] for ag.
-                  %i\n",previous->y,previous->x,previous->vely[i],previous->velx[i],
-                  i+1);
-                   */
+                            if (enable_print) printf("**DV of cell [%d %d]: [%.1f %.1f] for ag.
+                            %i\n",previous->y,previous->x,previous->vely[i],previous->velx[i],
+                            i+1);
+                            */
                         //	getchar();
 
                         //	if (RUN1 >= 2 && robot_steps1 >= 0){if (enable_print) printf("Angent[%d]
@@ -3843,17 +3843,20 @@ void test_rtaastar(int lookahead, int prunning) {
                             goal_reached[i] = 1;
                             solution_cost += agent_cost[i];
                             finish_all--;
-#ifndef RANDOMMOVES
-                            // position[i]->obstacle = 1;
                             position[i]->obstacle = 0;
-                            position[i]->blocked[0] = 0;
+                            for (int j = 0; j < 100; j++) {
+                                position[i]->blocked[j] = 0;
+                                position[i]->blockedAgent[i][j];
+                            }
+                            #ifndef RANDOMMOVES
+                            // position[i]->obstacle = 1;
                             // position[i]->x=1;
                             // position[i]->y=1;
                             if (enable_print) printf("** LLEGO time_step:%d** %d finish:%d cost:%f total ""cost:%f, now at [%d %d]\n",time_step, i, NAGENTS - finish_all, agent_cost[i],total_cost, position[i]->y, position[i]->x);
                             // getchar();
-#endif
+                            #endif
                             if (finish_all < 15) {
-                                enable_print = 1;
+                                // enable_print = 1;
                                 printf("lookahead = %d\n", lookahead);
                                 multi_print_grid();
                                 printf("Quedan por llegar\n");

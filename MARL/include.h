@@ -45,7 +45,7 @@
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */
 
 #define MAX_TIME_STEPS 1000
-#define NAGENTS 57
+#define NAGENTS 60
 // Medida de tiempo que el agente recuerda
 #define MEMORY 3
 
