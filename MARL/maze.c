@@ -60,7 +60,7 @@ void initialization_h_values_2D() {
                     if (cellpas->move[d]->h > cellpas->h + cellpas->cost[d]) {
                         // Actualiza el valor de h
                         cellpas->move[d]->h = cellpas->h + cellpas->cost[d];
-                        printf("H of cell [%d %d] is %f\n", cellpas->move[d]->y, cellpas->move[d]->x,cellpas->move[d]->h);
+                        printf("H of cell [%d %d] is %f for agent %d\n", cellpas->move[d]->y, cellpas->move[d]->x,cellpas->move[d]->h, a);
                         // Posiblemente sea un backup
                         cellpas->move[d]->key3 = cellpas->move[d]->h;
                         // Inserta la celda actualizada dentro del heap
@@ -70,6 +70,7 @@ void initialization_h_values_2D() {
             }
         }
     }
+    getchar();
 }
 
 /* Reserva memoria sobre cada celda,

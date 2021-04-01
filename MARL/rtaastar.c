@@ -331,7 +331,7 @@ void determine_constraints(int a, int lookahead, int formula,
 
     // Inicializa los valores sobre path evitando referencias a null
     for (int a = 0; a < NAGENTS; a++) {
-        for (int future = 0; future < 120; future++) {
+        for (int future = 0; future < 200; future++) {
             path[a][future] = currentCell;
         }
     }

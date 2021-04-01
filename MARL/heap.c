@@ -198,8 +198,8 @@ cell1 *popheap3() {
     thiscell = heap3[1];
     thiscell->heapindex3 = 0;
     percolatedown3(1, heap3[heapsize3--]);
-    printf("%d\n", thiscell->x);
-    printf("%d\n", thiscell->y);
+    // printf("%d\n", thiscell->x);
+    // printf("%d\n", thiscell->y);
     return thiscell;
 }
 
