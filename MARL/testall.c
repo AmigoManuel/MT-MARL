@@ -221,7 +221,7 @@ void generate_maze(int RUN1) {
     porc = (MAZEWIDTH * 0.1);
     
     // Dentro de agent_locations se almacenan los goals y starts de cada agente
-    int **agent_locations = read_agents_locations(locations_path);
+    agent_locations = read_agents_locations(locations_path);
     
     for (int a = 0; a < NAGENTS; a++) {
         out = 1;

@@ -26,8 +26,10 @@ void initialization_h_values_2D() {
     // Apuntador a celdas del laberinto
     cell1 *cellpas;
     int y, x;
-    // Por cada agente a
+
     for (int a = 0; a < NAGENTS; a++) {
+        // Maximo h actual
+        float maxH = 0.0;
         // y por cada casilla en el laberinto
         for (y = 0; y < MAZEHEIGHT; ++y){
             for (x = 0; x < MAZEWIDTH; ++x){
@@ -44,6 +46,10 @@ void initialization_h_values_2D() {
         cellpas->key3 = cellpas->h;
         // Inserta la casilla dentro del heap
         insertheap3(cellpas);
+
+        starty = agent_locations[a][2];
+        startx = agent_locations[a][3];
+        
         // Actualiza el heap
         while (topheap3() != NULL) {
             // toma el primer elemento del heap
@@ -60,17 +66,26 @@ void initialization_h_values_2D() {
                     if (cellpas->move[d]->h > cellpas->h + cellpas->cost[d]) {
                         // Actualiza el valor de h
                         cellpas->move[d]->h = cellpas->h + cellpas->cost[d];
-                        printf("H of cell [%d %d] is %f for agent %d\n", cellpas->move[d]->y, cellpas->move[d]->x,cellpas->move[d]->h, a);
+                        printf("H of cell [%d %d] is %f for agent %d\n", cellpas->move[d]->y, cellpas->move[d]->x, cellpas->move[d]->h, a);
                         // Posiblemente sea un backup
                         cellpas->move[d]->key3 = cellpas->move[d]->h;
                         // Inserta la celda actualizada dentro del heap
                         insertheap3(cellpas->move[d]);
+
+                        if (cellpas->move[d]->y == starty && cellpas->move[d]->x == startx) {
+                            maxH = cellpas->move[d]->h;
+                        }
+                        
+                        /* if (cellpas->move[d]->h > maxH) {
+                            maxH = cellpas->move[d]->h;
+                        } */
                     }
                 }
             }
         }
+        // Escribe sobre el arreglo de huristicas
+        hValueForAgent[a] = maxH;
     }
-    getchar();
 }
 
 /* Reserva memoria sobre cada celda,

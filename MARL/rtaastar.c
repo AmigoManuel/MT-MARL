@@ -250,7 +250,7 @@ void initialize_state(cell1 *tmpcell) {
 /* FIXME: Esta función no es llamada desde ningun lugar */
 int compare_path(int a, int j, int myConflictStep, int otherConflictStep,
                  int lookahead) {
-    float neigh_x, neigh_y, mine_x, mine_y;
+    /* float neigh_x, neigh_y, mine_x, mine_y;
     if (enable_print) printf("MyConflictStep: %i and Other: %i, real Depth: %i \n", myConflictStep, otherConflictStep, realDepth[a]);
     // En el mejor de los casos es posible ver los siguientes pasos previstos
     if ((myConflictStep < realDepth[a]) && (otherConflictStep < realDepth[j])) {
@@ -312,7 +312,7 @@ int compare_path(int a, int j, int myConflictStep, int otherConflictStep,
         if (enable_print) printf(" NON determined type of conflict, assumoing POINT intersection ""entre agentes %i y %i \n",a + 1, j + 1);
         conflictType[a][j] = 0;
     }
-    return 1;
+    return 1; */
 }
 
 /* TODO: Determina las situaciones de conflicto entre agentes,
@@ -3855,7 +3855,7 @@ void test_rtaastar(int lookahead, int prunning) {
                             if (enable_print) printf("** LLEGO time_step:%d** %d finish:%d cost:%f total ""cost:%f, now at [%d %d]\n",time_step, i, NAGENTS - finish_all, agent_cost[i],total_cost, position[i]->y, position[i]->x);
                             // getchar();
                             #endif
-                            if (finish_all < 15) {
+                            /* if (finish_all < 15) {
                                 // enable_print = 1;
                                 printf("lookahead = %d\n", lookahead);
                                 multi_print_grid();
@@ -3868,14 +3868,19 @@ void test_rtaastar(int lookahead, int prunning) {
                                     }    
                                 }
                                 getchar();
-                            }
+                            } */
                             
                             printf("continua %d\n", finish_all);
 
                             if (finish_all == 0) {
                                 multi_print_grid();
 
+                                enable_print = 1;
                                 total_cost = 0;
+                                printf("\nValores ideales:\n");
+                                for (int a = 0; a < NAGENTS; a++) {
+                                    if (enable_print) printf("agent [%d] -> valor H: %f\n", a, hValueForAgent[a]);
+                                }
                                 if (enable_print) printf("Costo por agente\n");
                                 for (int a=0; a < NAGENTS; a++){
                                     total_cost += agent_cost[a];

@@ -26,18 +26,7 @@
 
 #define RUNS 50
 #define RANDOMMAZE            /* must define this, becasue 8-connect maze can not be generated   */
-//#define MAZEWIDTH  256
-//#define MAZEHEIGHT  257
-//#define MAZEWIDTH  194
-//#define MAZEHEIGHT  194
-//#define MAZEWIDTH  530
-//#define MAZEHEIGHT  481
 
-//#define MAZEWIDTH  252
-//#define MAZEHEIGHT  163
-
-//#define MAZEWIDTH  10
-//#define MAZEHEIGHT  6
 #define MAZEWIDTH  34
 #define MAZEHEIGHT  34
 
@@ -45,15 +34,16 @@
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */
 
 #define MAX_TIME_STEPS 1000
-#define NAGENTS 60
+#define NAGENTS 20
 // Medida de tiempo que el agente recuerda
 #define MEMORY 3
 
 float hvalues[MAZEWIDTH * MAZEHEIGHT][NAGENTS];
 int agent_expansions[NAGENTS];
 float agent_cost[NAGENTS];
-
-
+// valores heuristicos A* por agente
+float hValueForAgent[NAGENTS];
+int **agent_locations;
 
 //#define DISPLAY
 #define STATISTICS     /* should disable this for timing, however it is necessay to count the number of propagation */
@@ -77,7 +67,7 @@ float agent_cost[NAGENTS];
 
 #ifdef EIGHTCONNECTED
 #define DIRECTIONS 8
-static int dx[8] = {1, 1, 0, -1,   -1, -1,  0,  1};
+    static int dx[8] = {1, 1, 0, -1, -1, -1, 0, 1};
 static int dy[8] = {0, 1, 1,  1,    0, -1, -1, -1};
 //nuevas    static int dx[8] = {0, -1, -1, -1,  0,  1, 1, 1};
 //    static int dy[8] = {1,  1,  0, -1, -1, -1, 0, 1};
@@ -86,8 +76,8 @@ static int reverse[8] = {4, 5, 6, 7, 0,  1,  2,  3};
 #else // 4-connected
 #define DIRECTIONS 5
 
-// Pares de movimientos en ejes x e y
-static int dx[DIRECTIONS] = {1, 0, -1, 0, 0};
+    // Pares de movimientos en ejes x e y
+    static int dx[DIRECTIONS] = {1, 0, -1, 0, 0};
 static int dy[DIRECTIONS] = {0, 1, 0, -1, 0};
 
 static int reverse[DIRECTIONS] = {2, 3, 0, 1, 4};
