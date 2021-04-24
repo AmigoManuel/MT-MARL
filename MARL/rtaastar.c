@@ -3855,7 +3855,7 @@ void test_rtaastar(int lookahead, int prunning) {
                             if (enable_print) printf("** LLEGO time_step:%d** %d finish:%d cost:%f total ""cost:%f, now at [%d %d]\n",time_step, i, NAGENTS - finish_all, agent_cost[i],total_cost, position[i]->y, position[i]->x);
                             // getchar();
                             #endif
-                            /* if (finish_all < 15) {
+                            if (finish_all < 15) {
                                 // enable_print = 1;
                                 printf("lookahead = %d\n", lookahead);
                                 multi_print_grid();
@@ -3868,9 +3868,9 @@ void test_rtaastar(int lookahead, int prunning) {
                                     }    
                                 }
                                 getchar();
-                            } */
+                            }
                             
-                            printf("continua %d\n", finish_all);
+                            // printf("continua %d\n", finish_all);
 
                             if (finish_all == 0) {
                                 multi_print_grid();
@@ -3879,7 +3879,7 @@ void test_rtaastar(int lookahead, int prunning) {
                                 total_cost = 0;
                                 printf("\nValores ideales:\n");
                                 for (int a = 0; a < NAGENTS; a++) {
-                                    if (enable_print) printf("agent [%d] -> valor H: %f\n", a, hValueForAgent[a]);
+                                    if (enable_print) printf("agent [%d] -> valor H: %f\n", a+1, hValueForAgent[a]);
                                 }
                                 if (enable_print) printf("Costo por agente\n");
                                 for (int a=0; a < NAGENTS; a++){
