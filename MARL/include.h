@@ -27,8 +27,8 @@
 #define RUNS 50
 #define RANDOMMAZE            /* must define this, becasue 8-connect maze can not be generated   */
 
-#define MAZEWIDTH  34
-#define MAZEHEIGHT  34
+#define MAZEWIDTH  12
+#define MAZEHEIGHT  11
 
 
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */

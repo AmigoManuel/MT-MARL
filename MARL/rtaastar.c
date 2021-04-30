@@ -118,7 +118,7 @@ struct timeval tv11, tv22, tv11a, tv22a, tv11b, tv22b, tv11c, tv22c, tv11d,
 
 long numberofexp, hsal;
 
-int enable_print = 0;
+int enable_print = 1;
 
 /* Inicialización de A* */
 void initialize_astar() {

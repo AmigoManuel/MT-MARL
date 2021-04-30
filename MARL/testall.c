@@ -31,8 +31,8 @@
 //"./GameMaps/brc202d.map2"
 //"./GameMaps/lak201d.map2"
 //"./GameMaps/bidi.map2"
-char map_path[50] = "./GameMaps/test8.map2";
-char locations_path[50] = "./GameMaps/test8.loc2";
+char map_path[50] = "./GameMaps/test12.map2";
+char locations_path[50] = "./GameMaps/test12.loc2";
 
 /* Lectura de mapa desde fichero externo 
  * @param filename string con el nombre del fichero */
