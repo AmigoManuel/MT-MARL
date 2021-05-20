@@ -210,7 +210,9 @@ void newrandommaze_astar() {
             // TODO: Posiblemente sea seguimiento del camino
             maze1[y][x].trace = NULL;
             // Una posible celda bloqueada por otro agente.
-            maze1[y][x].blocked[0] = 0;
+            for (int b = 0; b < 100; b++) {
+                maze1[y][x].blocked[b] = 0;
+            }
             // Por cada una de las direcciones posibles
             for (d1 = 0; d1 < DIRECTIONS; ++d1) {
                 /* Si no es encuentra un obstaculo en x,y,

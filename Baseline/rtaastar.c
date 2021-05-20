@@ -81,6 +81,8 @@ short finish_all = NAGENTS;
 int time_step;
 short goal_reached[NAGENTS];
 
+int enable_print = 0;
+
 cell1 *tmpcell1;
 cell1 *tmpcell2;
 struct timeval tv11, tv22, tv11a, tv22a, tv11b, tv22b, tv11c, tv22c, tv11d, tv22d, tv11e, tv22e;
@@ -129,28 +131,28 @@ void Multi_print_grid() {
             aoc = agent_acupation(tmpcell1);
             goc = goal_acupation(tmpcell1);
             if (maze1[y][x].obstacle == 1) {
-                printf("\e[42m");
-                printf("%2s", "#");
-                printf("\e[0m");
+                if (enable_print) printf("\e[42m");
+                if (enable_print) printf("%2s", "#");
+                if (enable_print) printf("\e[0m");
             } else {
                 if (aoc) {
-                    printf("\e[44m");
-                    printf("%2d", aoc);
-                    printf("\e[0m");
+                    if (enable_print) printf("\e[44m");
+                    if (enable_print) printf("%2d", aoc);
+                    if (enable_print) printf("\e[0m");
                 } else {
                     if (goc) {
-                        printf("\e[43m");
-                        printf("%2d", goc);
-                        printf("\e[0m");
+                        if (enable_print) printf("\e[43m");
+                        if (enable_print) printf("%2d", goc);
+                        if (enable_print) printf("\e[0m");
                     } else {
-                        printf("\e[31m");
-                        printf("%2d", 0);
-                        printf("\e[0m");
+                        if (enable_print) printf("\e[31m");
+                        if (enable_print) printf("%2d", 0);
+                        if (enable_print) printf("\e[0m");
                     }
                 }
             }
         }
-        printf("\n");
+        if (enable_print) printf("\n");
     }
 }
 //------------------------------------------------------------------------------------------------------
@@ -177,7 +179,7 @@ int computeshortestpath_astar(int a, int lookahead) {
 
     mazestart1 = position[a];
     mazegoal1 = goal[a];
-//	printf("a:%d [%d,%d]\n",a, position[a]->y,position[a]->x);
+//	if (enable_print) printf("a:%d [%d,%d]\n",a, position[a]->y,position[a]->x);
 
     mazeiteration1++;
     emptyheap2();
@@ -198,7 +200,7 @@ int computeshortestpath_astar(int a, int lookahead) {
 
     while (topheap2() != NULL) {
         tmpcell1 = topheap2();
-        //  printf("A* top a:%d [%d,%d] %d\n",a, tmpcell1->y,tmpcell1->x, mazeiteration1);
+        //  if (enable_print) printf("A* top a:%d [%d,%d] %d\n",a, tmpcell1->y,tmpcell1->x, mazeiteration1);
         if ((tmpcell1 == mazegoal1) || (cont_closed == lookahead)) {
             //  open_size = opensize2() + open_size;
 
@@ -212,7 +214,7 @@ int computeshortestpath_astar(int a, int lookahead) {
             }
             flag_success1 = 1;
             tmpcell1 = popheap2();
-            // printf("A* top a:%d [%d,%d] %d\n",a, tmpcell1->y,tmpcell1->x, mazeiteration1);
+            // if (enable_print) printf("A* top a:%d [%d,%d] %d\n",a, tmpcell1->y,tmpcell1->x, mazeiteration1);
             break;
         }
         tmpcell1 = popheap2();
@@ -226,12 +228,12 @@ int computeshortestpath_astar(int a, int lookahead) {
         ++agent_expansions[a];
         d = random() % DIRECTIONS;
         for (i = 0; i < DIRECTIONS; ++i) {
-            //	printf("d:%d\n",d);
-            //	if (tmpcell1->move[d]) printf("d:%d, %d %d %d\n",d, tmpcell1->move[d]->obstacle,tmpcell1->move[d]->blocked,tmpcell1->move[d]->overexpanded);
+            //	if (enable_print) printf("d:%d\n",d);
+            //	if (tmpcell1->move[d]) if (enable_print) printf("d:%d, %d %d %d\n",d, tmpcell1->move[d]->obstacle,tmpcell1->move[d]->blocked,tmpcell1->move[d]->overexpanded);
             if (tmpcell1->move[d] && (!tmpcell1->move[d]->obstacle) /*&& (!tmpcell1->move[d]->blocked)*/ &&
                 tmpcell1->move[d]->overexpanded != mazeiteration1) {
                 initialize_state(tmpcell1->move[d]);
-                //        printf("A* generation a:%d [%d,%d] %d\n",a, tmpcell1->move[d]->y,tmpcell1->move[d]->x, d);
+                //        if (enable_print) printf("A* generation a:%d [%d,%d] %d\n",a, tmpcell1->move[d]->y,tmpcell1->move[d]->x, d);
                 if (tmpcell1->move[d]->g > tmpcell1->g + tmpcell1->cost[d]) {
                     tmpcell1->move[d]->g = tmpcell1->g + tmpcell1->cost[d];
                     tmpcell1->move[d]->searchtree = tmpcell1;
@@ -249,7 +251,7 @@ int computeshortestpath_astar(int a, int lookahead) {
     if (flag_success1 == 1) {
 
         do {
-            //	printf("construyendo path :%d agente %d\n",++co,a+1);
+            //	if (enable_print) printf("construyendo path :%d agente %d\n",++co,a+1);
             cellpas->trace = NULL;   // tracing back a path from the goal back to the start
             while (cellpas != mazestart1) {
                 parent = cellpas->searchtree;
@@ -320,14 +322,14 @@ void test_rtaastar(int lookahead, int prunning) {
             //		  if (position[i]->trace || position[i]->trace
 
             if (RUN1 >= 0 && robot_steps1 >= 0) {
-                printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%lld time_step:%d terminado:%d\n", i + 1,
+                if (enable_print) printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%lld time_step:%d terminado:%d\n", i + 1,
                        position[i]->y, position[i]->x, goal[i]->y, goal[i]->x, position[i]->h, robot_steps1, time_step,
                        NAGENTS - finish_all);
                 Multi_print_grid();
                 for (k = 0; k < NAGENTS; k++)
-                    printf("(%d)[%d,%d]", k + 1, position[k]->y, position[k]->x);
-                printf("\n");
-                getchar();
+                    if (enable_print) printf("(%d)[%d,%d]", k + 1, position[k]->y, position[k]->x);
+                if (enable_print) printf("\n");
+                // getchar();
             }
 
 #ifdef RANDOMMOVES
@@ -342,9 +344,9 @@ void test_rtaastar(int lookahead, int prunning) {
 #endif
 
                 if (!computeshortestpath_astar(i, lookahead)) {
-                    //printf("***********************************************************************\n");
-                    //printf("*   A*  when mazeiteration1 = %d,    No path possible   !!!    *\n", mazeiteration1);
-                    //printf("***********************************************************************\n");
+                    //if (enable_print) printf("***********************************************************************\n");
+                    //if (enable_print) printf("*   A*  when mazeiteration1 = %d,    No path possible   !!!    *\n", mazeiteration1);
+                    //if (enable_print) printf("***********************************************************************\n");
                     //return;
                 } else {
                     previous = position[i];
@@ -356,7 +358,7 @@ void test_rtaastar(int lookahead, int prunning) {
                     previous->blocked = 0;
                     position[i]->blocked = 1;
                     travel_distance[i]++;
-                    //	if (RUN1 >= 2 && robot_steps1 >= 0){printf("Angent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%d nei:%d\n",i,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,count_nei(position[i]));print_grid(position[i]->x,position[i]->y,position[i],goal[i]->x,goal[i]->y);getchar();}
+                    //	if (RUN1 >= 2 && robot_steps1 >= 0){if (enable_print) printf("Angent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%d nei:%d\n",i,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,count_nei(position[i]));print_grid(position[i]->x,position[i]->y,position[i],goal[i]->x,goal[i]->y);getchar();}
                     if (position[i] == goal[i]) {
                         goal_reached[i] = 1;
                         solution_cost += agent_cost[i];
@@ -369,26 +371,31 @@ void test_rtaastar(int lookahead, int prunning) {
 #endif
                         if (finish_all == 0) {
 
+                            enable_print = 1;
+
                             total_cost = 0;
-                            printf("Costo por agente\n");
+                            if (enable_print) printf("Costo por agente\n");
                             for (int a; a < NAGENTS; a++) {
                                 total_cost += travel_distance[a];
-                                printf("agent [%d] -> costo total: %d\n", a + 1, travel_distance[a]);
+                                if (enable_print) printf("agent [%d] -> costo total: %d\n", a + 1, travel_distance[a]);
                             }
                             total_time = 0;
-                            printf("Completion time por agente\n");
+                            if (enable_print) printf("Completion time por agente\n");
                             for (int a; a < NAGENTS; a++) {
                                 total_time += completion_time[a];
-                                printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
+                                if (enable_print) printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
                             }
-                            printf("Costo promedio: %f\n", total_cost / NAGENTS);
-                            printf("Tiempo en acabar: %d\n", time_step);
-                            printf("Tiempo promedio: %f\n", total_time / NAGENTS);
+                            if (enable_print) printf("Costo promedio: %f\n", total_cost / NAGENTS);
+                            if (enable_print) printf("Tiempo en acabar: %d\n", time_step);
+                            if (enable_print) printf("Tiempo promedio: %f\n", total_time / NAGENTS);
 
                             getchar();
+
+                            enable_print = 0;
+                            
                             return;
                         }
-                        //	printf("** LLEGO time_step:%d** %d finish:%d cost:%f total cost:%f\n",time_step,i,NAGENTS-finish_all,agent_cost[i],total_cost);
+                        //	if (enable_print) printf("** LLEGO time_step:%d** %d finish:%d cost:%f total cost:%f\n",time_step,i,NAGENTS-finish_all,agent_cost[i],total_cost);
                     }
                 }
             }
@@ -417,13 +424,14 @@ void call_rtaastar() {
     for (prunning = 0; prunning < 1; prunning++)
         for (i = 0; i < 4; i++) {
             lookahead = look[i];
-            printf("lookahead == [%d] ___________________________________\n", lookahead);
+            if (enable_print) printf("lookahead == [%d] ___________________________________\n", lookahead);
             for (RUN1 = 0; RUN1 < RUNS; ++RUN1) {
-                printf("case == [%ld] ___________________________________\n", RUN1);
+                if (enable_print) printf("case == [%ld] ___________________________________\n", RUN1);
                 srand(5 * RUN1 + 100);
                 generate_maze(RUN1);
                 gettimeofday(&tv11, NULL);
                 test_rtaastar(lookahead, prunning);
+                emptyheap3();
                 gettimeofday(&tv22, NULL);
                 time_astar += 1.0 * (tv22.tv_sec - tv11.tv_sec) + 1.0 * (tv22.tv_usec - tv11.tv_usec) / 1000000.0;
                 robotmoves_total1 += robot_steps1;
@@ -438,7 +446,7 @@ void call_rtaastar() {
 
 
                 if ((salida = fopen("Output-mrtaa-1-step", "a")) == NULL) {
-                    printf("No se puede abrir el archivo de salida");
+                    if (enable_print) printf("No se puede abrir el archivo de salida");
                 }
                 fprintf(salida, "%d %f %d %d %lld %f %d %ld %lld %ld", lookahead, solution_cost, NAGENTS,
                         NAGENTS - finish_all, searches_astar1, (time_astar - time_astar_initialize1) * 1000,

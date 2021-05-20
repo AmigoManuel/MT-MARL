@@ -118,7 +118,7 @@ struct timeval tv11, tv22, tv11a, tv22a, tv11b, tv22b, tv11c, tv22c, tv11d,
 
 long numberofexp, hsal;
 
-int enable_print = 1;
+int enable_print = 0;
 
 /* Inicialización de A* */
 void initialize_astar() {
@@ -2713,6 +2713,19 @@ void observe_agent2(int a, int i, int lookahead, cell1 *previous) {
 }
 
 void observe_agent(int a, int i, int lookahead, cell1 *previous) {
+    /* for (int n = 0; n < 100; n++) {
+        for (int m = 0; m < 3; m++) {
+            mostProbPositionXY[a][i][n][m] = 0;
+        }
+    }
+
+    for (int n = 0; n < 3; n++) {
+        for (int m = 0; m < 3; m++) {
+            track[a][i][n][m] = -1;
+        }
+    } */
+    
+    
     if ((!goal_reached[i]) &&
         (((abs(position[i]->x - position[a]->x) +
            abs(position[i]->y - position[a]->y)) <= (lookahead)) &&
@@ -2721,6 +2734,10 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
         canSee[a][i] = 1;
         if (enable_print) printf("Agent %i at [%d %d] can see agent %i at [%d %d]\n", a + 1,position[a]->y, position[a]->x, i + 1, position[i]->y,position[i]->x);
         totp++;
+        
+        printf("%d - %d -", mostProbPositionXY[a][i][1][0], mostProbPositionXY[a][i][1][1]);
+        getchar();
+
         if ((mostProbPositionXY[a][i][1][0] == position[i]->x) &&
             (mostProbPositionXY[a][i][1][1] == position[i]->y)) {
             if (enable_print) printf("good prediction!!!");
@@ -3564,13 +3581,14 @@ void test_rtaastar(int lookahead, int prunning) {
     int y, x, i, j, k;
     long int m;
 
-    gettimeofday(&tv11c, NULL);
+    // gettimeofday(&tv11c, NULL);
     if (enable_print) printf("\nGENERATING RANDOMMAZE\n");
     newrandommaze_astar();
     if (enable_print) printf("\nDONE\n");
-    gettimeofday(&tv22c, NULL);
+    // gettimeofday(&tv22c, NULL);
     time_astar_initialize1 += 1.0 * (tv22c.tv_sec - tv11c.tv_sec) +
                               1.0 * (tv22c.tv_usec - tv11c.tv_usec) / 1000000.0;
+    time_astar_initialize1 = 0;
     for (int d = 0; d < NAGENTS; d++) {
         for (y = 0; y < MAZEHEIGHT; ++y) {
             for (x = 0; x < MAZEWIDTH; ++x) {
@@ -3615,11 +3633,10 @@ void test_rtaastar(int lookahead, int prunning) {
                 // Role=1 means I am not deferent to agent j
                 // Role=0 means taht I am deferent to agent i
 
-                if (enable_print) printf("\nWatching %i from %i.. \n", i + 1, j + 1);
+                if (enable_print) printf("Watching %i from %i.. \n", i + 1, j + 1);
                 // if (enable_print) printf("OBSERVING AGENTS\n");
 
                 observe_agent(j, i, lookahead, position[i]);
-
                 //	if (enable_print) printf("\n now %i\n ", maze1[5][3].blockedAgent[3][0]);
             }
         }
@@ -3636,12 +3653,12 @@ void test_rtaastar(int lookahead, int prunning) {
                 // step:%d time_step:%d
                 // terminado:%d\n",i+1,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,time_step,NAGENTS-finish_all);
                 // print the grid
-                // multi_print_grid();
+                if (i==0) multi_print_grid();
                 for (k = 0; k < NAGENTS; k++) {
                     if (enable_print) printf("(%d)[%d,%d]....(%i and %i) ", k + 1, position[k]->y,position[k]->x, role[0][1], role[1][0]);
                 }
                 if (enable_print) printf("\n");
-                // getchar();
+                if (i==0) getchar();
             }
 
             #ifdef RANDOMMOVES
@@ -3855,7 +3872,7 @@ void test_rtaastar(int lookahead, int prunning) {
                             if (enable_print) printf("** LLEGO time_step:%d** %d finish:%d cost:%f total ""cost:%f, now at [%d %d]\n",time_step, i, NAGENTS - finish_all, agent_cost[i],total_cost, position[i]->y, position[i]->x);
                             // getchar();
                             #endif
-                            if (finish_all < 15) {
+                            /* if (finish_all < 15) {
                                 // enable_print = 1;
                                 printf("lookahead = %d\n", lookahead);
                                 multi_print_grid();
@@ -3868,7 +3885,7 @@ void test_rtaastar(int lookahead, int prunning) {
                                     }    
                                 }
                                 getchar();
-                            }
+                            } */
                             
                             // printf("continua %d\n", finish_all);
 
@@ -3895,8 +3912,15 @@ void test_rtaastar(int lookahead, int prunning) {
                                  ("Costo promedio: %f\n", total_cost / NAGENTS);
                                 if (enable_print) printf("Tiempo en acabar: %d\n", time_step);
                                 if (enable_print) printf("Tiempo promedio: %f\n", total_time_cost /  NAGENTS);
-                                getchar();
 
+                                float hSuma = 0;
+                                for (int a = 0; a < NAGENTS; a++) hSuma = hSuma + hValueForAgent[a];
+                                float hMean = hSuma / NAGENTS;
+
+                                if (enable_print) printf("Promedio A*: %f\n", hMean);
+
+                                getchar();
+                                enable_print = 0;
                                 return;
                             }
                         }
@@ -3947,7 +3971,7 @@ void call_rtaastar() {
         total_time[(int)(sizeof(look) / (float)sizeof(int))];
     float avg_finish[(int)(sizeof(look) / (float)sizeof(int))],
         last_finish[(int)(sizeof(look) / (float)sizeof(int))];
-    srand(time(NULL));
+    // srand(time(NULL));
     float ftimes[RUNS];
     // for (prunning = 0; prunning <1; prunning++)
     for (i = 0; i < (int)(sizeof(look) / (float)sizeof(int)); i++) {
@@ -3985,16 +4009,16 @@ void call_rtaastar() {
                 }
             }
             if (enable_print) printf("case == [%ld] ___________________________________\n", RUN1);
-            srand(5 * RUN1 + 100);
+            // srand(5 * RUN1 + 100);
             generate_maze(RUN1);
-            gettimeofday(&tv11, NULL);
+            // gettimeofday(&tv11, NULL);
             if (enable_print) printf("NOW TEST RTA!!! \n");
             // getchar();
 
             // Call to method, one per iteration
             test_rtaastar(lookahead, prunning);
 
-            gettimeofday(&tv22, NULL);
+            // gettimeofday(&tv22, NULL);
             // if (enable_print) printf("Agents Remaining: %i at RUN %i \n", finish_all,RUN1);
             if (enable_print) printf("Agents Remaining: %i at RUN %ld \n", finish_all, RUN1);
             badpredictions[i] = badpredictions[i] + badp;
@@ -4029,7 +4053,7 @@ void call_rtaastar() {
             // robotmoves_total1);
             // getchar();
             lastfinish = -1000;
-#ifdef STATISTICS
+            #ifdef STATISTICS
             if (times_of_billion1 > 0)
                 average_expansion_persearch =
                     ((float)1000000000 / (float)searches_astar1 *
@@ -4038,7 +4062,7 @@ void call_rtaastar() {
             else
                 average_expansion_persearch =
                     ((float)statexpanded1 / (float)searches_astar1);
-#endif
+            #endif
 
             if ((salida = fopen("Output-mrtaa-1-step", "a")) == NULL) {
                 if (enable_print) printf("No se puede abrir el archivo de salida");
