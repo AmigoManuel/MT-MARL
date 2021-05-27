@@ -294,6 +294,7 @@ int main(int argc, char *argv[]) {
         strcpy(map_path, argv[1]);
         strcpy(locations_path, argv[2]);
     }
+    remove("log-resultados");
 
     #ifdef UNKNOWN
     #ifdef DECREASE

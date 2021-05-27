@@ -3894,6 +3894,38 @@ void test_rtaastar(int lookahead, int prunning) {
 
                                 enable_print = 1;
                                 total_cost = 0;
+
+                                FILE *fp;
+
+                                fp = fopen("log-resultados", "a+");
+
+                                fprintf(fp, "\n RUN: %ld\n", RUN1);
+                                fprintf(fp, "\nValores ideales:\n");
+                                for (int a = 0; a < NAGENTS; a++)
+                                {
+                                    fprintf(fp, "agent [%d] -> valor H: %f\n", a + 1, hValueForAgent[a]);
+                                }
+                                fprintf(fp, "Costo por agente\n");
+                                for (int a = 0; a < NAGENTS; a++)
+                                {
+                                    total_cost += agent_cost[a];
+                                    fprintf(fp, "agent [%d] -> costo total: %f\n", a + 1, agent_cost[a]);
+                                }
+                                float total_time_cost = 0;
+                                fprintf(fp, "Completion time por agente\n");
+                                for (int a; a < NAGENTS; a++)
+                                {
+                                    total_time_cost += completion_time[a];
+                                    fprintf(fp, "agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
+                                }
+                                ("Costo promedio: %f\n", total_cost / NAGENTS);
+                                fprintf(fp, "Tiempo en acabar: %d\n", time_step);
+                                fprintf(fp, "Tiempo promedio: %f\n", total_time_cost / NAGENTS);
+
+                                fclose(fp);
+                                getchar();
+
+                                /* total_cost = 0;
                                 printf("\nValores ideales:\n");
                                 for (int a = 0; a < NAGENTS; a++) {
                                     if (enable_print) printf("agent [%d] -> valor H: %f\n", a+1, hValueForAgent[a]);
@@ -3919,7 +3951,8 @@ void test_rtaastar(int lookahead, int prunning) {
 
                                 if (enable_print) printf("Promedio A*: %f\n", hMean);
 
-                                getchar();
+                                getchar(); */
+                                
                                 enable_print = 0;
                                 return;
                             }
