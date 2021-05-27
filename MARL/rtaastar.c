@@ -2713,7 +2713,7 @@ void observe_agent2(int a, int i, int lookahead, cell1 *previous) {
 }
 
 void observe_agent(int a, int i, int lookahead, cell1 *previous) {
-    /* for (int n = 0; n < 100; n++) {
+    for (int n = 0; n < 100; n++) {
         for (int m = 0; m < 3; m++) {
             mostProbPositionXY[a][i][n][m] = 0;
         }
@@ -2723,7 +2723,7 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
         for (int m = 0; m < 3; m++) {
             track[a][i][n][m] = -1;
         }
-    } */
+    }
     
     
     if ((!goal_reached[i]) &&
@@ -2735,9 +2735,6 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
         if (enable_print) printf("Agent %i at [%d %d] can see agent %i at [%d %d]\n", a + 1,position[a]->y, position[a]->x, i + 1, position[i]->y,position[i]->x);
         totp++;
         
-        printf("%d - %d -", mostProbPositionXY[a][i][1][0], mostProbPositionXY[a][i][1][1]);
-        getchar();
-
         if ((mostProbPositionXY[a][i][1][0] == position[i]->x) &&
             (mostProbPositionXY[a][i][1][1] == position[i]->y)) {
             if (enable_print) printf("good prediction!!!");
@@ -3608,6 +3605,7 @@ void test_rtaastar(int lookahead, int prunning) {
         backtrack[i] = 0;
         initialCellX[i] = position[i]->x;
         initialCellY[i] = position[i]->y;
+        
 
         for (int y = 0; y < MAZEHEIGHT; ++y) {
             for (int x = 0; x < MAZEWIDTH; ++x) {
@@ -3623,12 +3621,14 @@ void test_rtaastar(int lookahead, int prunning) {
             }
         }
     }
+    
+    
 
     // First observation
     for (i = 0; i < NAGENTS; i++) {
         for (j = 0; j < NAGENTS; j++) {
             if (i != j) {
-                canSee[i][k] = 0;
+                canSee[i][j] = 0;
                 role[i][j] = -1;
                 // Role=1 means I am not deferent to agent j
                 // Role=0 means taht I am deferent to agent i
@@ -3636,7 +3636,7 @@ void test_rtaastar(int lookahead, int prunning) {
                 if (enable_print) printf("Watching %i from %i.. \n", i + 1, j + 1);
                 // if (enable_print) printf("OBSERVING AGENTS\n");
 
-                observe_agent(j, i, lookahead, position[i]);
+                // observe_agent(j, i, lookahead, position[i]);
                 //	if (enable_print) printf("\n now %i\n ", maze1[5][3].blockedAgent[3][0]);
             }
         }
