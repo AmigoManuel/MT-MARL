@@ -1388,7 +1388,10 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
         // End Previous code
 
-        d = rand() % DIRECTIONS;
+        // Se fuerza la dirección y se evita aleatoriedad
+        // CUIDADO: Esto influencia el camino a utiliza
+        // d = rand() % DIRECTIONS;
+        d = 1;
         for (i = 0; i < DIRECTIONS; ++i) {
             if (tmpcell1->move[d]) {
                 if (enable_print) printf("\n********************************************************");
@@ -3636,7 +3639,7 @@ void test_rtaastar(int lookahead, int prunning) {
                 if (enable_print) printf("Watching %i from %i.. \n", i + 1, j + 1);
                 // if (enable_print) printf("OBSERVING AGENTS\n");
 
-                // observe_agent(j, i, lookahead, position[i]);
+                observe_agent(j, i, lookahead, position[i]);
                 //	if (enable_print) printf("\n now %i\n ", maze1[5][3].blockedAgent[3][0]);
             }
         }
@@ -3913,7 +3916,7 @@ void test_rtaastar(int lookahead, int prunning) {
                                 }
                                 float total_time_cost = 0;
                                 fprintf(fp, "Completion time por agente\n");
-                                for (int a; a < NAGENTS; a++)
+                                for (int a = 0; a < NAGENTS; a++)
                                 {
                                     total_time_cost += completion_time[a];
                                     fprintf(fp, "agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);

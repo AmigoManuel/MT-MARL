@@ -2,166 +2,37 @@
  RUN: 0
 
 Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
+agent [1] -> valor H: 1.000000
+agent [2] -> valor H: 17.000000
+agent [3] -> valor H: 5.000000
+agent [4] -> valor H: 9.000000
+agent [5] -> valor H: 2.000000
+agent [6] -> valor H: 10.000000
+agent [7] -> valor H: 10.000000
+agent [8] -> valor H: 4.000000
+agent [9] -> valor H: 1.000000
+agent [10] -> valor H: 15.000000
 Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 14.000000
-agent [3] -> costo total: 13.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 3.000000
+agent [1] -> costo total: 1.000000
+agent [2] -> costo total: 17.000000
+agent [3] -> costo total: 5.000000
+agent [4] -> costo total: 9.000000
+agent [5] -> costo total: 2.000000
+agent [6] -> costo total: 10.000000
+agent [7] -> costo total: 10.000000
+agent [8] -> costo total: 4.000000
+agent [9] -> costo total: 1.000000
+agent [10] -> costo total: 15.000000
 Completion time por agente
-agent [1] -> tiempo total: 16
-agent [2] -> tiempo total: 14
-agent [3] -> tiempo total: 16
-agent [4] -> tiempo total: 4
-agent [5] -> tiempo total: 4
-Tiempo en acabar: 16
-Tiempo promedio: 0.000000
-
- RUN: 1
-
-Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
-Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 14.000000
-agent [3] -> costo total: 17.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 3.000000
-Completion time por agente
-Tiempo en acabar: 18
-Tiempo promedio: 0.000000
-
- RUN: 2
-
-Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
-Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 14.000000
-agent [3] -> costo total: 15.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 3.000000
-Completion time por agente
-Tiempo en acabar: 16
-Tiempo promedio: 0.000000
-
- RUN: 3
-
-Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
-Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 14.000000
-agent [3] -> costo total: 15.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 3.000000
-Completion time por agente
-Tiempo en acabar: 16
-Tiempo promedio: 0.000000
-
- RUN: 4
-
-Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
-Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 16.000000
-agent [3] -> costo total: 15.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 5.000000
-Completion time por agente
-Tiempo en acabar: 18
-Tiempo promedio: 0.000000
-
- RUN: 5
-
-Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
-Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 14.000000
-agent [3] -> costo total: 13.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 5.000000
-Completion time por agente
-Tiempo en acabar: 16
-Tiempo promedio: 0.000000
-
- RUN: 6
-
-Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
-Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 14.000000
-agent [3] -> costo total: 15.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 3.000000
-Completion time por agente
-Tiempo en acabar: 16
-Tiempo promedio: 0.000000
-
- RUN: 7
-
-Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
-Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 14.000000
-agent [3] -> costo total: 15.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 3.000000
-Completion time por agente
-Tiempo en acabar: 16
-Tiempo promedio: 0.000000
-
- RUN: 8
-
-Valores ideales:
-agent [1] -> valor H: 16.000000
-agent [2] -> valor H: 14.000000
-agent [3] -> valor H: 11.000000
-agent [4] -> valor H: 4.000000
-agent [5] -> valor H: 1.000000
-Costo por agente
-agent [1] -> costo total: 16.000000
-agent [2] -> costo total: 14.000000
-agent [3] -> costo total: 15.000000
-agent [4] -> costo total: 4.000000
-agent [5] -> costo total: 5.000000
-Completion time por agente
-Tiempo en acabar: 16
-Tiempo promedio: 0.000000
+agent [1] -> tiempo total: 1
+agent [2] -> tiempo total: 17
+agent [3] -> tiempo total: 5
+agent [4] -> tiempo total: 10
+agent [5] -> tiempo total: 2
+agent [6] -> tiempo total: 10
+agent [7] -> tiempo total: 10
+agent [8] -> tiempo total: 4
+agent [9] -> tiempo total: 1
+agent [10] -> tiempo total: 15
+Tiempo en acabar: 17
+Tiempo promedio: 7.500000
