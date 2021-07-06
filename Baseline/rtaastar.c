@@ -131,28 +131,28 @@ void Multi_print_grid() {
             aoc = agent_acupation(tmpcell1);
             goc = goal_acupation(tmpcell1);
             if (maze1[y][x].obstacle == 1) {
-                if (enable_print) printf("\e[42m");
-                if (enable_print) printf("%2s", "#");
-                if (enable_print) printf("\e[0m");
+                printf("\e[42m");
+                printf("%2s", "#");
+                printf("\e[0m");
             } else {
                 if (aoc) {
-                    if (enable_print) printf("\e[44m");
-                    if (enable_print) printf("%2d", aoc);
-                    if (enable_print) printf("\e[0m");
+                    printf("\e[44m");
+                    printf("%2d", aoc);
+                    printf("\e[0m");
                 } else {
                     if (goc) {
-                        if (enable_print) printf("\e[43m");
-                        if (enable_print) printf("%2d", goc);
-                        if (enable_print) printf("\e[0m");
+                        printf("\e[43m");
+                        printf("%2d", goc);
+                        printf("\e[0m");
                     } else {
-                        if (enable_print) printf("\e[31m");
-                        if (enable_print) printf("%2d", 0);
-                        if (enable_print) printf("\e[0m");
+                        printf("\e[31m");
+                        printf("%2d", 0);
+                        printf("\e[0m");
                     }
                 }
             }
         }
-        if (enable_print) printf("\n");
+        printf("\n");
     }
 }
 //------------------------------------------------------------------------------------------------------
@@ -325,7 +325,11 @@ void test_rtaastar(int lookahead, int prunning) {
                 if (enable_print) printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%lld time_step:%d terminado:%d\n", i + 1,
                        position[i]->y, position[i]->x, goal[i]->y, goal[i]->x, position[i]->h, robot_steps1, time_step,
                        NAGENTS - finish_all);
-                Multi_print_grid();
+                if (i == NAGENTS - 1){
+                    Multi_print_grid();
+                    getchar();
+                }
+
                 for (k = 0; k < NAGENTS; k++)
                     if (enable_print) printf("(%d)[%d,%d]", k + 1, position[k]->y, position[k]->x);
                 if (enable_print) printf("\n");

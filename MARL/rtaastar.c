@@ -1390,8 +1390,8 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
         // Se fuerza la dirección y se evita aleatoriedad
         // CUIDADO: Esto influencia el camino a utiliza
-        // d = rand() % DIRECTIONS;
-        d = 1;
+        d = rand() % DIRECTIONS;
+        // d = 1;
         for (i = 0; i < DIRECTIONS; ++i) {
             if (tmpcell1->move[d]) {
                 if (enable_print) printf("\n********************************************************");
@@ -2836,14 +2836,12 @@ void updateHistory(int a, int i, int lookahead, cell1 *previous) {
         if (enable_print) printf("Time %i: [%i %i] \n", t, track[a][i][t][1], track[a][i][t][0]);
     }
 
-    if (track[a][i][1][0] !=
-        -1) // The agent has at least two observations of its neighbor i
+    if (track[a][i][1][0] != -1) // The agent has at least two observations of its neighbor i
     {
         updateProbabilities(a, i);
     }
 
-    if (track[a][i][1][0] !=
-        -1) // The agent has at least two observations of its neighbor i
+    if (track[a][i][1][0] != -1) // The agent has at least two observations of its neighbor i
     {
         if ((track[a][i][1][1] == track[a][i][0][1]) &&
             (track[a][i][1][0] == track[a][i][0][0])) {
@@ -2932,16 +2930,11 @@ void updateProbabilities(int a, int i) {
                          obsNextCell[a][i][1] + obsNextCell[a][i][3] +
                          obsNextCell[a][i][4];
 
-    nextCellProb[a][i][0] =
-        100 * (float)obsNextCell[a][i][0] / (float)total_nextCell;
-    nextCellProb[a][i][1] =
-        100 * (float)obsNextCell[a][i][1] / (float)total_nextCell;
-    nextCellProb[a][i][2] =
-        100 * (float)obsNextCell[a][i][2] / (float)total_nextCell;
-    nextCellProb[a][i][3] =
-        100 * (float)obsNextCell[a][i][3] / (float)total_nextCell;
-    nextCellProb[a][i][4] =
-        100 * (float)obsNextCell[a][i][4] / (float)total_nextCell;
+    nextCellProb[a][i][0] = 100 * (float)obsNextCell[a][i][0] / (float)total_nextCell;
+    nextCellProb[a][i][1] = 100 * (float)obsNextCell[a][i][1] / (float)total_nextCell;
+    nextCellProb[a][i][2] = 100 * (float)obsNextCell[a][i][2] / (float)total_nextCell;
+    nextCellProb[a][i][3] = 100 * (float)obsNextCell[a][i][3] / (float)total_nextCell;
+    nextCellProb[a][i][4] = 100 * (float)obsNextCell[a][i][4] / (float)total_nextCell;
 
     if (enable_print) printf("Observed Probabilities: DOWN %.1f, UP %.1f, LEFT %.1f , RIGHT %.1f\n",nextCellProb[a][i][1], nextCellProb[a][i][3], nextCellProb[a][i][2],nextCellProb[a][i][0]);
 }
@@ -3651,6 +3644,7 @@ void test_rtaastar(int lookahead, int prunning) {
         //			i = random() % NAGENTS;
         // For each agent in the problem..
         for (i = 0; i < NAGENTS; i++) {
+
             if (RUN1 >= 0 && robot_steps1 >= 0) {
                 // if (enable_print) printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f
                 // step:%d time_step:%d
@@ -3801,8 +3795,6 @@ void test_rtaastar(int lookahead, int prunning) {
                         previous->trace = NULL;
                         previous->blocked[0] = 0;
 
-                        for (j = 0; j < NAGENTS; j++) {
-                        }
                         position[i]->blocked[0] = 1;
                         if (enable_print) printf(" Me movi a %d %d", position[i]->y, position[i]->x);
                         if (enable_print) printf(" con H %.1f \n",hvalues[MAZEWIDTH * position[i]->y + position[i]->x][i]);
@@ -4001,7 +3993,7 @@ void call_rtaastar() {
     // Valor limite para lookahead
     int lookahead;
     int prunning, i;
-    int look[1] = {4}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
+    int look[4] = {4,5,8,14}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
     float total_score[(int)(sizeof(look) / (float)sizeof(int))],
         avg_score[(int)(sizeof(look) / (float)sizeof(int))],
         total_time[(int)(sizeof(look) / (float)sizeof(int))];
@@ -4148,6 +4140,7 @@ void call_rtaastar() {
 
     } // end lookahead
 
+    enable_print = 1;
     for (int i = 0; i < (int)(sizeof(look) / (float)sizeof(int)); i++) {
         lookahead = look[i];
         float op = 0;

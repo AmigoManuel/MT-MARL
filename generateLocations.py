@@ -1,6 +1,6 @@
 from random import randint
 
-map_file = open("C:/Users/diazu/MT-MARL/MARL/GameMaps/test9.map2", 'r')
+map_file = open("C:/Users/diazu/MT-MARL/MARL/GameMaps/test88.map2", 'r')
 
 
 class Agent:
@@ -22,7 +22,7 @@ class Agent:
 lines = map_file.read().splitlines()
 width = len(lines[0]) - 1
 height = len(lines) - 1
-n = 10
+n = 100
 index = 0
 
 mapped_loc = []
