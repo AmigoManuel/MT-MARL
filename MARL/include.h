@@ -37,7 +37,7 @@
 #define MAX_TIME_STEPS 1000
 
 //#define NAGENTS 20
- #define NAGENTS 60
+ #define NAGENTS 50
 
 // Medida de tiempo que el agente recuerda
 #define MEMORY 3

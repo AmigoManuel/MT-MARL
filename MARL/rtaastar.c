@@ -2474,14 +2474,14 @@ int compute_constraintpath(int a, int lookahead) {
                 }
             }
 
-            /*
-          * if (flag_success1 == 1)
+            
+          if (flag_success1 == 1)
    {
 
       do{
       //	if (enable_print) printf("construyendo path :%d agente %d\n",++co,a+1);
-         cellpas->trace = NULL;   // tracing back a path from the goal back to
-   the start while(cellpas != mazestart1)
+         cellpas->trace = NULL;   // tracing back a path from the goal back to the start
+         while(cellpas != mazestart1)
          {
             parent = cellpas->searchtree;
             parent->trace = cellpas;
@@ -2490,7 +2490,7 @@ int compute_constraintpath(int a, int lookahead) {
          if (mazestart1->trace->blocked != 1) break;
          cellpas = popheap2();
       }while (topheap2() != NULL);
-   } */
+   }
 
             if (sizeheap2() == 1) {
                 if (enable_print) printf(" QUEDA UNOOOOOOOOOOOOO size %i\n", sizeheap2());
@@ -2513,7 +2513,6 @@ int compute_constraintpath(int a, int lookahead) {
             cellpas->searchtree = cellpas->tmpsearchtree[cellpas->depth[a]];
         } while (cellpas != NULL); //(cellpas != NULL); //
     }                              // end if (flag_success1 == 1)
-
     return (flag_success1);
 }
 
@@ -3639,7 +3638,7 @@ void test_rtaastar(int lookahead, int prunning) {
     }
 
     // Loop until all agents finish
-    while (finish_all && time_step <= MAX_TIME_STEPS) {
+    while (finish_all) {
         if (enable_print) printf("OBSERVING AGENTS\n");
         //			i = random() % NAGENTS;
         // For each agent in the problem..
@@ -3650,12 +3649,12 @@ void test_rtaastar(int lookahead, int prunning) {
                 // step:%d time_step:%d
                 // terminado:%d\n",i+1,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,time_step,NAGENTS-finish_all);
                 // print the grid
-                if (i==0) multi_print_grid();
+                if (i==0) printf("[%d]", time_step);
                 for (k = 0; k < NAGENTS; k++) {
                     if (enable_print) printf("(%d)[%d,%d]....(%i and %i) ", k + 1, position[k]->y,position[k]->x, role[0][1], role[1][0]);
                 }
                 if (enable_print) printf("\n");
-                if (i==0) getchar();
+                //if (i==0) getchar();
             }
 
             #ifdef RANDOMMOVES
@@ -3867,90 +3866,91 @@ void test_rtaastar(int lookahead, int prunning) {
                             if (enable_print) printf("** LLEGO time_step:%d** %d finish:%d cost:%f total ""cost:%f, now at [%d %d]\n",time_step, i, NAGENTS - finish_all, agent_cost[i],total_cost, position[i]->y, position[i]->x);
                             // getchar();
                             #endif
-                            /* if (finish_all < 15) {
-                                // enable_print = 1;
-                                printf("lookahead = %d\n", lookahead);
-                                multi_print_grid();
-                                printf("Quedan por llegar\n");
-                                for (int a = 0; a < NAGENTS; a++)
-                                {
-                                    if (!goal_reached[a])
-                                    {
-                                        printf("agente %d\n", a+1);
-                                    }    
-                                }
-                                getchar();
-                            } */
+
+                        }
+                        if (finish_all == 0 || time_step >= MAX_TIME_STEPS) {
+                            multi_print_grid();
+
+                            enable_print = 1;
+                            total_cost = 0;
+
+                            FILE *fp;
+
+                            fp = fopen("log-resultados", "a+");
+
+                            fprintf(fp, "RUN %ld\n", RUN1);
                             
-                            // printf("continua %d\n", finish_all);
-
-                            if (finish_all == 0) {
-                                multi_print_grid();
-
-                                enable_print = 1;
-                                total_cost = 0;
-
-                                FILE *fp;
-
-                                fp = fopen("log-resultados", "a+");
-
-                                fprintf(fp, "\n RUN: %ld\n", RUN1);
-                                fprintf(fp, "\nValores ideales:\n");
-                                for (int a = 0; a < NAGENTS; a++)
-                                {
-                                    fprintf(fp, "agent [%d] -> valor H: %f\n", a + 1, hValueForAgent[a]);
-                                }
-                                fprintf(fp, "Costo por agente\n");
-                                for (int a = 0; a < NAGENTS; a++)
-                                {
-                                    total_cost += agent_cost[a];
-                                    fprintf(fp, "agent [%d] -> costo total: %f\n", a + 1, agent_cost[a]);
-                                }
-                                float total_time_cost = 0;
-                                fprintf(fp, "Completion time por agente\n");
-                                for (int a = 0; a < NAGENTS; a++)
-                                {
-                                    total_time_cost += completion_time[a];
-                                    fprintf(fp, "agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
-                                }
-                                ("Costo promedio: %f\n", total_cost / NAGENTS);
-                                fprintf(fp, "Tiempo en acabar: %d\n", time_step);
-                                fprintf(fp, "Tiempo promedio: %f\n", total_time_cost / NAGENTS);
-
-                                fclose(fp);
-                                getchar();
-
-                                /* total_cost = 0;
-                                printf("\nValores ideales:\n");
-                                for (int a = 0; a < NAGENTS; a++) {
-                                    if (enable_print) printf("agent [%d] -> valor H: %f\n", a+1, hValueForAgent[a]);
-                                }
-                                if (enable_print) printf("Costo por agente\n");
-                                for (int a=0; a < NAGENTS; a++){
-                                    total_cost += agent_cost[a];
-                                    if (enable_print) printf("agent [%d] -> costo total: %f\n", a+1, agent_cost[a]);
-                                }
-                                total_time_cost = 0;
-                                if (enable_print) printf("Completion time por agente\n");
-                                for (int a; a < NAGENTS; a++) {
-                                    total_time_cost += completion_time[a];
-                                    if (enable_print) printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
-                                }
-                                 ("Costo promedio: %f\n", total_cost / NAGENTS);
-                                if (enable_print) printf("Tiempo en acabar: %d\n", time_step);
-                                if (enable_print) printf("Tiempo promedio: %f\n", total_time_cost /  NAGENTS);
-
-                                float hSuma = 0;
-                                for (int a = 0; a < NAGENTS; a++) hSuma = hSuma + hValueForAgent[a];
-                                float hMean = hSuma / NAGENTS;
-
-                                if (enable_print) printf("Promedio A*: %f\n", hMean);
-
-                                getchar(); */
-                                
-                                enable_print = 0;
-                                return;
+                            fprintf(fp, "valores_ideales ");
+                            fprintf(fp, "[");
+                            for (int a = 0; a < NAGENTS; a++)
+                            {
+                                if (a == NAGENTS - 1) fprintf(fp, "%.0lf", hValueForAgent[a]);
+                                else fprintf(fp, "%.0lf,", hValueForAgent[a]);
                             }
+                            fprintf(fp, "]\n");
+
+                            fprintf(fp, "costo_por_agente ");
+                            fprintf(fp, "[");
+                            for (int a = 0; a < NAGENTS; a++)
+                            {
+                                if (goal_reached[a]) total_cost += agent_cost[a];
+                                if (a == NAGENTS - 1) fprintf(fp, "%.0lf", agent_cost[a]);
+                                else fprintf(fp, "%.0lf,", agent_cost[a]);
+                            }
+                            float total_time_cost = 0;
+                            fprintf(fp, "]\n");
+                            
+                            
+                            fprintf(fp, "completion_time_por_agente ");
+                            fprintf(fp, "[");
+                            for (int a = 0; a < NAGENTS; a++)
+                            {
+                                total_time_cost += completion_time[a];
+                                if (a == NAGENTS - 1) fprintf(fp, "%d", completion_time[a]);
+                                else fprintf(fp, "%d,", completion_time[a]);
+                            }
+                            ("costo_promedio %f\n", total_cost / NAGENTS);
+                            fprintf(fp, "]\n");
+
+                            fprintf(fp, "tiempo_ultimo_agente_goal %d\n", lastfinish);
+                            fprintf(fp, "tiempo_en_acabar %d\n", time_step);
+                            fprintf(fp, "tiempo_promedio %f\n", total_time_cost / NAGENTS);
+                            fprintf(fp, "agentes_en_goal %d\n", NAGENTS - finish_all);
+                            fprintf(fp, "bad_good_total_rate_pred [%i,%i,%i,%.1f]", badp, goop, totp, (float)goop / (float)totp);
+
+                            fclose(fp);
+                            getchar();
+
+                            /* total_cost = 0;
+                            printf("\nValores ideales:\n");
+                            for (int a = 0; a < NAGENTS; a++) {
+                                if (enable_print) printf("agent [%d] -> valor H: %f\n", a+1, hValueForAgent[a]);
+                            }
+                            if (enable_print) printf("Costo por agente\n");
+                            for (int a=0; a < NAGENTS; a++){
+                                total_cost += agent_cost[a];
+                                if (enable_print) printf("agent [%d] -> costo total: %f\n", a+1, agent_cost[a]);
+                            }
+                            total_time_cost = 0;
+                            if (enable_print) printf("Completion time por agente\n");
+                            for (int a; a < NAGENTS; a++) {
+                                total_time_cost += completion_time[a];
+                                if (enable_print) printf("agent [%d] -> tiempo total: %d\n", a + 1, completion_time[a]);
+                            }
+                                ("Costo promedio: %f\n", total_cost / NAGENTS);
+                            if (enable_print) printf("Tiempo en acabar: %d\n", time_step);
+                            if (enable_print) printf("Tiempo promedio: %f\n", total_time_cost /  NAGENTS);
+
+                            float hSuma = 0;
+                            for (int a = 0; a < NAGENTS; a++) hSuma = hSuma + hValueForAgent[a];
+                            float hMean = hSuma / NAGENTS;
+
+                            if (enable_print) printf("Promedio A*: %f\n", hMean);
+
+                            getchar(); */
+                            
+                            enable_print = 0;
+                            return;
                         }
 
                     } // From computenewpath
@@ -3993,13 +3993,13 @@ void call_rtaastar() {
     // Valor limite para lookahead
     int lookahead;
     int prunning, i;
-    int look[4] = {4,5,8,14}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
+    int look[1] = {3}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
     float total_score[(int)(sizeof(look) / (float)sizeof(int))],
         avg_score[(int)(sizeof(look) / (float)sizeof(int))],
         total_time[(int)(sizeof(look) / (float)sizeof(int))];
     float avg_finish[(int)(sizeof(look) / (float)sizeof(int))],
         last_finish[(int)(sizeof(look) / (float)sizeof(int))];
-    // srand(time(NULL));
+    srand(time(NULL));
     float ftimes[RUNS];
     // for (prunning = 0; prunning <1; prunning++)
     for (i = 0; i < (int)(sizeof(look) / (float)sizeof(int)); i++) {

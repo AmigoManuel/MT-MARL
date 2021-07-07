@@ -22,7 +22,7 @@ class Agent:
 lines = map_file.read().splitlines()
 width = len(lines[0]) - 1
 height = len(lines) - 1
-n = 100
+n = 400
 index = 0
 
 mapped_loc = []
@@ -38,6 +38,7 @@ while index < n:
             mapped_loc.append(start_loc)
             mapped_loc.append(goal_loc)
             agents.append(Agent(index, start_loc[0], start_loc[1], goal_loc[0], goal_loc[1]))
+            print(len(agents))
             index = index + 1
 
 for agent in agents:
