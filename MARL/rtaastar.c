@@ -3869,7 +3869,7 @@ void test_rtaastar(int lookahead, int prunning) {
 
                         }
                         if (finish_all == 0 || time_step >= MAX_TIME_STEPS) {
-                            multi_print_grid();
+                            // multi_print_grid();
 
                             enable_print = 1;
                             total_cost = 0;
@@ -3919,7 +3919,7 @@ void test_rtaastar(int lookahead, int prunning) {
                             fprintf(fp, "bad_good_total_rate_pred [%i,%i,%i,%.1f]", badp, goop, totp, (float)goop / (float)totp);
 
                             fclose(fp);
-                            getchar();
+                            // getchar();
 
                             /* total_cost = 0;
                             printf("\nValores ideales:\n");

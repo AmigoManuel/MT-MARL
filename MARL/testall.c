@@ -277,7 +277,7 @@ void generate_maze(int RUN1) {
         }
         position[a] = &maze1[starty][startx];
         goal[a] = &maze1[goaly][goalx];
-        printf("a:%d despues starty:%d startx:%d goaly:%d goalx:%d\n", a, position[a]->y, position[a]->x, goaly, goalx);
+        // printf("a:%d despues starty:%d startx:%d goaly:%d goalx:%d\n", a, position[a]->y, position[a]->x, goaly, goalx);
         //	getchar();
     }
     printf("MAZE GENERATED!!! \n");
