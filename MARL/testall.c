@@ -33,8 +33,8 @@
 //"./GameMaps/lak201d.map2"
 //"./GameMaps/bidi.map2"
 // revisar escenario 9
-char map_path[50] = "./GameMaps/test88.map2";
-char locations_path[50] = "./GameMaps/test88.loc2";
+char map_path[50] = "./GameMaps/test11.map2";
+char locations_path[50] = "./GameMaps/test11.loc2";
 
 /* Lectura de mapa desde fichero externo 
  * @param filename string con el nombre del fichero */
@@ -293,7 +293,6 @@ void task_set(int coreid){
     CPU_ZERO(&mask);
     CPU_SET(coreid, &mask);
     result = sched_setaffinity(0, sizeof(mask), &mask);
-    printf("%d\n", result);
 }
 
 int main(int argc, char *argv[]) {
@@ -318,8 +317,8 @@ int main(int argc, char *argv[]) {
     #endif
     #endif
     #ifdef TESTRTAASTAR
+        // Affinidad procesador
         task_set(0);
-        getchar();
         call_rtaastar();
     #endif
     #ifdef TESTLSSLRTA
