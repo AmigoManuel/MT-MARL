@@ -108,6 +108,8 @@ int pred_agents[NAGENTS][NAGENTS];
 int good_pred_agents[NAGENTS][NAGENTS];
 int predict[NAGENTS][NAGENTS];
 int completion_time[NAGENTS];
+int push_over[NAGENTS];
+cell1 *last_recently_see[NAGENTS];
 
 cell1 *tmpcell1;
 cell1 *tmpcell2;
@@ -3174,13 +3176,70 @@ void test_rtaastar(int lookahead, int prunning) {
                             enable_print = 0;
                             return;
                         }
+                        
+                        
+                        
+                        // Si no me encuentro en mi goal
+                        if (position[i] != goal[i]) {
+                            // No me he movido en el paso anterior
+                            if (position[i] == previous) {
+                                // No me he movido desde la ultima vez
+                                if (last_recently_see[i] != NULL &&
+                                    last_recently_see[i] == position[i]) {
+                                    // Me conservo en el lugar, entonces incrementa contador
+                                    push_over[i] = push_over[i] + 1;
+                                    if (push_over[i] > 50) {
+                                        for (int d = 0; d < DIRECTIONS - 1; d++) {
+                                            if (!position[i]->succ[d]->obstacle &&
+                                                !position[i]->succ[d]->blocked[0]) {
+                                                /* printf("la celda [%d %d] esta libre desde [%d %d] para %d en dirección %d\n",
+                                                        position[i]->succ[d]->y,
+                                                        position[i]->succ[d]->x,
+                                                        position[i]->y,
+                                                        position[i]->x,
+                                                        i + 1, d); */
+                                                position[i] = position[i]->succ[d];
+                                                push_over[i] = 0;
+
+                                                // Asigna nueva posición al agente
+                                                position[i] = position[i]->succ[d];
+                                                // Determina el costo del movimiento y lo agrega al costo total 
+                                                agent_cost[i] += euclidian(previous, position[i]);
+
+                                                robot_steps1++;
+
+                                                previous->blocked[0] = 0;
+                                                position[i]->blocked[0] = 1;
+                                                
+                                                position[i]->parent[i] = previous;
+
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                    
+                                } else {
+                                    // Me moví desde la ultima vez, entonces reinicio
+                                    push_over[i] = 0;
+                                }
+
+                                last_recently_see[i] = previous;
+
+                                /* for (int a = 0; a < NAGENTS; a++) {
+                                    printf("[%d]", push_over[a]);
+                                }
+                                printf("\n"); */
+
+                            }
+                        }
+
+
+
 
                     } // From computenewpath
-
                 } // from computeshortestpath
             }
-
-            //		  i = (i+1) % NAGENTS;
+            // i = (i+1) % NAGENTS;
         }
         time_step++;
         // updatemaze1(previous,mazestart1);
@@ -3245,6 +3304,7 @@ void call_rtaastar() {
             // For each agent
             for (int a = 0; a < NAGENTS; a++) {
                 // and each other agent
+                push_over[a] = 0;
                 for (int j = 0; j < NAGENTS; j++) {
                     lastMobileCellDist[a] =
                         10000; // big number to emphasize that at the beginning he
