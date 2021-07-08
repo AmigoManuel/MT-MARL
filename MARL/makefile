@@ -1,4 +1,4 @@
-CFLAGS      = -O3 -std=c99
+CFLAGS      = -O3 -std=c99 -D_GNU_SOURCE
 LFLAGS      = -O3
 CC      = gcc
 

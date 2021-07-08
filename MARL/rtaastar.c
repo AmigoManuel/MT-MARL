@@ -3916,7 +3916,7 @@ void test_rtaastar(int lookahead, int prunning) {
                             fprintf(fp, "tiempo_en_acabar %d\n", time_step);
                             fprintf(fp, "tiempo_promedio %f\n", total_time_cost / NAGENTS);
                             fprintf(fp, "agentes_en_goal %d\n", NAGENTS - finish_all);
-                            fprintf(fp, "bad_good_total_rate_pred [%i,%i,%i,%.1f]", badp, goop, totp, (float)goop / (float)totp);
+                            fprintf(fp, "bad_good_total_rate_pred [%i,%i,%i,%.1f]\n", badp, goop, totp, (float)goop / (float)totp);
 
                             fclose(fp);
                             // getchar();

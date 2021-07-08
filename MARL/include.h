@@ -24,7 +24,7 @@
 //#define EIGHTCONNECTED    // must defined 8-connected grids .
 
 
-#define RUNS 50
+#define RUNS 10
 #define RANDOMMAZE            /* must define this, becasue 8-connect maze can not be generated   */
 
  #define MAZEWIDTH  34
@@ -37,7 +37,7 @@
 #define MAX_TIME_STEPS 1000
 
 //#define NAGENTS 20
- #define NAGENTS 50
+#define NAGENTS 300
 
 // Medida de tiempo que el agente recuerda
 #define MEMORY 3

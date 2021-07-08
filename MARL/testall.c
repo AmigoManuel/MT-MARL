@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <sched.h>
 
 #include "agent.h"
 #include "heap.h"
@@ -286,6 +287,14 @@ void generate_maze(int RUN1) {
 
 /*----------------------------------------------------------------------------------*/
 
+void task_set(int coreid){
+    int result;
+    cpu_set_t mask;
+    CPU_ZERO(&mask);
+    CPU_SET(coreid, &mask);
+    result = sched_setaffinity(0, sizeof(mask), &mask);
+    printf("%d\n", result);
+}
 
 int main(int argc, char *argv[]) {
 
@@ -309,6 +318,8 @@ int main(int argc, char *argv[]) {
     #endif
     #endif
     #ifdef TESTRTAASTAR
+        task_set(0);
+        getchar();
         call_rtaastar();
     #endif
     #ifdef TESTLSSLRTA
