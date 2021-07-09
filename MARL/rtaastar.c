@@ -2982,7 +2982,6 @@ void test_rtaastar(int lookahead, int prunning) {
 
                     // SECOND SEARCH, BASED ON CONSTRAINTS/CONFLICTS:
                     if (!compute_constraintpath(i, lookahead)) {
-                        enable_print = 1;
                         if (enable_print) printf("No solution???? Might need to backtrack %i steps, \n",lastMobileCellDist[i]);
                         // NEED TO CHANGE MODE TO BACKTRACK!!!
                         backtrack[i] = 1;
@@ -3010,7 +3009,6 @@ void test_rtaastar(int lookahead, int prunning) {
                         }
                         if (position[i]->parent[i] == NULL) if (enable_print) printf("SOY NULL");
                         else if (enable_print) printf("NO SOY NULL");
-                        enable_print = 0;
                     } else {
                         if (enable_print) printf(" SO FAR SO GOOD AGENT %i, at postiion [%d %d]!!!\n",i, position[i]->y, position[i]->x);
                         previous = position[i];
@@ -3178,7 +3176,7 @@ void test_rtaastar(int lookahead, int prunning) {
                         }
                         
                         
-                        
+                        // Esta rutina permite empujar los agentes fuera de su celda luego de PUSH_OVER_THRESHOLD tiempo en ella
                         // Si no me encuentro en mi goal
                         if (position[i] != goal[i]) {
                             // No me he movido en el paso anterior
@@ -3188,48 +3186,41 @@ void test_rtaastar(int lookahead, int prunning) {
                                     last_recently_see[i] == position[i]) {
                                     // Me conservo en el lugar, entonces incrementa contador
                                     push_over[i] = push_over[i] + 1;
-                                    if (push_over[i] > 50) {
-                                        for (int d = 0; d < DIRECTIONS - 1; d++) {
+                                    if (push_over[i] > PUSH_OVER_THRESHOLD) {
+                                        d = rand() % DIRECTIONS;
+                                        for (int _d = 0; _d < DIRECTIONS; _d++) {
                                             if (!position[i]->succ[d]->obstacle &&
-                                                !position[i]->succ[d]->blocked[0]) {
+                                                !position[i]->succ[d]->blocked[0] &&
+                                                (int) position[i]->succ[d]->g) {
                                                 /* printf("la celda [%d %d] esta libre desde [%d %d] para %d en dirección %d\n",
                                                         position[i]->succ[d]->y,
                                                         position[i]->succ[d]->x,
                                                         position[i]->y,
                                                         position[i]->x,
                                                         i + 1, d); */
-                                                position[i] = position[i]->succ[d];
+
                                                 push_over[i] = 0;
-
-                                                // Asigna nueva posición al agente
                                                 position[i] = position[i]->succ[d];
-                                                // Determina el costo del movimiento y lo agrega al costo total 
                                                 agent_cost[i] += euclidian(previous, position[i]);
-
                                                 robot_steps1++;
-
                                                 previous->blocked[0] = 0;
                                                 position[i]->blocked[0] = 1;
-                                                
                                                 position[i]->parent[i] = previous;
-
-                                                continue;
+                                                break;
                                             }
+                                            d = (d + 1) % DIRECTIONS;
                                         }
                                     }
-                                    
                                 } else {
                                     // Me moví desde la ultima vez, entonces reinicio
                                     push_over[i] = 0;
                                 }
-
+                                // Ultima vez visto
                                 last_recently_see[i] = previous;
-
                                 /* for (int a = 0; a < NAGENTS; a++) {
                                     printf("[%d]", push_over[a]);
                                 }
                                 printf("\n"); */
-
                             }
                         }
 

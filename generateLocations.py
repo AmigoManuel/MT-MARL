@@ -1,10 +1,10 @@
 from random import randint
 
 path = "C:/Users/diazu/MT-MARL/MARL/GameMaps/"
-map_name = "test10"
+map_name = "test7"
 map_file = open(path + map_name + ".map2", 'r')
 
-n = 10
+n = 100
 
 
 class Agent:
@@ -43,11 +43,11 @@ def scan_availables(lines):
 
 def generate_locations(availables):
     agents = []
-    for i in range(10):
-        start_index = randint(0, len(availables))
+    for i in range(n):
+        start_index = randint(0, len(availables) - 1)
         start = availables[start_index]
         availables.remove(start)
-        goal_index = randint(0, len(availables))
+        goal_index = randint(0, len(availables) - 1)
         goal = availables[goal_index]
         availables.remove(goal)
         agents.append(

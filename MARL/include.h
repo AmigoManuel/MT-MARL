@@ -39,6 +39,8 @@
 //#define NAGENTS 20
 #define NAGENTS 100
 
+#define PUSH_OVER_THRESHOLD 30
+
 // Medida de tiempo que el agente recuerda
 #define MEMORY 3
 

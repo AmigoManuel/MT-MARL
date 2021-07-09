@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8ecb0dd7-4a4b-45b5-951b-d0ca5e709ffe" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/MARL/GameMaps/test7.loc2" beforeDir="false" afterPath="$PROJECT_DIR$/MARL/GameMaps/test7.loc2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MARL/Output-mrtaa-1-step" beforeDir="false" afterPath="$PROJECT_DIR$/MARL/Output-mrtaa-1-step" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MARL/include.h" beforeDir="false" afterPath="$PROJECT_DIR$/MARL/include.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MARL/log-resultados" beforeDir="false" afterPath="$PROJECT_DIR$/MARL/log-resultados" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MARL/testall" beforeDir="false" afterPath="$PROJECT_DIR$/MARL/testall" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generateLocations.py" beforeDir="false" afterPath="$PROJECT_DIR$/generateLocations.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1v3NhnQ4qje1uU0BBtSpG3qeOQw" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RunManager">
+    <configuration name="generateLocations" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Python39\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/generateLocations.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.generateLocations" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8ecb0dd7-4a4b-45b5-951b-d0ca5e709ffe" name="Default Changelist" comment="" />
+      <created>1625786936971</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1625786936971</updated>
+      <workItem from="1625786940294" duration="657000" />
+      <workItem from="1625773702109" duration="3040000" />
+      <workItem from="1625787244244" duration="201000" />
+      <workItem from="1625787470866" duration="2000" />
+      <workItem from="1625787483614" duration="107000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MT_MARL$generateLocations.coverage" NAME="generateLocations Coverage Results" MODIFIED="1625787532281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
