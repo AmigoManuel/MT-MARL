@@ -27,8 +27,12 @@
 #define RUNS 100
 #define RANDOMMAZE            /* must define this, becasue 8-connect maze can not be generated   */
 
-#define MAZEWIDTH  34
-#define MAZEHEIGHT  34
+#define MAZEWIDTH 34
+#define MAZEHEIGHT 34
+
+//#define MAZEWIDTH  68
+//#define MAZEHEIGHT  68
+
 //#define MAZEWIDTH 12
 //#define MAZEHEIGHT 11
 
@@ -37,9 +41,9 @@
 #define MAX_TIME_STEPS 1000
 
 //#define NAGENTS 20
-#define NAGENTS 100
+#define NAGENTS 20
 
-#define PUSH_OVER_THRESHOLD 30
+#define PUSH_OVER_THRESHOLD 20
 
 // Medida de tiempo que el agente recuerda
 #define MEMORY 3
