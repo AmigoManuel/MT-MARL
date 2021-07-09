@@ -3140,7 +3140,7 @@ void test_rtaastar(int lookahead, int prunning) {
                             fprintf(fp, "tiempo_promedio %f\n", total_time_cost / NAGENTS);
                             fprintf(fp, "agentes_en_goal %d\n", NAGENTS - finish_all);
                             fprintf(fp, "bad_good_total_rate_pred [%i,%i,%i,%.1f]\n", badp, goop, totp, (float)goop / (float)totp);
-                            fprintf(fp, "push_out_count %d", push_out_count);
+                            fprintf(fp, "push_out_count %d\n", push_out_count);
 
                             fclose(fp);
                             // getchar();
@@ -3267,6 +3267,7 @@ void call_rtaastar() {
     float SDOM = 0;
     int lookahead;
     int prunning, i;
+    push_out_count = 0;
     int look[1] = {3}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
     float total_score[(int)(sizeof(look) / (float)sizeof(int))],
         avg_score[(int)(sizeof(look) / (float)sizeof(int))],

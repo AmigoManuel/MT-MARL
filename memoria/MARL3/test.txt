@@ -1,0 +1,678 @@
+Now I is 0 
+lookahead == [1] ___________________________________
+case == [0] ___________________________________
+a:0 despues starty:2 startx:2 goaly:2 goalx:6
+a:1 despues starty:3 startx:2 goaly:3 goalx:6
+a:2 despues starty:2 startx:5 goaly:2 goalx:1
+a:3 despues starty:3 startx:5 goaly:3 goalx:1
+
+Watching 1 from 2.. 
+Agent 2 at [3 2] can see agent 1 at [2 2]
+Agent 2 model of agent 1 is: 
+Time 0: [2 2] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [2 2] 
+Observing AGNET 0 moving to [2 2] at t 1
+
+Watching 1 from 3.. 
+
+Watching 1 from 4.. 
+
+Watching 2 from 1.. 
+Agent 1 at [2 2] can see agent 2 at [3 2]
+Agent 1 model of agent 2 is: 
+Time 0: [3 2] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [3 2] 
+Observing AGNET 1 moving to [3 2] at t 1
+
+Watching 2 from 3.. 
+
+Watching 2 from 4.. 
+
+Watching 3 from 1.. 
+
+Watching 3 from 2.. 
+
+Watching 3 from 4.. 
+Agent 4 at [3 5] can see agent 3 at [2 5]
+Agent 4 model of agent 3 is: 
+Time 0: [2 5] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [2 5] 
+Observing AGNET 2 moving to [2 5] at t 1
+
+Watching 4 from 1.. 
+
+Watching 4 from 2.. 
+
+Watching 4 from 3.. 
+Agent 3 at [2 5] can see agent 4 at [3 5]
+Agent 3 model of agent 4 is: 
+Time 0: [3 5] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [3 5] 
+Observing AGNET 3 moving to [3 5] at t 1
+OBSERVING AGENTS
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[44m 1[0m[31m 0[0m[31m 0[0m[44m 3[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[44m 2[0m[31m 0[0m[31m 0[0m[44m 4[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,2](2)[3,2](3)[2,5](4)[3,5]
+ COMPUTING FOR 1 !!!
+Checking predicted occupied states.. BUSY [3 2] at T 0
+
+From Cell [2 2] at time 1
+ 
+
+To [2 3] SIN DV, my Vel is [0.0 1.0], GoalVector norm  [0.00 1.00]  DMW2: 1.0, DMW: 1.0
+ [2 3] Prev G es 1.0 * (totalpenalty) 1.0  = (totalG) 1.0 + H of [19] es 3.000000,  F es 4.000000
+
+
+To [3 2] SIN DV, my Vel is [1.0 0.0], GoalVector norm  [0.00 1.00]  DMW2: 0.0, DMW: 1.5
+ ****FUTRE At 1 another agent wants to move to [3 2], there is an agent but who??
+****At 0 Cant move to [3 2], there is an agent
+
+
+To [2 1] SIN DV, my Vel is [0.0 -1.0], GoalVector norm  [0.00 1.00]  DMW2: -1.0, DMW: 2.0
+ [2 1] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [17] es 5.000000,  F es 6.000000
+ H value : 3.000000 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:0 [2,3] 
+
+TOO Cell [2 3] 0 1 GOT IT 1 
+ Me QUIERO MOVER a 2 3 
+ Me movi a 2 3
+
+Watching 1 from 2.. 
+OBSERVING MOVING AGENT
+
+Watching 2 from 1.. 
+MOVING AGENT OBSERVING
+(0) SAW the guy before at [3 2], not anymore, making blocked back to  0
+
+Watching 1 from 3.. 
+OBSERVING MOVING AGENT
+
+Watching 3 from 1.. 
+MOVING AGENT OBSERVING
+
+Watching 1 from 4.. 
+OBSERVING MOVING AGENT
+
+Watching 4 from 1.. 
+MOVING AGENT OBSERVING
+**DV of cell [2 2]: [0.0 1.0] for ag. 1
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[31m 0[0m[44m 1[0m[31m 0[0m[44m 3[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[44m 2[0m[31m 0[0m[31m 0[0m[44m 4[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,3](2)[3,2](3)[2,5](4)[3,5]
+ COMPUTING FOR 2 !!!
+Checking predicted occupied states..
+From Cell [3 2] at time 1
+ 
+
+To [3 1] SIN DV, my Vel is [0.0 -1.0], GoalVector norm  [0.00 1.00]  DMW2: -1.0, DMW: 2.0
+ [3 1] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [25] es 5.000000,  F es 6.000000
+
+
+To [2 2] SIN DV, my Vel is [-1.0 0.0], GoalVector norm  [0.00 1.00]  DMW2: 0.0, DMW: 1.5
+ ****FUTRE At 1 another agent wants to move to [2 2], there is an agent but who??
+[2 2] Prev G es 1.0 * (totalpenalty) 1.5  = (totalG) 1.0 + H of [18] es 4.123106,  F es 5.123106
+
+
+To [3 3] SIN DV, my Vel is [0.0 1.0], GoalVector norm  [0.00 1.00]  DMW2: 1.0, DMW: 1.0
+ [3 3] Prev G es 1.0 * (totalpenalty) 1.0  = (totalG) 1.0 + H of [27] es 3.000000,  F es 4.000000
+ H value : 3.000000 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:1 [3,3] 
+
+TOO Cell [3 3] 0 2 GOT IT 1 
+ Me QUIERO MOVER a 3 3 
+ Me movi a 3 3
+
+Watching 2 from 1.. 
+OBSERVING MOVING AGENT
+Agent 1 at [2 3] can see agent 2 at [3 3]
+Agent 1 model of agent 2 is: 
+Time 0: [3 3] 
+Time 1: [3 2] 
+Agent 2 moved RIGHT 1
+Observed Probabilities: DOWN 0.0, UP 0.0, LEFT 0.0 , RIGHT 100.0
+AGENT 1 ERASING PREVIOUS OBSERVATIONS of 2 as in [3 2]
+
+ACCORDING TO AGENT 1, MOST LIKELY DIRECTION FOR AGENT 2, currently at [3 3], at time 0 IS: SAME!!: [3 3]
+blocking NEW OBSERVED position [3 3] : 1
+
+Watching 1 from 2.. 
+MOVING AGENT OBSERVING
+Agent 2 appeared AGAIN [3 3] can see agent 1 at [2 3]
+Agent 2 model of agent 1 is: 
+Time 0: [2 3] 
+Time 1: [2 2] 
+Agent 1 moved RIGHT 1
+Observed Probabilities: DOWN 0.0, UP 0.0, LEFT 0.0 , RIGHT 100.0
+AGENT 2 ERASING PREVIOUS OBSERVATIONS of 1 as in [2 2]
+
+ACCORDING TO AGENT 2, MOST LIKELY DIRECTION FOR AGENT 1, currently at [2 3], at time 0 IS: SAME!!: [2 3]
+blocking NEW OBSERVED position [2 3] : 1
+
+Watching 2 from 3.. 
+OBSERVING MOVING AGENT
+
+Watching 3 from 2.. 
+MOVING AGENT OBSERVING
+
+Watching 2 from 4.. 
+OBSERVING MOVING AGENT
+
+Watching 4 from 2.. 
+MOVING AGENT OBSERVING
+**DV of cell [3 2]: [0.0 1.0] for ag. 2
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[31m 0[0m[44m 1[0m[31m 0[0m[44m 3[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[31m 0[0m[44m 2[0m[31m 0[0m[44m 4[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,3](2)[3,3](3)[2,5](4)[3,5]
+ COMPUTING FOR 3 !!!
+Checking predicted occupied states.. BUSY [3 5] at T 0
+
+From Cell [2 5] at time 1
+ 
+
+To [2 6] SIN DV, my Vel is [0.0 1.0], GoalVector norm  [0.00 -1.00]  DMW2: -1.0, DMW: 2.0
+ [2 6] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [22] es 5.000000,  F es 6.000000
+
+
+To [3 5] SIN DV, my Vel is [1.0 0.0], GoalVector norm  [0.00 -1.00]  DMW2: 0.0, DMW: 1.5
+ ****FUTRE At 1 another agent wants to move to [3 5], there is an agent but who??
+****At 0 Cant move to [3 5], there is an agent
+
+
+To [2 4] SIN DV, my Vel is [0.0 -1.0], GoalVector norm  [0.00 -1.00]  DMW2: 1.0, DMW: 1.0
+ [2 4] Prev G es 1.0 * (totalpenalty) 1.0  = (totalG) 1.0 + H of [20] es 3.000000,  F es 4.000000
+ H value : 3.000000 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:2 [2,4] 
+
+TOO Cell [2 4] 0 1 GOT IT 1 
+ Me QUIERO MOVER a 2 4 
+ Me movi a 2 4
+
+Watching 3 from 1.. 
+OBSERVING MOVING AGENT
+Agent 1 at [2 3] can see agent 3 at [2 4]
+Agent 1 model of agent 3 is: 
+Time 0: [2 4] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [2 4] 
+Observing AGNET 2 moving to [2 4] at t 1
+
+Watching 1 from 3.. 
+MOVING AGENT OBSERVING
+Agent 3 appeared AGAIN [2 4] can see agent 1 at [2 3]
+Agent 3 model of agent 1 is: 
+Time 0: [2 3] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [2 3] 
+Observing AGNET 0 moving to [2 3] at t 1
+
+Watching 3 from 2.. 
+OBSERVING MOVING AGENT
+
+Watching 2 from 3.. 
+MOVING AGENT OBSERVING
+
+Watching 3 from 4.. 
+OBSERVING MOVING AGENT
+
+Watching 4 from 3.. 
+MOVING AGENT OBSERVING
+(0) SAW the guy before at [3 5], not anymore, making blocked back to  0
+**DV of cell [2 5]: [0.0 -1.0] for ag. 3
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[31m 0[0m[44m 1[0m[44m 3[0m[31m 0[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[31m 0[0m[44m 2[0m[31m 0[0m[44m 4[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,3](2)[3,3](3)[2,4](4)[3,5]
+ COMPUTING FOR 4 !!!
+Checking predicted occupied states..
+From Cell [3 5] at time 1
+ 
+
+To [3 6] SIN DV, my Vel is [0.0 1.0], GoalVector norm  [0.00 -1.00]  DMW2: -1.0, DMW: 2.0
+ [3 6] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [30] es 5.000000,  F es 6.000000
+
+
+To [3 4] SIN DV, my Vel is [0.0 -1.0], GoalVector norm  [0.00 -1.00]  DMW2: 1.0, DMW: 1.0
+ [3 4] Prev G es 1.0 * (totalpenalty) 1.0  = (totalG) 1.0 + H of [28] es 3.000000,  F es 4.000000
+
+
+To [2 5] SIN DV, my Vel is [-1.0 0.0], GoalVector norm  [0.00 -1.00]  DMW2: 0.0, DMW: 1.5
+ ****FUTRE At 1 another agent wants to move to [2 5], there is an agent but who??
+[2 5] Prev G es 1.0 * (totalpenalty) 1.5  = (totalG) 1.0 + H of [21] es 4.123106,  F es 5.123106
+ H value : 3.000000 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:3 [3,4] 
+
+TOO Cell [3 4] 0 2 GOT IT 1 
+ Me QUIERO MOVER a 3 4 
+ Me movi a 3 4
+
+Watching 4 from 1.. 
+OBSERVING MOVING AGENT
+
+Watching 1 from 4.. 
+MOVING AGENT OBSERVING
+
+Watching 4 from 2.. 
+OBSERVING MOVING AGENT
+Agent 2 at [3 3] can see agent 4 at [3 4]
+Agent 2 model of agent 4 is: 
+Time 0: [3 4] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [3 4] 
+Observing AGNET 3 moving to [3 4] at t 1
+
+Watching 2 from 4.. 
+MOVING AGENT OBSERVING
+Agent 4 appeared AGAIN [3 4] can see agent 2 at [3 3]
+Agent 4 model of agent 2 is: 
+Time 0: [3 3] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [3 3] 
+Observing AGNET 1 moving to [3 3] at t 1
+
+Watching 4 from 3.. 
+OBSERVING MOVING AGENT
+Agent 3 at [2 4] can see agent 4 at [3 4]
+Agent 3 model of agent 4 is: 
+Time 0: [3 4] 
+Time 1: [3 5] 
+Agent 4 moved LEFT 1
+Observed Probabilities: DOWN 0.0, UP 0.0, LEFT 100.0 , RIGHT 0.0
+AGENT 3 ERASING PREVIOUS OBSERVATIONS of 4 as in [3 5]
+
+ACCORDING TO AGENT 3, MOST LIKELY DIRECTION FOR AGENT 4, currently at [3 4], at time 0 IS: SAME!!: [3 4]
+blocking NEW OBSERVED position [3 4] : 1
+
+Watching 3 from 4.. 
+MOVING AGENT OBSERVING
+Agent 4 appeared AGAIN [3 4] can see agent 3 at [2 4]
+Agent 4 model of agent 3 is: 
+Time 0: [2 4] 
+Time 1: [2 5] 
+Agent 3 moved LEFT 1
+Observed Probabilities: DOWN 0.0, UP 0.0, LEFT 100.0 , RIGHT 0.0
+AGENT 4 ERASING PREVIOUS OBSERVATIONS of 3 as in [2 5]
+
+ACCORDING TO AGENT 4, MOST LIKELY DIRECTION FOR AGENT 3, currently at [2 4], at time 0 IS: SAME!!: [2 4]
+blocking NEW OBSERVED position [2 4] : 1
+**DV of cell [3 5]: [0.0 -1.0] for ag. 4
+OBSERVING AGENTS
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[31m 0[0m[44m 1[0m[44m 3[0m[31m 0[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[31m 0[0m[44m 2[0m[44m 4[0m[31m 0[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,3](2)[3,3](3)[2,4](4)[3,4]
+ COMPUTING FOR 1 !!!
+Checking predicted occupied states.. BUSY [2 4] at T 0
+ BUSY [3 3] at T 0
+
+From Cell [2 3] at time 1
+ 
+
+To [2 4] SIN DV, my Vel is [0.0 1.0], GoalVector norm  [0.00 1.00]  DMW2: 1.0, DMW: 1.0
+ ****FUTRE At 1 another agent wants to move to [2 4], there is an agent but who??
+****At 0 Cant move to [2 4], there is an agent
+
+
+To [3 3] SIN DV, my Vel is [1.0 0.0], GoalVector norm  [0.00 1.00]  DMW2: 0.0, DMW: 1.5
+ ****At 0 Cant move to [3 3], there is an agent
+To [2 2], my Vel is [0.0 -1.0], GoalVector norm:  [0.00 1.00] firstDMW2: -1.0, maxSimil: 1.0 DMW2: -1.0
+PENALTY moving to [2 2] is 1.0 -1.0 = 2.0  * G(1.000000)= 2.0 
+[2 2] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [18] es 4.000000,  F es 5.000000
+ H value : 4.000000 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:0 [2,2] 
+
+TOO Cell [2 2] 0 0 GOT IT 1 
+ Me QUIERO MOVER a 2 2 
+ Me movi a 2 2
+
+Watching 1 from 2.. 
+OBSERVING MOVING AGENT
+(0) SAW the guy before at [2 3], not anymore, making blocked back to  0
+
+Watching 2 from 1.. 
+MOVING AGENT OBSERVING
+(0) SAW the guy before at [3 3], not anymore, making blocked back to  0
+
+Watching 1 from 3.. 
+OBSERVING MOVING AGENT
+(0) SAW the guy before at [2 3], not anymore, making blocked back to  0
+
+Watching 3 from 1.. 
+MOVING AGENT OBSERVING
+(0) SAW the guy before at [2 4], not anymore, making blocked back to  0
+
+Watching 1 from 4.. 
+OBSERVING MOVING AGENT
+
+Watching 4 from 1.. 
+MOVING AGENT OBSERVING
+**DV of cell [2 3]: [0.0 -1.0] for ag. 1
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[44m 1[0m[31m 0[0m[44m 3[0m[31m 0[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[31m 0[0m[44m 2[0m[44m 4[0m[31m 0[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,2](2)[3,3](3)[2,4](4)[3,4]
+ COMPUTING FOR 2 !!!
+Checking predicted occupied states.. BUSY [3 4] at T 0
+
+From Cell [3 3] at time 1
+ 
+
+To [2 3] SIN DV, my Vel is [-1.0 0.0], GoalVector norm  [0.00 1.00]  DMW2: 0.0, DMW: 1.5
+ [2 3] Prev G es 1.0 * (totalpenalty) 1.5  = (totalG) 1.0 + H of [19] es 3.162278,  F es 4.162278
+
+
+To [3 4] SIN DV, my Vel is [0.0 1.0], GoalVector norm  [0.00 1.00]  DMW2: 1.0, DMW: 1.0
+ ****FUTRE At 1 another agent wants to move to [3 4], there is an agent but who??
+****At 0 Cant move to [3 4], there is an agent
+To [3 2], my Vel is [0.0 -1.0], GoalVector norm:  [0.00 1.00] firstDMW2: -1.0, maxSimil: 1.0 DMW2: -1.0
+PENALTY moving to [3 2] is 1.0 -1.0 = 2.0  * G(1.000000)= 2.0 
+[3 2] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [26] es 4.000000,  F es 5.000000
+ H value : 3.162278 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:1 [2,3] 
+
+TOO Cell [2 3] 0 1 GOT IT 1 
+ Me QUIERO MOVER a 2 3 
+ Me movi a 2 3
+
+Watching 2 from 1.. 
+OBSERVING MOVING AGENT
+Agent 1 at [2 2] can see agent 2 at [2 3]
+Agent 1 model of agent 2 is: 
+Time 0: [2 3] 
+Time 1: [3 3] 
+Agent 2 moved UP 1
+Observed Probabilities: DOWN 0.0, UP 50.0, LEFT 0.0 , RIGHT 50.0
+AGENT 1 ERASING PREVIOUS OBSERVATIONS of 2 as in [3 3]
+
+ACCORDING TO AGENT 1, MOST LIKELY DIRECTION FOR AGENT 2, currently at [2 3], at time 0 IS: SAME!!: [2 3]
+blocking NEW OBSERVED position [2 3] : 1
+
+Watching 1 from 2.. 
+MOVING AGENT OBSERVING
+Agent 2 appeared AGAIN [2 3] can see agent 1 at [2 2]
+Agent 2 model of agent 1 is: 
+Time 0: [2 2] 
+Time 1: [2 3] 
+Agent 1 moved LEFT 1
+Observed Probabilities: DOWN 0.0, UP 0.0, LEFT 50.0 , RIGHT 50.0
+AGENT 2 ERASING PREVIOUS OBSERVATIONS of 1 as in [2 3]
+
+ACCORDING TO AGENT 2, MOST LIKELY DIRECTION FOR AGENT 1, currently at [2 2], at time 0 IS: SAME!!: [2 2]
+blocking NEW OBSERVED position [2 2] : 1
+
+Watching 2 from 3.. 
+OBSERVING MOVING AGENT
+Agent 3 at [2 4] can see agent 2 at [2 3]
+Agent 3 model of agent 2 is: 
+Time 0: [2 3] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [2 3] 
+Observing AGNET 1 moving to [2 3] at t 1
+
+Watching 3 from 2.. 
+MOVING AGENT OBSERVING
+Agent 2 appeared AGAIN [2 3] can see agent 3 at [2 4]
+Agent 2 model of agent 3 is: 
+Time 0: [2 4] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [2 4] 
+Observing AGNET 2 moving to [2 4] at t 1
+
+Watching 2 from 4.. 
+OBSERVING MOVING AGENT
+(0) SAW the guy before at [3 3], not anymore, making blocked back to  0
+
+Watching 4 from 2.. 
+MOVING AGENT OBSERVING
+(0) SAW the guy before at [3 4], not anymore, making blocked back to  0
+**DV of cell [3 3]: [-1.0 0.0] for ag. 2
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[44m 1[0m[44m 2[0m[44m 3[0m[31m 0[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[31m 0[0m[31m 0[0m[44m 4[0m[31m 0[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,2](2)[2,3](3)[2,4](4)[3,4]
+ COMPUTING FOR 3 !!!
+Checking predicted occupied states.. BUSY [2 3] at T 0
+ BUSY [3 4] at T 0
+
+From Cell [2 4] at time 1
+ 
+
+To [3 4] SIN DV, my Vel is [1.0 0.0], GoalVector norm  [0.00 -1.00]  DMW2: 0.0, DMW: 1.5
+ ****At 0 Cant move to [3 4], there is an agent
+
+
+To [2 3] SIN DV, my Vel is [0.0 -1.0], GoalVector norm  [0.00 -1.00]  DMW2: 1.0, DMW: 1.0
+ ****FUTRE At 1 another agent wants to move to [2 3], there is an agent but who??
+****At 0 Cant move to [2 3], there is an agent
+To [2 5], my Vel is [0.0 1.0], GoalVector norm:  [0.00 -1.00] firstDMW2: -1.0, maxSimil: 1.0 DMW2: -1.0
+PENALTY moving to [2 5] is 1.0 -1.0 = 2.0  * G(1.000000)= 2.0 
+[2 5] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [21] es 4.000000,  F es 5.000000
+ H value : 4.000000 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:2 [2,5] 
+
+TOO Cell [2 5] 0 0 GOT IT 1 
+ Me QUIERO MOVER a 2 5 
+ Me movi a 2 5
+
+Watching 3 from 1.. 
+OBSERVING MOVING AGENT
+
+Watching 1 from 3.. 
+MOVING AGENT OBSERVING
+
+Watching 3 from 2.. 
+OBSERVING MOVING AGENT
+(0) SAW the guy before at [2 4], not anymore, making blocked back to  0
+
+Watching 2 from 3.. 
+MOVING AGENT OBSERVING
+(0) SAW the guy before at [2 3], not anymore, making blocked back to  0
+
+Watching 3 from 4.. 
+OBSERVING MOVING AGENT
+(0) SAW the guy before at [2 4], not anymore, making blocked back to  0
+
+Watching 4 from 3.. 
+MOVING AGENT OBSERVING
+(0) SAW the guy before at [3 4], not anymore, making blocked back to  0
+**DV of cell [2 4]: [0.0 1.0] for ag. 3
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[44m 1[0m[44m 2[0m[31m 0[0m[44m 3[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[31m 0[0m[31m 0[0m[44m 4[0m[31m 0[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,2](2)[2,3](3)[2,5](4)[3,4]
+ COMPUTING FOR 4 !!!
+Checking predicted occupied states..
+From Cell [3 4] at time 1
+ 
+
+To [3 3] SIN DV, my Vel is [0.0 -1.0], GoalVector norm  [0.00 -1.00]  DMW2: 1.0, DMW: 1.0
+ ****FUTRE At 1 another agent wants to move to [3 3], there is an agent but who??
+[3 3] Prev G es 1.0 * (totalpenalty) 1.0  = (totalG) 1.0 + H of [27] es 2.000000,  F es 3.000000
+
+
+To [2 4] SIN DV, my Vel is [-1.0 0.0], GoalVector norm  [0.00 -1.00]  DMW2: 0.0, DMW: 1.5
+ [2 4] Prev G es 1.0 * (totalpenalty) 1.5  = (totalG) 1.0 + H of [20] es 3.162278,  F es 4.162278
+To [3 5], my Vel is [0.0 1.0], GoalVector norm:  [0.00 -1.00] firstDMW2: -1.0, maxSimil: 1.0 DMW2: -1.0
+PENALTY moving to [3 5] is 1.0 -1.0 = 2.0  * G(1.000000)= 2.0 
+[3 5] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [29] es 4.000000,  F es 5.000000
+ H value : 2.000000 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:3 [3,3] 
+
+TOO Cell [3 3] 0 2 GOT IT 1 
+ Me QUIERO MOVER a 3 3 
+ Me movi a 3 3
+
+Watching 4 from 1.. 
+OBSERVING MOVING AGENT
+
+Watching 1 from 4.. 
+MOVING AGENT OBSERVING
+
+Watching 4 from 2.. 
+OBSERVING MOVING AGENT
+Agent 2 at [2 3] can see agent 4 at [3 3]
+Agent 2 model of agent 4 is: 
+Time 0: [3 3] 
+Time 1: [3 4] 
+Agent 4 moved LEFT 1
+Observed Probabilities: DOWN 0.0, UP 0.0, LEFT 100.0 , RIGHT 0.0
+AGENT 2 ERASING PREVIOUS OBSERVATIONS of 4 as in [3 4]
+
+ACCORDING TO AGENT 2, MOST LIKELY DIRECTION FOR AGENT 4, currently at [3 3], at time 0 IS: SAME!!: [3 3]
+blocking NEW OBSERVED position [3 3] : 1
+
+Watching 2 from 4.. 
+MOVING AGENT OBSERVING
+Agent 4 appeared AGAIN [3 3] can see agent 2 at [2 3]
+Agent 4 model of agent 2 is: 
+Time 0: [2 3] 
+Time 1: [3 3] 
+Agent 2 moved UP 1
+Observed Probabilities: DOWN 0.0, UP 100.0, LEFT 0.0 , RIGHT 0.0
+AGENT 4 ERASING PREVIOUS OBSERVATIONS of 2 as in [3 3]
+
+ACCORDING TO AGENT 4, MOST LIKELY DIRECTION FOR AGENT 2, currently at [2 3], at time 0 IS: SAME!!: [2 3]
+blocking NEW OBSERVED position [2 3] : 1
+
+Watching 4 from 3.. 
+OBSERVING MOVING AGENT
+
+Watching 3 from 4.. 
+MOVING AGENT OBSERVING
+**DV of cell [3 4]: [0.0 -1.0] for ag. 4
+OBSERVING AGENTS
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[44m 1[0m[44m 2[0m[31m 0[0m[44m 3[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[31m 0[0m[44m 4[0m[31m 0[0m[31m 0[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[2,2](2)[2,3](3)[2,5](4)[3,3]
+ COMPUTING FOR 1 !!!
+Checking predicted occupied states.. BUSY [2 3] at T 0
+
+From Cell [2 2] at time 1
+ 
+
+To [3 2] SIN DV, my Vel is [1.0 0.0], GoalVector norm  [0.00 1.00]  DMW2: 0.0, DMW: 1.5
+ ****FUTRE At 1 another agent wants to move to [3 2], there is an agent but who??
+[3 2] Prev G es 1.0 * (totalpenalty) 1.5  = (totalG) 1.0 + H of [26] es 4.123106,  F es 5.123106
+
+
+To [2 1] SIN DV, my Vel is [0.0 -1.0], GoalVector norm  [0.00 1.00]  DMW2: -1.0, DMW: 2.0
+ [2 1] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [17] es 5.000000,  F es 6.000000
+To [2 3], my Vel is [0.0 1.0], GoalVector norm:  [0.00 1.00] firstDMW2: 1.0, maxSimil: 1.0 DMW2: 1.0
+PENALTY moving to [2 3] is 1.0 1.0 = 1.0  * G(1.000000)= 1.0 
+****At 0 Cant move to [2 3], there is an agent
+ H value : 4.123106 
+ G value : 1.000000 
+
+(BEST MOVE WIHTOUT ACCOUNTING FOR AGENTS) A* top a:0 [3,2] 
+
+TOO Cell [3 2] 0 1 GOT IT 1 
+ Me QUIERO MOVER a 3 2 
+ Me movi a 3 2
+
+Watching 1 from 2.. 
+OBSERVING MOVING AGENT
+(0) SAW the guy before at [2 2], not anymore, making blocked back to  0
+
+Watching 2 from 1.. 
+MOVING AGENT OBSERVING
+(0) SAW the guy before at [2 3], not anymore, making blocked back to  0
+
+Watching 1 from 3.. 
+OBSERVING MOVING AGENT
+
+Watching 3 from 1.. 
+MOVING AGENT OBSERVING
+
+Watching 1 from 4.. 
+OBSERVING MOVING AGENT
+Agent 4 at [3 3] can see agent 1 at [3 2]
+Agent 4 model of agent 1 is: 
+Time 0: [3 2] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [3 2] 
+Observing AGNET 0 moving to [3 2] at t 1
+
+Watching 4 from 1.. 
+MOVING AGENT OBSERVING
+Agent 1 appeared AGAIN [3 2] can see agent 4 at [3 3]
+Agent 1 model of agent 4 is: 
+Time 0: [3 3] 
+Time 1: [-1 -1] 
+blocking OBSERVED position [3 3] 
+Observing AGNET 3 moving to [3 3] at t 1
+**DV of cell [2 2]: [0.9 0.1] for ag. 1
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[43m 3[0m[31m 0[0m[44m 2[0m[31m 0[0m[44m 3[0m[43m 1[0m[31m 0[0m
+[31m 0[0m[43m 4[0m[44m 1[0m[44m 4[0m[31m 0[0m[31m 0[0m[43m 2[0m[31m 0[0m
+[31m 0[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[42m #[0m[31m 0[0m
+[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m[31m 0[0m
+(1)[3,2](2)[2,3](3)[2,5](4)[3,3]
+ COMPUTING FOR 2 !!!
+Checking predicted occupied states.. BUSY [3 3] at T 0
+
+From Cell [2 3] at time 1
+ 
+
+To [2 4] SIN DV, my Vel is [0.0 1.0], GoalVector norm  [0.32 0.95]  DMW2: 1.0, DMW: 1.0
+ ****FUTRE At 1 another agent wants to move to [2 4], there is an agent but who??
+[2 4] Prev G es 1.0 * (totalpenalty) 1.0  = (totalG) 1.0 + H of [20] es 2.236068,  F es 3.236068
+To [3 3], my Vel is [1.0 0.0], GoalVector norm:  [0.32 0.95] firstDMW2: 0.3, maxSimil: 0.9 DMW2: 0.3
+PENALTY moving to [3 3] is 1.0 0.3 = 1.3  * G(1.000000)= 1.3 
+****At 0 Cant move to [3 3], there is an agent
+
+
+To [2 2] SIN DV, my Vel is [0.0 -1.0], GoalVector norm  [0.32 0.95]  DMW2: -1.0, DMW: 2.0
+ ****FUTRE At 1 another agent wants to move to [2 2], there is an agent but who??
+[2 2] Prev G es 1.0 * (totalpenalty) 2.0  = (totalG) 1.0 + H of [18] es 4.123106,  F es 5.123106
+ H 

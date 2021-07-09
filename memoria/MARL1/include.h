@@ -24,7 +24,7 @@
 //#define EIGHTCONNECTED    // must defined 8-connected grids .
 
 
-#define RUNS 100
+#define RUNS 10
 #define RANDOMMAZE            /* must define this, becasue 8-connect maze can not be generated   */
 
 #define MAZEWIDTH 34
@@ -41,7 +41,7 @@
 #define MAX_TIME_STEPS 1000
 
 //#define NAGENTS 20
-#define NAGENTS 30
+#define NAGENTS 100
 
 #define PUSH_OVER_THRESHOLD 20
 
