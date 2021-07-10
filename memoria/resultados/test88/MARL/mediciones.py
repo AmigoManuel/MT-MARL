@@ -1,7 +1,8 @@
 from openpyxl import Workbook
+import numpy as np
 
-folder_name = "100"
 merge_file_name = "merge"
+events = ["50", "100", "150", "200", "250", "300"]
 
 
 class RUN:
@@ -14,6 +15,7 @@ class RUN:
         self.tiempo_promedio = values[5]
         self.agentes_en_goal = values[6]
         self.bad_good_total_rate_pred = values[7]
+        self.push_out_count = values[8]
 
 
 def strip_lines():
@@ -26,19 +28,31 @@ def strip_lines():
 def read_instances(lines):
     RUNS = []
     temp = []
+    arr_push_out = [0]
+    run_name = -1
     for line in lines:
         name, values = line.split(' ')
+        if name == "RUN":
+            run_name = eval(values)
         if name != "RUN":
-            temp.append(eval(values))
-        if name == "bad_good_total_rate_pred":
+            if name == "push_out_count":
+                temp.append(eval(values) - arr_push_out[len(arr_push_out) - 1])
+                arr_push_out.append(eval(values))
+                if run_name == 9:
+                    arr_push_out.clear()
+                    arr_push_out.append(0)
+            else:
+                temp.append(eval(values))
+        if name == "push_out_count":
             RUNS.append(RUN(temp))
             temp.clear()
     return RUNS
 
 
 def write_excel(RUNS, workbook):
-    sheet = workbook.create_sheet(folder_name + " agents")
+    sheet = workbook.create_sheet(folder_name + "_agents")
 
+    # tabla costo por agente #
     sheet.cell(row=1, column=1, value="costo_por_agente")
     sheet.cell(row=2, column=1, value="RUN")
     for i in range(int(folder_name)):
@@ -48,8 +62,11 @@ def write_excel(RUNS, workbook):
         RUN = RUNS[i]
         for j in range(len(RUN.costo_por_agente)):
             sheet.cell(row=i + 3, column=j + 2, value=RUN.costo_por_agente[j])
-
     initial_row = len(RUNS) + 4
+    sheet.cell(row=initial_row - 1, column=1, value="promedio")
+    sheet.cell(row=initial_row - 1, column=2, value=np.mean([np.mean(run.costo_por_agente) for run in RUNS]))
+
+    # tabla completion time por agente#
     sheet.cell(row=initial_row, column=1, value="completion_time_por_agente")
     sheet.cell(row=initial_row + 1, column=1, value="RUN")
     for i in range(int(folder_name)):
@@ -57,10 +74,13 @@ def write_excel(RUNS, workbook):
     for i in range(len(RUNS)):
         sheet.cell(row=initial_row + i + 2, column=1, value=str(i))
         RUN = RUNS[i]
-        for j in range(len(RUN.costo_por_agente)):
-            sheet.cell(row=initial_row + i + 2, column=j + 2, value=RUN.costo_por_agente[j])
+        for j in range(len(RUN.completion_time_por_agente)):
+            sheet.cell(row=initial_row + i + 2, column=j + 2, value=RUN.completion_time_por_agente[j])
 
     initial_row = (initial_row * 2) - 1
+    sheet.cell(row=initial_row - 1, column=1, value="promedio")
+    sheet.cell(row=initial_row - 1, column=2, value=np.mean([np.mean(run.completion_time_por_agente) for run in RUNS]))
+
     sheet.cell(row=initial_row, column=1, value="estadisticos")
     sheet.cell(row=initial_row + 1, column=1, value="RUN")
     sheet.cell(row=initial_row + 1, column=2, value="tiempo_ultimo_agente_goal")
@@ -71,30 +91,88 @@ def write_excel(RUNS, workbook):
     sheet.cell(row=initial_row + 1, column=7, value="good_pred")
     sheet.cell(row=initial_row + 1, column=8, value="total_pred")
     sheet.cell(row=initial_row + 1, column=9, value="rate_pred")
+    sheet.cell(row=initial_row + 1, column=10, value="push_out_count")
     for i in range(len(RUNS)):
         RUN = RUNS[i]
-        sheet.cell(row=initial_row + i + 2, column=1, value=str(i))
-        sheet.cell(row=initial_row + i + 2, column=2, value=str(RUN.tiempo_ultimo_agente_goal))
-        sheet.cell(row=initial_row + i + 2, column=3, value=str(RUN.tiempo_en_acabar))
-        sheet.cell(row=initial_row + i + 2, column=4, value=str(RUN.tiempo_promedio))
-        sheet.cell(row=initial_row + i + 2, column=5, value=str(RUN.agentes_en_goal))
-        sheet.cell(row=initial_row + i + 2, column=6, value=str(RUN.bad_good_total_rate_pred[0]))
-        sheet.cell(row=initial_row + i + 2, column=7, value=str(RUN.bad_good_total_rate_pred[1]))
-        sheet.cell(row=initial_row + i + 2, column=8, value=str(RUN.bad_good_total_rate_pred[2]))
-        sheet.cell(row=initial_row + i + 2, column=9, value=str(RUN.bad_good_total_rate_pred[3]))
+        sheet.cell(row=initial_row + i + 2, column=1, value=i)
+        sheet.cell(row=initial_row + i + 2, column=2, value=RUN.tiempo_ultimo_agente_goal)
+        sheet.cell(row=initial_row + i + 2, column=3, value=RUN.tiempo_en_acabar)
+        sheet.cell(row=initial_row + i + 2, column=4, value=RUN.tiempo_promedio)
+        sheet.cell(row=initial_row + i + 2, column=5, value=RUN.agentes_en_goal)
+        sheet.cell(row=initial_row + i + 2, column=6, value=RUN.bad_good_total_rate_pred[0])
+        sheet.cell(row=initial_row + i + 2, column=7, value=RUN.bad_good_total_rate_pred[1])
+        sheet.cell(row=initial_row + i + 2, column=8, value=RUN.bad_good_total_rate_pred[2])
+        sheet.cell(row=initial_row + i + 2, column=9, value=RUN.bad_good_total_rate_pred[3])
+        sheet.cell(row=initial_row + i + 2, column=10, value=RUN.push_out_count)
 
     initial_row = initial_row + len(RUNS) + 3
+
     sheet.cell(row=initial_row, column=1, value="valores_ideales")
     for i in range(int(folder_name)):
         RUN = RUNS[0]
         sheet.cell(row=initial_row + 1, column=i + 1, value="agent " + str(i + 1))
         sheet.cell(row=initial_row + 2, column=i + 1, value=RUN.valores_ideales[i])
+    sheet.cell(row=initial_row + 3, column=1, value="promedio_ideales")
+    sheet.cell(row=initial_row + 3, column=2, value=np.mean(RUNS[0].valores_ideales))
+    return workbook
 
+
+def manage_refs(workbook):
+    sheet = workbook.create_sheet("refs")
+    sheet.cell(row=1, column=2, value="costo_por_agente")
+    sheet.cell(row=1, column=3, value="completion_time")
+    sheet.cell(row=1, column=4, value="valores_ideales")
+    # sheet.cell(row=1, column=8, value="bad_pred")
+    # sheet.cell(row=1, column=9, value="good_pred")
+    # sheet.cell(row=1, column=10, value="total_pred")
+    # sheet.cell(row=1, column=11, value="rate_pred")
+    # sheet.cell(row=1, column=12, value="push_out_count")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + 2, column=1, value=event)
+        sheet.cell(row=i + 2, column=2, value="=" + event + "_agents!b43")
+        sheet.cell(row=i + 2, column=3, value="=" + event + "_agents!b86")
+        sheet.cell(row=i + 2, column=4, value="=" + event + "_agents!b133")
+
+    initial_row = len(events) + 2
+    sheet.cell(row=initial_row + 1, column=2, value="tiempo_ultimo_agente_goal")
+    sheet.cell(row=initial_row + 1, column=3, value="MAX")
+    sheet.cell(row=initial_row + 1, column=4, value="STDEV")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + initial_row + 2, column=1, value=event)
+        sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!b89:b128)")
+        sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!b89:b128)")
+        sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!b89:b128)")
+        # sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!b89:b128)")
+        # sheet.cell(row=i + initial_row + 2, column=3, value="=AVERAGE("+event+"_agents!c89:c128)")
+        # sheet.cell(row=i + initial_row + 2, column=4, value="=AVERAGE("+event+"_agents!e89:e128)")
+
+    initial_row = (len(events)*2) + 4
+    sheet.cell(row=initial_row + 1, column=2, value="tiempo_en_acabar (success_agents)")
+    sheet.cell(row=initial_row + 1, column=3, value="MAX")
+    sheet.cell(row=initial_row + 1, column=4, value="STDEV")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + initial_row + 2, column=1, value=event)
+        sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!c89:c128)")
+        sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!c89:c128)")
+        sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!c89:c128)")
+
+    initial_row = (len(events)*2) + 12
+    sheet.cell(row=initial_row + 1, column=2, value="agentes_en_goal")
+    sheet.cell(row=initial_row + 1, column=3, value="MAX")
+    sheet.cell(row=initial_row + 1, column=4, value="STDEV")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + initial_row + 2, column=1, value=event)
+        sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!e89:e128)")
+        sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!e89:e128)")
+        sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!e89:e128)")
     return workbook
 
 
 if __name__ == '__main__':
-    events = ["50", "100", "150", "200", "250"]
     workbook = Workbook()
     for event in events:
         folder_name = event
@@ -102,4 +180,6 @@ if __name__ == '__main__':
         lines = strip_lines()
         RUNS = read_instances(lines)
         workbook = write_excel(RUNS, workbook)
+    workbook = manage_refs(workbook)
+
     workbook.save(filename="results.xlsx")
