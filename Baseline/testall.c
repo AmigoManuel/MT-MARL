@@ -23,8 +23,8 @@
 #define HA(from, to) ((10)* ( abs( (from)->y - (to)->y  ) + abs( (from)->x - (to)->x )   ))
 #endif
 
-char map_path[50] = "./GameMaps/test11.map2";
-char locations_path[50] = "./GameMaps/test11.loc2";
+char map_path[50] = "./GameMaps/test7.map2";
+char locations_path[50] = "./GameMaps/test7.loc2";
 
 /* Lectura de mapa desde fichero externo */
 void read_gamemap(const char *filename) {
@@ -291,6 +291,7 @@ int main(int argc, char *argv[]) {
         strcpy(map_path, argv[1]);
         strcpy(locations_path, argv[2]);
     }
+    remove("log-resultados");
 
     #ifdef UNKNOWN
     #ifdef DECREASE

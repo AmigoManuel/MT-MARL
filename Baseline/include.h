@@ -24,7 +24,7 @@
 //#define EIGHTCONNECTED    // must defined 8-connected grids .
 
 
-#define RUNS 100
+#define RUNS 10
 #define RANDOMMAZE            /* must define this, becasue 8-connect maze can not be generated   */
 //#define MAZEWIDTH  256
 //#define MAZEHEIGHT  257
@@ -36,17 +36,17 @@
 //#define MAZEWIDTH  252
 //#define MAZEHEIGHT  163
 
-// #define MAZEWIDTH  34
-// #define MAZEHEIGHT  34
+#define MAZEWIDTH  34
+#define MAZEHEIGHT  34
 
-#define MAZEWIDTH  12
-#define MAZEHEIGHT  11
+//#define MAZEWIDTH  12
+//#define MAZEHEIGHT  11
 
 
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */
 
-#define MAX_TIME_STEPS 100
-#define NAGENTS 10
+#define MAX_TIME_STEPS 1000
+#define NAGENTS 100
 
 float hvalues[MAZEWIDTH * MAZEHEIGHT][NAGENTS];
 int agent_expansions[NAGENTS];

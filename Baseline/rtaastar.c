@@ -12,9 +12,9 @@
 #include "rtaastar.h"
 #include "testall.h"
 
-
 #include <stdlib.h>
 #include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
 
 #ifdef TESTRTAASTAR
@@ -67,6 +67,7 @@ cell1 *CLOSED[10000];
 double f_value = 0;
 double total_cost = 0;
 double total_time = 0;
+short lastfinish = -1000;
 
 float time_astar_initialize1 = 0;
 float time_astar_first1 = 0;
@@ -299,9 +300,9 @@ void test_rtaastar(int lookahead, int prunning) {
     int y, x, i, j, k;
     long int m;
 
-    gettimeofday(&tv11c, NULL);
+    // gettimeofday(&tv11c, NULL);
     newrandommaze_astar();
-    gettimeofday(&tv22c, NULL);
+    // gettimeofday(&tv22c, NULL);
     time_astar_initialize1 += 1.0 * (tv22c.tv_sec - tv11c.tv_sec) + 1.0 * (tv22c.tv_usec - tv11c.tv_usec) / 1000000.0;
 
     initialize_astar();
@@ -313,10 +314,10 @@ void test_rtaastar(int lookahead, int prunning) {
         travel_distance[a] = 0;
         completion_time[a] = 0;
     }
-    while (finish_all && time_step <= MAX_TIME_STEPS) {
+    while (finish_all) {
 
-//			i = random() % NAGENTS;
-//			for (j = 0; j< NAGENTS; j++){
+        //			i = random() % NAGENTS;
+        //			for (j = 0; j< NAGENTS; j++){
         for (i = 0; i < NAGENTS; i++) {
 
             //		  if (position[i]->trace || position[i]->trace
@@ -336,16 +337,16 @@ void test_rtaastar(int lookahead, int prunning) {
                 // getchar();
             }
 
-#ifdef RANDOMMOVES
+            #ifdef RANDOMMOVES
             if (goal_reached[i]) {
                 //randommove(i);
                 stay_in_place(i);
                 // queda el primer time_step con el que logre llegar
                 if(completion_time[i] == 0) completion_time[i] = time_step;
             } else {
-#else
+            #else
                 if (position[i] != goal[i]){
-#endif
+            #endif
 
                 if (!computeshortestpath_astar(i, lookahead)) {
                     //if (enable_print) printf("***********************************************************************\n");
@@ -364,20 +365,70 @@ void test_rtaastar(int lookahead, int prunning) {
                     travel_distance[i]++;
                     //	if (RUN1 >= 2 && robot_steps1 >= 0){if (enable_print) printf("Angent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%d nei:%d\n",i,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,count_nei(position[i]));print_grid(position[i]->x,position[i]->y,position[i],goal[i]->x,goal[i]->y);getchar();}
                     if (position[i] == goal[i]) {
+                        if (goal_reached[i] == 0) {
+                            lastfinish = time_step;
+                            completion_time[i] = time_step;
+                        }
                         goal_reached[i] = 1;
                         solution_cost += agent_cost[i];
                         // El ultimo no alcanza a escribirse dentro del if(goal_rached[i])
                         // por eso se escribe al acabar la ultima iteración.
                         completion_time[i] = time_step;
                         finish_all--;
-#ifndef RANDOMMOVES
+                        #ifndef RANDOMMOVES
                         position[i]->obstacle = 1;
-#endif
-                        if (finish_all == 0) {
-
+                        #endif
+                        if (finish_all == 0 || time_step >= MAX_TIME_STEPS) {
+                            printf("acabo");
                             enable_print = 1;
-
                             total_cost = 0;
+
+                            FILE *fp;
+
+                            fp = fopen("log-resultados", "a+");
+
+                            fprintf(fp, "RUN %ld\n", RUN1);
+                            
+                            fprintf(fp, "valores_ideales ");
+                            fprintf(fp, "[");
+                            for (int a = 0; a < NAGENTS; a++)
+                            {
+                                if (a == NAGENTS - 1) fprintf(fp, "%d", 0);
+                                else fprintf(fp, "%d,", 0);
+                            }
+                            fprintf(fp, "]\n");
+
+                            fprintf(fp, "costo_por_agente ");
+                            fprintf(fp, "[");
+                            for (int a = 0; a < NAGENTS; a++)
+                            {
+                                if (goal_reached[a]) total_cost += agent_cost[a];
+                                if (a == NAGENTS - 1) fprintf(fp, "%.0lf", agent_cost[a]);
+                                else fprintf(fp, "%.0lf,", agent_cost[a]);
+                            }
+                            float total_time_cost = 0;
+                            fprintf(fp, "]\n");
+                            
+                            
+                            fprintf(fp, "completion_time_por_agente ");
+                            fprintf(fp, "[");
+                            for (int a = 0; a < NAGENTS; a++)
+                            {
+                                total_time_cost += completion_time[a];
+                                if (a == NAGENTS - 1) fprintf(fp, "%d", completion_time[a]);
+                                else fprintf(fp, "%d,", completion_time[a]);
+                            }
+                            ("costo_promedio %f\n", total_cost / NAGENTS);
+                            fprintf(fp, "]\n");
+
+                            fprintf(fp, "tiempo_ultimo_agente_goal %d\n", lastfinish);
+                            fprintf(fp, "tiempo_en_acabar %d\n", time_step);
+                            fprintf(fp, "tiempo_promedio %f\n", total_time_cost / NAGENTS);
+                            fprintf(fp, "agentes_en_goal %d\n", NAGENTS - finish_all);
+
+                            fclose(fp);
+
+                            /* total_cost = 0;
                             if (enable_print) printf("Costo por agente\n");
                             for (int a; a < NAGENTS; a++) {
                                 total_cost += travel_distance[a];
@@ -393,7 +444,7 @@ void test_rtaastar(int lookahead, int prunning) {
                             if (enable_print) printf("Tiempo en acabar: %d\n", time_step);
                             if (enable_print) printf("Tiempo promedio: %f\n", total_time / NAGENTS);
 
-                            getchar();
+                            getchar(); */
 
                             enable_print = 0;
                             
@@ -423,61 +474,61 @@ void call_rtaastar() {
     float SDOM = 0;
     int lookahead;
     int prunning, i;
-    int look[9] = {1, 8, 16, 32, 64, 128, 256, 512, 1024};
+    //int look[9] = {1, 8, 16, 32, 64, 128, 256, 512, 1024};
+    int look[1] = {1};
 
-    for (prunning = 0; prunning < 1; prunning++)
-        for (i = 0; i < 4; i++) {
-            lookahead = look[i];
-            if (enable_print) printf("lookahead == [%d] ___________________________________\n", lookahead);
-            for (RUN1 = 0; RUN1 < RUNS; ++RUN1) {
-                if (enable_print) printf("case == [%ld] ___________________________________\n", RUN1);
-                srand(5 * RUN1 + 100);
-                generate_maze(RUN1);
-                gettimeofday(&tv11, NULL);
-                test_rtaastar(lookahead, prunning);
-                emptyheap3();
-                gettimeofday(&tv22, NULL);
-                time_astar += 1.0 * (tv22.tv_sec - tv11.tv_sec) + 1.0 * (tv22.tv_usec - tv11.tv_usec) / 1000000.0;
-                robotmoves_total1 += robot_steps1;
-#ifdef STATISTICS
-                if (times_of_billion1 > 0)
-                    average_expansion_persearch =
-                            ((float) 1000000000 / (float) searches_astar1 * (float) times_of_billion1) +
-                            ((float) statexpanded1 / (float) searches_astar1);
-                else
-                    average_expansion_persearch = ((float) statexpanded1 / (float) searches_astar1);
-#endif
+    for (prunning = 0; prunning < 1; prunning++) {
+        lookahead = look[0];
+        if (enable_print) printf("lookahead == [%d] ___________________________________\n", lookahead);
+        for (RUN1 = 0; RUN1 < RUNS; ++RUN1) {
+            if (enable_print) printf("case == [%ld] ___________________________________\n", RUN1);
+            srand(time(NULL));
+            generate_maze(RUN1);
+            // gettimeofday(&tv11, NULL);
+            test_rtaastar(lookahead, prunning);
+            emptyheap3();
+            // gettimeofday(&tv22, NULL);
+            time_astar += 1.0 * (tv22.tv_sec - tv11.tv_sec) + 1.0 * (tv22.tv_usec - tv11.tv_usec) / 1000000.0;
+            robotmoves_total1 += robot_steps1;
+            lastfinish = -1000;
+            #ifdef STATISTICS
+            if (times_of_billion1 > 0)
+                average_expansion_persearch =
+                        ((float) 1000000000 / (float) searches_astar1 * (float) times_of_billion1) +
+                        ((float) statexpanded1 / (float) searches_astar1);
+            else
+                average_expansion_persearch = ((float) statexpanded1 / (float) searches_astar1);
+            #endif
 
 
-                if ((salida = fopen("Output-mrtaa-1-step", "a")) == NULL) {
-                    if (enable_print) printf("No se puede abrir el archivo de salida");
-                }
-                fprintf(salida, "%d %f %d %d %lld %f %d %ld %lld %ld", lookahead, solution_cost, NAGENTS,
-                        NAGENTS - finish_all, searches_astar1, (time_astar - time_astar_initialize1) * 1000,
-                        time_step - 1, RUN1, statexpanded1, statpercolated2);
+            if ((salida = fopen("Output-mrtaa-1-step", "a")) == NULL) {
+                if (enable_print) printf("No se puede abrir el archivo de salida");
+            }
+            fprintf(salida, "%d %f %d %d %lld %f %d %ld %lld %ld", lookahead, solution_cost, NAGENTS,
+                    NAGENTS - finish_all, searches_astar1, (time_astar - time_astar_initialize1) * 1000,
+                    time_step - 1, RUN1, statexpanded1, statpercolated2);
 
-                fputs("\n", salida);
-                fclose(salida);
-
-                statexpanded1_first = 0;
-                statexpanded1 = 0;
-                robotmoves_total1 = 0;
-                time_astar = 0;
-                time_searches = 0;
-                time_astar_initialize1 = 0;
-                searches_astar1 = 0;
-                average_expansion_persearch = 0;
-                average_trace_persearch = 0;
-                variance_expansion_persearch = 0;
-                SDOM = 0;
-                solution_cost = 0;
-                max_expansions = 0;
-                open_size = 0;
-                memory_count = 0;
-                statexpanded1_prune = 0;
+            fputs("\n", salida);
+            fclose(salida);
+            statexpanded1_first = 0;
+            statexpanded1 = 0;
+            robotmoves_total1 = 0;
+            time_astar = 0;
+            time_searches = 0;
+            time_astar_initialize1 = 0;
+            searches_astar1 = 0;
+            average_expansion_persearch = 0;
+            average_trace_persearch = 0;
+            variance_expansion_persearch = 0;
+            SDOM = 0;
+            solution_cost = 0;
+            max_expansions = 0;
+            open_size = 0;
+            memory_count = 0;
+            statexpanded1_prune = 0;
 
             }// end for RUN1S
-        }//end lookahead
+    }
     return;
 }
 
