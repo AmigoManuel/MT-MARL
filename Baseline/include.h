@@ -45,6 +45,7 @@
 
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */
 
+#define PUSH_OVER_THRESHOLD 5
 #define MAX_TIME_STEPS 1000
 #define NAGENTS 100
 
