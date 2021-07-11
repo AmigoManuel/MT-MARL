@@ -651,7 +651,7 @@ void call_rtaastar()
             statexpanded1_prune = 0;
 
             //delay
-            sleep(2);
+            sleep(1);
 
         } // end for RUN1S
     }
