@@ -591,7 +591,7 @@ void call_rtaastar()
     int lookahead;
     int prunning, i;
     //int look[9] = {1, 8, 16, 32, 64, 128, 256, 512, 1024};
-    int look[1] = {1};
+    int look[1] = {3};
 
     for (prunning = 0; prunning < 1; prunning++)
     {
