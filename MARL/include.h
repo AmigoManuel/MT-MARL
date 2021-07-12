@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-
+       
 #define INFORMEDSEARCH           /* use Manhattan distance  */
 
 #define TESTRTAASTAR         /* test RTAA star */
