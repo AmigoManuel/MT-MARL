@@ -14,8 +14,8 @@ class RUN:
         self.tiempo_en_acabar = values[4]
         self.tiempo_promedio = values[5]
         self.agentes_en_goal = values[6]
-        self.bad_good_total_rate_pred = values[7]
-        self.push_out_count = values[8]
+        # self.bad_good_total_rate_pred = values[7]
+        self.push_out_count = values[7]
 
 
 def strip_lines():
@@ -84,11 +84,11 @@ def write_excel(RUNS, workbook):
     sheet.cell(row=initial_row + 1, column=3, value="tiempo_en_acabar")
     sheet.cell(row=initial_row + 1, column=4, value="tiempo_promedio")
     sheet.cell(row=initial_row + 1, column=5, value="agentes_en_goal")
-    sheet.cell(row=initial_row + 1, column=6, value="bad_pred")
-    sheet.cell(row=initial_row + 1, column=7, value="good_pred")
-    sheet.cell(row=initial_row + 1, column=8, value="total_pred")
-    sheet.cell(row=initial_row + 1, column=9, value="rate_pred")
-    sheet.cell(row=initial_row + 1, column=10, value="push_out_count")
+    # sheet.cell(row=initial_row + 1, column=6, value="bad_pred")
+    # sheet.cell(row=initial_row + 1, column=7, value="good_pred")
+    # sheet.cell(row=initial_row + 1, column=8, value="total_pred")
+    # sheet.cell(row=initial_row + 1, column=9, value="rate_pred")
+    sheet.cell(row=initial_row + 1, column=6, value="push_out_count")
     for i in range(len(RUNS)):
         RUN = RUNS[i]
         sheet.cell(row=initial_row + i + 2, column=1, value=i)
@@ -96,11 +96,11 @@ def write_excel(RUNS, workbook):
         sheet.cell(row=initial_row + i + 2, column=3, value=RUN.tiempo_en_acabar)
         sheet.cell(row=initial_row + i + 2, column=4, value=RUN.tiempo_promedio)
         sheet.cell(row=initial_row + i + 2, column=5, value=RUN.agentes_en_goal)
-        sheet.cell(row=initial_row + i + 2, column=6, value=RUN.bad_good_total_rate_pred[0])
-        sheet.cell(row=initial_row + i + 2, column=7, value=RUN.bad_good_total_rate_pred[1])
-        sheet.cell(row=initial_row + i + 2, column=8, value=RUN.bad_good_total_rate_pred[2])
-        sheet.cell(row=initial_row + i + 2, column=9, value=RUN.bad_good_total_rate_pred[3])
-        sheet.cell(row=initial_row + i + 2, column=10, value=RUN.push_out_count)
+        # sheet.cell(row=initial_row + i + 2, column=6, value=RUN.bad_good_total_rate_pred[0])
+        # sheet.cell(row=initial_row + i + 2, column=7, value=RUN.bad_good_total_rate_pred[1])
+        # sheet.cell(row=initial_row + i + 2, column=8, value=RUN.bad_good_total_rate_pred[2])
+        # sheet.cell(row=initial_row + i + 2, column=9, value=RUN.bad_good_total_rate_pred[3])
+        sheet.cell(row=initial_row + i + 2, column=6, value=RUN.push_out_count)
 
     initial_row = initial_row + len(RUNS) + 3
 
@@ -145,7 +145,7 @@ def manage_refs(workbook):
         # sheet.cell(row=i + initial_row + 2, column=3, value="=AVERAGE("+event+"_agents!c89:c128)")
         # sheet.cell(row=i + initial_row + 2, column=4, value="=AVERAGE("+event+"_agents!e89:e128)")
 
-    initial_row = (len(events) + 2) * 2
+    initial_row = (len(events)+2) * 2
     sheet.cell(row=initial_row + 1, column=2, value="tiempo_en_acabar (success_agents)")
     sheet.cell(row=initial_row + 1, column=3, value="MAX")
     sheet.cell(row=initial_row + 1, column=4, value="STDEV")
@@ -156,7 +156,7 @@ def manage_refs(workbook):
         sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!c89:c128)")
         sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!c89:c128)")
 
-    initial_row = (len(events) + 2) * 3
+    initial_row = (len(events)+2) * 3
     sheet.cell(row=initial_row + 1, column=2, value="agentes_en_goal")
     sheet.cell(row=initial_row + 1, column=3, value="MAX")
     sheet.cell(row=initial_row + 1, column=4, value="STDEV")
@@ -179,4 +179,4 @@ if __name__ == '__main__':
         workbook = write_excel(RUNS, workbook)
     workbook = manage_refs(workbook)
 
-    workbook.save(filename="resultsMARL.xlsx")
+    workbook.save(filename="resultsBaseline.xlsx")
