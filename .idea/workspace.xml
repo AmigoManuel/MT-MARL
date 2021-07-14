@@ -2,18 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="affb4699-5a78-493f-b8f0-7ea6d3091b00" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/memoria/pasillo (test88)/Baseline/mediciones.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/memoria/pasillo (test88)/MARL/mediciones.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline/mediciones.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline/resultsBaseline.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/memoria/pasillo 2 (test88)/MARL/mediciones.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/memoria/pasillo 2 (test88)/MARL/resultsMARL.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Baseline/Output-mrtaa-1-step" beforeDir="false" afterPath="$PROJECT_DIR$/Baseline/Output-mrtaa-1-step" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Baseline/include.h" beforeDir="false" afterPath="$PROJECT_DIR$/Baseline/include.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Baseline/testall" beforeDir="false" afterPath="$PROJECT_DIR$/Baseline/testall" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memoria/aleatorio (test7)/Baseline/resultsBaseline.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/aleatorio (test7)/Baseline/resultsBaseline.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memoria/aleatorio (test7)/MARL/mediciones.py" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/aleatorio (test7)/MARL/mediciones.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memoria/aleatorio (test7)/MARL/resultsMARL.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/aleatorio (test7)/MARL/resultsMARL.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,10 +28,12 @@
     <option name="sortByType" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/memoria/pasillo (test88)/MARL" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -45,11 +41,13 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\diazu\MT-MARL\memoria\pasillo 2 (test88)\Baseline" />
+      <recent name="C:\Users\diazu\MT-MARL\memoria\pasillo 2 (test88)\MARL" />
       <recent name="C:\Users\diazu\MT-MARL\memoria\pasillo (test88)\MARL" />
       <recent name="C:\Users\diazu\MT-MARL\memoria\pasillo (test88)\Baseline" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.mediciones">
+  <component name="RunManager" selected="Python.mediciones (5)">
     <configuration name="mediciones (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MT-MARL" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -72,28 +70,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mediciones (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="MT-MARL" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/memoria/pasillo (test88)/MARL" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/pasillo (test88)/MARL/mediciones.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="mediciones (3)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MT-MARL" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -108,6 +84,50 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/pasillo (test88)/Baseline/mediciones.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="mediciones (4)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MT-MARL" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/memoria/pasillo 2 (test88)/MARL" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/pasillo 2 (test88)/MARL/mediciones.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="mediciones (5)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MT-MARL" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline/mediciones.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -140,10 +160,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.mediciones (5)" />
+        <item itemvalue="Python.mediciones (4)" />
         <item itemvalue="Python.mediciones" />
         <item itemvalue="Python.mediciones (1)" />
         <item itemvalue="Python.mediciones (3)" />
-        <item itemvalue="Python.mediciones (2)" />
       </list>
     </recent_temporary>
   </component>
@@ -162,9 +183,14 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__2_.coverage" NAME="mediciones (2) Coverage Results" MODIFIED="1626127114067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo (test88)/MARL" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__3_.coverage" NAME="mediciones (3) Coverage Results" MODIFIED="1626127258629" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo (test88)/Baseline" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__5_.coverage" NAME="mediciones (5) Coverage Results" MODIFIED="1626240860692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__4_.coverage" NAME="mediciones (4) Coverage Results" MODIFIED="1626240633817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo 2 (test88)/MARL" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones.coverage" NAME="mediciones Coverage Results" MODIFIED="1626127474296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/aleatorio (test7)/MARL" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__1_.coverage" NAME="mediciones (1) Coverage Results" MODIFIED="1626127463466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/aleatorio (test7)/Baseline" />
   </component>
