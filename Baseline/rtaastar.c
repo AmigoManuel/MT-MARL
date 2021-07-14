@@ -391,10 +391,12 @@ void test_rtaastar(int lookahead, int prunning)
                 //randommove(i);
                 stay_in_place(i);
                 // queda el primer time_step con el que logre llegar
-                if (completion_time[i] == 0)
-                    completion_time[i] = time_step;
+                // if (completion_time[i] == 0) completion_time[i] = time_step;
                 continue;
+            } else {
+                completion_time[i] = time_step;
             }
+            
 
             if (!computeshortestpath_astar(i, lookahead))
             {
