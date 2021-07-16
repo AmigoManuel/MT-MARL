@@ -47,7 +47,7 @@
 
 #define PUSH_OVER_THRESHOLD 5
 #define MAX_TIME_STEPS 1000
-#define NAGENTS 10
+#define NAGENTS 200
 
 float hvalues[MAZEWIDTH * MAZEHEIGHT][NAGENTS];
 int agent_expansions[NAGENTS];

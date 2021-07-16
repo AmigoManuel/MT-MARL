@@ -25,7 +25,7 @@ class Agent:
 lines = map_file.read().splitlines()
 width = len(lines[0]) - 1
 height = len(lines) - 1
-n = 200
+n = 50
 index = 0
 
 mapped_loc = []
