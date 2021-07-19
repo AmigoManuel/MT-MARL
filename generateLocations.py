@@ -1,8 +1,8 @@
 from random import randint
 
-pathMARL = "./MARL/GameMaps/pasillo/"
-pathBaseline = "./Baseline/GameMaps/pasillo/"
-name = "pasillo"
+pathMARL = "./MARL/GameMaps/4pasillo/"
+pathBaseline = "./Baseline/GameMaps/4pasillo/"
+name = "4pasillo"
 map_file = open(pathMARL + name + ".map2", 'r')
 
 
@@ -25,7 +25,7 @@ class Agent:
 lines = map_file.read().splitlines()
 width = len(lines[0]) - 1
 height = len(lines) - 1
-n = 50
+n = 200
 index = 0
 
 mapped_loc = []

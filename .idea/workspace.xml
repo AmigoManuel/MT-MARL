@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="affb4699-5a78-493f-b8f0-7ea6d3091b00" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memoria/pasillo/Baseline/resultsBaseline.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/pasillo/Baseline/resultsBaseline.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memoria/pasillo/MARL/resultsMARL.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/pasillo/MARL/resultsMARL.xlsx" afterDir="false" />
-    </list>
+    <list default="true" id="affb4699-5a78-493f-b8f0-7ea6d3091b00" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -180,7 +176,7 @@
       <workItem from="1626126969567" duration="1495000" />
       <workItem from="1626658755201" duration="506000" />
       <workItem from="1626659328770" duration="62000" />
-      <workItem from="1626659435115" duration="732000" />
+      <workItem from="1626659435115" duration="755000" />
     </task>
     <servers />
   </component>
