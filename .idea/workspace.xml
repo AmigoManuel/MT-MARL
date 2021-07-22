@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="affb4699-5a78-493f-b8f0-7ea6d3091b00" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/memoria/pasillo/pasillo.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/memoria/pasillo.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/memoria/pasillo/Baseline/mediciones.py" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/pasillo/Baseline/mediciones.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/memoria/pasillo/Baseline/resultsBaseline.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/pasillo/Baseline/resultsBaseline.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/memoria/pasillo/MARL/mediciones.py" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/pasillo/MARL/mediciones.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/memoria/pasillo/MARL/resultsMARL.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/pasillo/MARL/resultsMARL.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,9 +167,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.mediciones (3)" />
+        <item itemvalue="Python.mediciones (2)" />
         <item itemvalue="Python.mediciones" />
         <item itemvalue="Python.mediciones (1)" />
-        <item itemvalue="Python.mediciones (2)" />
         <item itemvalue="Python.mediciones (5)" />
       </list>
     </recent_temporary>
@@ -181,7 +186,8 @@
       <workItem from="1626658755201" duration="506000" />
       <workItem from="1626659328770" duration="62000" />
       <workItem from="1626659435115" duration="755000" />
-      <workItem from="1626815044334" duration="1451000" />
+      <workItem from="1626815044334" duration="2924000" />
+      <workItem from="1626929992921" duration="2123000" />
     </task>
     <servers />
   </component>
@@ -204,8 +210,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__2_.coverage" NAME="mediciones (2) Coverage Results" MODIFIED="1626659544641" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo/MARL" />
-    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__3_.coverage" NAME="mediciones (3) Coverage Results" MODIFIED="1626817280447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo/Baseline" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__2_.coverage" NAME="mediciones (2) Coverage Results" MODIFIED="1626931799942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo/MARL" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__3_.coverage" NAME="mediciones (3) Coverage Results" MODIFIED="1626932025164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo/Baseline" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__5_.coverage" NAME="mediciones (5) Coverage Results" MODIFIED="1626240860692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__4_.coverage" NAME="mediciones (4) Coverage Results" MODIFIED="1626240633817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo 2 (test88)/MARL" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones.coverage" NAME="mediciones Coverage Results" MODIFIED="1626815272227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/4pasillo/Baseline" />
