@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="affb4699-5a78-493f-b8f0-7ea6d3091b00" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/memoria/4pasillo/4pasillo.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/4pasillo/4pasillo.xlsx" afterDir="false" />
@@ -9,6 +10,9 @@
       <change beforePath="$PROJECT_DIR$/memoria/4pasillo/MARL/mediciones.py" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/4pasillo/MARL/mediciones.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/memoria/4pasillo/MARL/resultsMARL.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/memoria/4pasillo/MARL/resultsMARL.xlsx" afterDir="false" />
     </list>
+=======
+    <list default="true" id="affb4699-5a78-493f-b8f0-7ea6d3091b00" name="Default Changelist" comment="" />
+>>>>>>> 0a30bde0aa6df52bab78aec0811336a79b4577d8
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +37,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/memoria/4pasillo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/memoria/libre" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -45,14 +49,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\diazu\MT-MARL\memoria\libre" />
+      <recent name="C:\Users\diazu\MT-MARL\memoria\libre\Baseline" />
+      <recent name="C:\Users\diazu\MT-MARL\memoria\libre\MARL" />
       <recent name="C:\Users\diazu\MT-MARL\memoria\4pasillo" />
       <recent name="C:\Users\diazu\MT-MARL\memoria\4pasillo\MARL" />
-      <recent name="C:\Users\diazu\MT-MARL\memoria\4pasillo\Baseline" />
-      <recent name="C:\Users\diazu\MT-MARL\memoria\pasillo 2 (test88)\Baseline" />
-      <recent name="C:\Users\diazu\MT-MARL\memoria\pasillo 2 (test88)\MARL" />
     </key>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Python.mediciones (1)">
+=======
+  <component name="RunManager" selected="Python.mediciones (5)">
+>>>>>>> 0a30bde0aa6df52bab78aec0811336a79b4577d8
     <configuration name="mediciones (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MT-MARL" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -67,28 +75,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/4pasillo/MARL/mediciones.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="mediciones (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="MT-MARL" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/memoria/pasillo/MARL" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/pasillo/MARL/mediciones.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -119,6 +105,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="mediciones (4)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MT-MARL" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/memoria/libre/Baseline" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/libre/Baseline/mediciones.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="mediciones (5)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MT-MARL" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -127,12 +135,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/memoria/libre/MARL" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline/mediciones.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memoria/libre/MARL/mediciones.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -165,11 +173,19 @@
     </configuration>
     <recent_temporary>
       <list>
+<<<<<<< HEAD
         <item itemvalue="Python.mediciones (1)" />
         <item itemvalue="Python.mediciones" />
         <item itemvalue="Python.mediciones (3)" />
         <item itemvalue="Python.mediciones (2)" />
         <item itemvalue="Python.mediciones (5)" />
+=======
+        <item itemvalue="Python.mediciones (5)" />
+        <item itemvalue="Python.mediciones (4)" />
+        <item itemvalue="Python.mediciones" />
+        <item itemvalue="Python.mediciones (1)" />
+        <item itemvalue="Python.mediciones (3)" />
+>>>>>>> 0a30bde0aa6df52bab78aec0811336a79b4577d8
       </list>
     </recent_temporary>
   </component>
@@ -188,6 +204,8 @@
       <workItem from="1626815044334" duration="2924000" />
       <workItem from="1626929992921" duration="3384000" />
       <workItem from="1626974842465" duration="705000" />
+      <workItem from="1627082462551" duration="1665000" />
+      <workItem from="1627103738582" duration="1128000" />
     </task>
     <servers />
   </component>
@@ -210,11 +228,20 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+<<<<<<< HEAD
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__2_.coverage" NAME="mediciones (2) Coverage Results" MODIFIED="1626931799942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo/MARL" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__3_.coverage" NAME="mediciones (3) Coverage Results" MODIFIED="1626969903435" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo/Baseline" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__5_.coverage" NAME="mediciones (5) Coverage Results" MODIFIED="1626240860692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo 2 (test88)/Baseline" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__4_.coverage" NAME="mediciones (4) Coverage Results" MODIFIED="1626240633817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo 2 (test88)/MARL" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones.coverage" NAME="mediciones Coverage Results" MODIFIED="1626970168701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/4pasillo/Baseline" />
     <SUITE FILE_PATH="coverage/MT_MARL$mediciones__1_.coverage" NAME="mediciones (1) Coverage Results" MODIFIED="1626970176291" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/4pasillo/MARL" />
+=======
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__2_.coverage" NAME="mediciones (2) Coverage Results" MODIFIED="1626961184750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo/MARL" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__3_.coverage" NAME="mediciones (3) Coverage Results" MODIFIED="1626963487058" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/pasillo/Baseline" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__5_.coverage" NAME="mediciones (5) Coverage Results" MODIFIED="1627104157186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/libre/MARL" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__4_.coverage" NAME="mediciones (4) Coverage Results" MODIFIED="1627104141804" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/libre/Baseline" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones.coverage" NAME="mediciones Coverage Results" MODIFIED="1627083773698" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/4pasillo/Baseline" />
+    <SUITE FILE_PATH="coverage/MT_MARL$mediciones__1_.coverage" NAME="mediciones (1) Coverage Results" MODIFIED="1627083769698" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/memoria/4pasillo/MARL" />
+>>>>>>> 0a30bde0aa6df52bab78aec0811336a79b4577d8
   </component>
 </project>

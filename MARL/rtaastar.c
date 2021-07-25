@@ -909,6 +909,33 @@ void determine_role(int *roleij, int maxInfo, int a, int j, int *cell_role) {
     if (enable_print) printf("Role between %i and %i is %i, cell_role is %i\n", a + 1, j + 1,*roleij, *cell_role);
 }
 
+void push_over_func(int i, cell1* previous) {
+    // Me conservo en el lugar, entonces incrementa contador
+    push_over[i] = push_over[i] + 1;
+    if (push_over[i] > PUSH_OVER_THRESHOLD)
+    {
+        d = rand() % DIRECTIONS;
+        for (int _d = 0; _d < DIRECTIONS; _d++)
+        {
+            if (!position[i]->succ[d]->obstacle &&
+                !position[i]->succ[d]->blocked[0] &&
+                (int)position[i]->succ[d]->g)
+            {
+                push_over[i] = 0;
+                position[i] = position[i]->succ[d];
+                agent_cost[i] += euclidian(previous, position[i]);
+                robot_steps1++;
+                previous->blocked[0] = 0;
+                position[i]->blocked[0] = 1;
+                position[i]->parent[i] = previous;
+                push_out_count = push_out_count + 1;
+                break;
+            }
+            d = (d + 1) % DIRECTIONS;
+        }
+    }
+}
+
 int compute_shortestpath_astar(int a, int lookahead) {
     long valuehpath, j, minimo;
     int variant1, sal, i;
@@ -2291,6 +2318,7 @@ void observe_agent(int a, int i, int lookahead, cell1 *previous) {
         for (int z = 0; z < (lookahead); z++) {
             if ((mostProbPositionXY[a][i][z][0] > -1) &&
                 (mostProbPositionXY[a][i][z][1] > -1)) {
+                // Nunca se cumple sobre la primera observación.
                 if (maze1[mostProbPositionXY[a][i][z][1]]
                          [mostProbPositionXY[a][i][z][0]]
                              .blockedAgent[a][z] > 0) {
@@ -2938,14 +2966,7 @@ void test_rtaastar(int lookahead, int prunning) {
                 if (i==0) getchar();
             } */
 
-            #ifdef RANDOMMOVES
-            if (goal_reached[i])
-                randommove(i);
-            else {
-            #else
             if (position[i] != goal[i]) { // While it is not at its goal...
-            #endif
-
                 // First, compute the shortest path, ignoring other agents...
                 if (!compute_shortestpath_astar(i, lookahead)) {
                     // if (enable_print) printf(" OOOPPS,AGENT %i NEED TO BACKTRACK!!!\n",i);
@@ -3074,52 +3095,25 @@ void test_rtaastar(int lookahead, int prunning) {
                         
                         // Esta rutina permite empujar los agentes fuera de su celda luego de PUSH_OVER_THRESHOLD tiempo en ella
                         // Si no me encuentro en mi goal
-                        if (position[i] != goal[i]) {
+                        /* if (position[i] != goal[i]) {
                             // No me he movido en el paso anterior
                             if (position[i] == previous) {
                                 // No me he movido desde la ultima vez
                                 if (last_recently_see[i] != NULL &&
                                     last_recently_see[i] == position[i]) {
-                                    // Me conservo en el lugar, entonces incrementa contador
-                                    push_over[i] = push_over[i] + 1;
-                                    if (push_over[i] > PUSH_OVER_THRESHOLD) {
-                                        d = rand() % DIRECTIONS;
-                                        for (int _d = 0; _d < DIRECTIONS; _d++) {
-                                            if (!position[i]->succ[d]->obstacle &&
-                                                !position[i]->succ[d]->blocked[0] &&
-                                                (int) position[i]->succ[d]->g) {
-                                                /* printf("la celda [%d %d] esta libre desde [%d %d] para %d en dirección %d\n",
-                                                        position[i]->succ[d]->y,
-                                                        position[i]->succ[d]->x,
-                                                        position[i]->y,
-                                                        position[i]->x,
-                                                        i + 1, d); */
-
-                                                push_over[i] = 0;
-                                                position[i] = position[i]->succ[d];
-                                                agent_cost[i] += euclidian(previous, position[i]);
-                                                robot_steps1++;
-                                                previous->blocked[0] = 0;
-                                                position[i]->blocked[0] = 1;
-                                                position[i]->parent[i] = previous;
-                                                push_out_count = push_out_count + 1;
-                                                break;
-                                            }
-                                            d = (d + 1) % DIRECTIONS;
-                                        }
-                                    }
+                                    // push_over_func(i, previous);
                                 } else {
                                     // Me moví desde la ultima vez, entonces reinicio
                                     push_over[i] = 0;
                                 }
                                 // Ultima vez visto
                                 last_recently_see[i] = previous;
-                                /* for (int a = 0; a < NAGENTS; a++) {
-                                    printf("[%d]", push_over[a]);
-                                }
-                                printf("\n"); */
+                                //for (int a = 0; a < NAGENTS; a++) {
+                                //    printf("[%d]", push_over[a]);
+                                //}
+                                //printf("\n");
                             }
-                        }
+                        } */
 
 
 

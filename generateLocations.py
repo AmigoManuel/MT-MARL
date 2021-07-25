@@ -1,8 +1,8 @@
 from random import randint
 
-pathMARL = "./MARL/GameMaps/4pasillo/"
-pathBaseline = "./Baseline/GameMaps/4pasillo/"
-name = "4pasillo"
+pathMARL = "./MARL/GameMaps/libre/"
+pathBaseline = "./Baseline/GameMaps/libre/"
+name = "libre"
 map_file = open(pathMARL + name + ".map2", 'r')
 
 
