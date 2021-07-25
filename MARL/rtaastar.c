@@ -2966,14 +2966,7 @@ void test_rtaastar(int lookahead, int prunning) {
                 if (i==0) getchar();
             } */
 
-            #ifdef RANDOMMOVES
-            if (goal_reached[i])
-                randommove(i);
-            else {
-            #else
             if (position[i] != goal[i]) { // While it is not at its goal...
-            #endif
-
                 // First, compute the shortest path, ignoring other agents...
                 if (!compute_shortestpath_astar(i, lookahead)) {
                     // if (enable_print) printf(" OOOPPS,AGENT %i NEED TO BACKTRACK!!!\n",i);
