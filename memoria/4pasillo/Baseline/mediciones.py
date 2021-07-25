@@ -50,7 +50,7 @@ def write_excel(RUNS, workbook):
     sheet = workbook.create_sheet(folder_name + "_agents")
 
     # tabla costo por agente #
-    sheet.cell(row=1, column=1, value="costo_por_agente")
+    sheet.cell(row=1, column=1, value="sum_of_costs")
     sheet.cell(row=2, column=1, value="RUN")
     for i in range(int(folder_name)):
         sheet.cell(row=2, column=i + 2, value="agent " + str(i + 1))
@@ -62,9 +62,11 @@ def write_excel(RUNS, workbook):
     initial_row = len(RUNS) + 4
     sheet.cell(row=initial_row - 1, column=1, value="promedio")
     sheet.cell(row=initial_row - 1, column=2, value=np.mean([np.mean(run.costo_por_agente) for run in RUNS]))
+    sheet.cell(row=initial_row - 1, column=3, value="std")
+    sheet.cell(row=initial_row - 1, column=4, value=np.std([np.mean(run.costo_por_agente) for run in RUNS]))
 
     # tabla completion time por agente#
-    sheet.cell(row=initial_row, column=1, value="completion_time_por_agente")
+    sheet.cell(row=initial_row, column=1, value="makespan")
     sheet.cell(row=initial_row + 1, column=1, value="RUN")
     for i in range(int(folder_name)):
         sheet.cell(row=initial_row + 1, column=i + 2, value="agent " + str(i + 1))
@@ -77,6 +79,8 @@ def write_excel(RUNS, workbook):
     initial_row = (initial_row * 2) - 1
     sheet.cell(row=initial_row - 1, column=1, value="promedio")
     sheet.cell(row=initial_row - 1, column=2, value=np.mean([np.mean(run.completion_time_por_agente) for run in RUNS]))
+    sheet.cell(row=initial_row - 1, column=3, value="std")
+    sheet.cell(row=initial_row - 1, column=4, value=np.std([np.mean(run.completion_time_por_agente) for run in RUNS]))
 
     sheet.cell(row=initial_row, column=1, value="estadisticos")
     sheet.cell(row=initial_row + 1, column=1, value="RUN")
@@ -116,9 +120,11 @@ def write_excel(RUNS, workbook):
 
 def manage_refs(workbook):
     sheet = workbook.create_sheet("refs")
-    sheet.cell(row=1, column=2, value="costo_por_agente")
-    sheet.cell(row=1, column=3, value="completion_time")
-    sheet.cell(row=1, column=4, value="valores_ideales")
+    sheet.cell(row=1, column=2, value="sum_of_costs")
+    sheet.cell(row=1, column=3, value="std")
+    sheet.cell(row=1, column=4, value="makespan")
+    sheet.cell(row=1, column=5, value="std")
+    sheet.cell(row=1, column=6, value="valores_ideales")
     # sheet.cell(row=1, column=8, value="bad_pred")
     # sheet.cell(row=1, column=9, value="good_pred")
     # sheet.cell(row=1, column=10, value="total_pred")
@@ -128,8 +134,10 @@ def manage_refs(workbook):
         event = events[i]
         sheet.cell(row=i + 2, column=1, value=event)
         sheet.cell(row=i + 2, column=2, value="=" + event + "_agents!b43")
-        sheet.cell(row=i + 2, column=3, value="=" + event + "_agents!b86")
-        sheet.cell(row=i + 2, column=4, value="=" + event + "_agents!b133")
+        sheet.cell(row=i + 2, column=3, value="=" + event + "_agents!d43")
+        sheet.cell(row=i + 2, column=4, value="=" + event + "_agents!b86")
+        sheet.cell(row=i + 2, column=5, value="=" + event + "_agents!d86")
+        sheet.cell(row=i + 2, column=6, value="=" + event + "_agents!b133")
 
     initial_row = len(events) + 2
     sheet.cell(row=initial_row + 1, column=2, value="tiempo_ultimo_agente_goal")
@@ -146,7 +154,7 @@ def manage_refs(workbook):
         # sheet.cell(row=i + initial_row + 2, column=4, value="=AVERAGE("+event+"_agents!e89:e128)")
 
     initial_row = (len(events)+2) * 2
-    sheet.cell(row=initial_row + 1, column=2, value="tiempo_en_acabar (success_agents)")
+    sheet.cell(row=initial_row + 1, column=2, value="tiempo_en_acabar")
     sheet.cell(row=initial_row + 1, column=3, value="MAX")
     sheet.cell(row=initial_row + 1, column=4, value="STDEV")
     for i in range(len(events)):
