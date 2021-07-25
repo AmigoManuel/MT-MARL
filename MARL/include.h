@@ -42,7 +42,7 @@
 #define PUSH_OVER_THRESHOLD 2
 #define MAX_TIME_STEPS 1000
 //#define NAGENTS 20
-#define NAGENTS 10
+#define NAGENTS 100
 
 
 // Medida de tiempo que el agente recuerda
