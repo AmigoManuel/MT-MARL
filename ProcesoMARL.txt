@@ -1,0 +1,178 @@
+MARL
+
+// mostProbPositionXY[a][i][0][0] posicion x
+// mostProbPositionXY[a][i][0][1] posicion y
+
+-> call_rtaastar()
+    for cada RUN
+        -> generate_maze(RUN1)
+        -> test_rtaastar(int lookahead, int prunning)
+        
+
+-> test_rtaastar(int lookahead, int prunning)
+    -> newrandommaze_astar()
+    -> initialize_astar()
+    // Primera observacion
+    for cada agente i
+        for cada agente j
+            if i != j
+                canSee[i][j] = 0
+                role[i][j] = -1
+                -> observe_agent(j, i, lookahead, position[i])
+    while no llege cada agente a su destino
+        for cada agente i
+            if el agente no se encuetra en su casilla de destino
+                ->compute_shortestpath_astar(i, lookahead)
+                for cada instante l dentro del lookahead
+                    if se encuentra determinado el camino ideal para el agente i sobre el instante l
+                        if el instante l es posterior al inicial y existe un camino ideal determinado sobre el instante anterior a l
+                            if el costo de conflicto sobre el instante anterior a l es muy elevado (mayor a .5) //
+                                transformar este en 1 para recalcar esta dificultad
+                        se asigna el valor de l como el largo del camino para el agente i
+                -> Segunda observación basada en restricciones y conflictos
+                if ->compute_constraintpath(i, lookahaead)
+                    if la celda de destino se encuentra bloqueada
+                        conserva su posición y pasa al siguiente agente
+                    else
+                        asigna la nueva posición al agente i
+                        for cada agente j distinto a i
+                            ->observe_agent2(j, i, lookahead, nueva posición de i)
+                            ->observe_new_agents(i, j, lookahead)
+                else
+                    no encontro solución, por ende debe regresar por su camino
+                    if la celda anterior a i se encuentra bloqueada
+                        conserva su posición y pasa al siguiente agente
+                    else
+                        cambia la celda actual del agente i por el padre de su celda actual, es decir su celda anterior
+                
+                if el agente i llego a su casilla de destino
+                    se queda en el lugar permitiendo el paso por sobre el
+                if cada agente llego a su casilla de destino
+                    acaba la ejecución
+
+/*-- inicializaciones de maze --*/
+                                    
+-> initialize_astar()
+    for cada celda en el mapa
+        for cada direccion posible desde esa celda
+                determina su celda sucesora
+                determina el costo de desplazarse a ella
+                filtra los obstaculos para no entrar en uno
+        inicializa las variables del mapa => iteration overexpanded trace blocked
+        inicializa las variables de agentes => blocked agent_expansions agent_cost
+        -> initialization_h_values_2D()
+
+-> initialization_h_values_2D()
+    for cada agente
+        for cada celda
+            inicializa el valor de h de la celda en infinito
+        inicializa el valor de h sobre la celda objetivo en 0
+        inicializa el valor de key3 en 0
+        inserta la celda objetivo del agente en heap3
+        mientras queden celdas dentro del heap3
+            extrae la celda top del heap3
+            escribe sobre hvalues[celda][agente] el valor h de la celda extraida
+            for cada dirección d
+                if es posible moverse desde la celda actual
+                    if el valor h actual es mayor que el ajustado //  if(cellpas->move[d]->h > cellpas->h + cellpas->cost[d])
+                        actualiza el valor de h y de la key3
+                        inserta la celda a desplazarse dentro del heap3
+                        if la celda es la celda de inicio del agente
+                            almacena esta dentro de hValueForAgent
+
+-> initialize_astar()
+    iteración del mapa en 0
+    vacía el heap2
+    marca cada nodo objetivo como no alcanzado aún
+
+/*- calculo de camino -*/
+
+/* Primera observación (con a distinto de i). Inicializa las posibles ubicaciones y memoria de a con respecto a i en 0.
+ Si a se encuentra sobre el rango de visión de i y si sobre la siguiente ventana de tiempo (lookahead = 1), la 
+ ubicación mas probable de a con respecto a i (en un inicio es una celda nula) es la ubicación acual de i (a quiere la
+ celda de i), entonces es una predicción acertada, sino, es una mala predicción y en ambos casos se realiza una evaluación
+ de la predicción realizada. luego se actualiza el historico de predicciones realizadas.
+ En caso que a no se encuentre sobre el rango de i, ambos agentes no se logran ver sobre esta observación. */
+->observe_agent(int a, int i, int lookahead, cell1 *previous)
+    inicializa las ubicaciones más probables de a con respecto a i en 0
+    inicializa las huellas/track de a con respecto a i en -1
+    if el objetivo no se a alcanzado por el agente i y el agente a se encuentra dentro del rango lookahaead con respecto a i
+        entonces el agente a puede ver al agente i
+        if la proxima posición más probable para a con respecto i, a una casilla de distancia es la posicion actual de i // if ((mostProbPositionXY[a][i][1][0] == position[i]->x) && (mostProbPositionXY[a][i][1][1] == position[i]->y))
+            prediccion acertada
+            ->evalPrevPrediction(a, i, 1)
+        else
+            prediccion errada
+            ->evalPrevPrediction(a, i, 0)
+        ->updateHistory(a, i, lookahead, previous)
+    else
+        los agentes a e i no se pueden ver
+
+/* Lleva la cantidad de predicciones y predicciones correctas realizadas. */
+->evalPrevPrediction(int a, int i, int correct)
+    incrementa el contador de predecciones realizadas entre los agentes a e i
+    if la predicción es correcta
+        se incremente el contador de predicciones correctas entre a e i
+
+/* Actualiza para el agente a, la celda track (memoria) sobre la ventana de tiempo siguiente a la ubicación del 
+ agente i, esto ya que el agente a quiere la celda i. Incrementa los indicadores de transición y bloqueo de celda
+ para que el agente a tenga en reseva la celda actual de i y la tome como su siguiente celda más probable.*/
+->updateHistory(int a, int i, int lookahead, cell1 *previous)
+    almacena la celda actual de i en memoria para a sobre la siguiente ventana de tiempo
+    for cada instante z dentro del lookahaead
+        marca la celda actual de i como bloqueada/reservada para el agente a en el instante z
+        incrementa el contador de solicitudes hacia la celda actual de i para el agente a en el instante z
+        marca la posición actual de i como la más probable para a, sobre el instante z
+
+->compute_shortestpath_astar(int a, int lookahead)
+    if el grado de la celda del agente a >= 3 //celdas vecinas disponibles
+        // es posible hacer swaping sobre esta celda
+        lastMobileCellDist[a] = 0
+        lastMobileState[a] = celda
+    for cada celda en el mapa
+        inicializa el numero de conflictos de a en 0
+        for cada instante z sobre el lookahead
+            celda->marked[a][z] = 0
+            el costo de conflicto inicial para a sobre la celda en el instante z es 0
+    mobility = cantidad de celdas adyacentes libres // sin bloqueo
+    // El agente es capaz de moverse en otra dirección. No retorar por su camino o avanzar recto
+    if mobility > 2
+        lastMobileCellDist[a] = 0
+        lastMobileCellY[a] = position[a]->y
+        lastMobileCellX[a] = position[a]->x
+    else
+        // se aleja de su ultima celda en la que se encontro hasta 900
+        if lastMobileCellDist[a] < 900
+            lastMobileCellDist[a] = lastMobileCellDist[a] + 1
+    // se determina formula, con h en position[a]
+    formula = h(position[a], a) + 2 * (lastMobileCellDist[a]) + 3
+    // se almacena para luego
+    agentInfo[a] = formula
+    // se inicializa el camino, ya que uno nuevo se calculara
+    for z en lookahead
+        path[a][z] = NULL
+    // Proceso A*
+    se vacía el heap2
+    mazestart1 = position[a]
+    mazegoal1 = goal[a]
+    int newdepth = 0
+    cont_closed = 0
+    mazestart1->g = 0
+    mazestart1->key = 0
+    mazestart1->searchtree = NULL
+    mazestart1->trace = NULL
+    se inserta mazestart1 sobre el heap2
+    flag_success1 = 0
+    while queden elementos sobre el heap2
+        extrae celda top del heap2
+        if celda es el goal o se alcanza el limite lookahead
+            lastStepDepth = tmpcell1->tmpdepth[a]
+            // h(a) sobre la celda
+            f_value = h(celda, a) + celda->g
+            cellpas = celda
+            for cada z sobre los estados cerrados // entre 1 y lookahead 
+
+
+->observe_agent2(int a, int i, int lookahead, cell1 *previous)
+
+->observe_new_agents(int a, int i, int lookahead)

@@ -952,6 +952,9 @@ int compute_shortestpath_astar(int a, int lookahead) {
     if (maze1[position[a]->y][position[a]->x].degree[a] >= 3) {
         // HEEY IF IT IS THE SECOND TIME IT STAYS IN THE STATE; IT COUNTS MORE
         // DEGREES!!!! Need to save the state so that it can be used for swapping
+        printf("agente %d degree %d", a + 1, maze1[position[a]->y][position[a]->x].degree[a]);
+        getchar();
+
         if (enable_print) printf("Awesome! can use this state for swapping!!!\n");
         lastMobileCellDist[a] = 0;
         lastMobileState[a] = &maze1[position[a]->y][position[a]->x];
@@ -1220,8 +1223,7 @@ int compute_shortestpath_astar(int a, int lookahead) {
             (cont_closed == lookahead)) { // open_size = opensize2() + open_size;
             // Se calcul f para actualizar h
 
-            f_value =
-                hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a] + tmpcell1->g;
+            f_value = hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a] + tmpcell1->g;
             if (enable_print) printf(" \n\nH value of [%d %d]: %f,", tmpcell1->y, tmpcell1->x,hvalues[MAZEWIDTH * tmpcell1->y + tmpcell1->x][a]);
             if (enable_print) printf(" G : %f\n", tmpcell1->g);
 
@@ -2952,7 +2954,7 @@ void test_rtaastar(int lookahead, int prunning) {
         // i = random() % NAGENTS;
         // For each agent in the problem..
         for (i = 0; i < NAGENTS; i++) {
-            /* if (RUN1 >= 0 && robot_steps1 >= 0) {
+            if (RUN1 >= 0 && robot_steps1 >= 0) {
                 // if (enable_print) printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f
                 // step:%d time_step:%d
                 // terminado:%d\n",i+1,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,time_step,NAGENTS-finish_all);
@@ -2964,7 +2966,7 @@ void test_rtaastar(int lookahead, int prunning) {
                 }
                 if (enable_print) printf("\n");
                 if (i==0) getchar();
-            } */
+            }
 
             if (position[i] != goal[i]) { // While it is not at its goal...
                 // First, compute the shortest path, ignoring other agents...
