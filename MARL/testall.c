@@ -34,7 +34,7 @@
 //"./GameMaps/bidi.map2"
 // revisar escenario 9
 char map_path[50] = "./GameMaps/pasillo/pasillo.map2";
-char locations_path[50] = "./GameMaps/pasillo/pasillo-10.loc2";
+char locations_path[50] = "./GameMaps/pasillo/pasillo-50.loc2";
 
 /* Lectura de mapa desde fichero externo 
  * @param filename string con el nombre del fichero */
@@ -302,7 +302,6 @@ int main(int argc, char *argv[]) {
         strcpy(map_path, argv[1]);
         strcpy(locations_path, argv[2]);
     }
-    remove("log-resultados");
 
     #ifdef UNKNOWN
     #ifdef DECREASE

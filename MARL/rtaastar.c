@@ -952,9 +952,6 @@ int compute_shortestpath_astar(int a, int lookahead) {
     if (maze1[position[a]->y][position[a]->x].degree[a] >= 3) {
         // HEEY IF IT IS THE SECOND TIME IT STAYS IN THE STATE; IT COUNTS MORE
         // DEGREES!!!! Need to save the state so that it can be used for swapping
-        printf("agente %d degree %d", a + 1, maze1[position[a]->y][position[a]->x].degree[a]);
-        getchar();
-
         if (enable_print) printf("Awesome! can use this state for swapping!!!\n");
         lastMobileCellDist[a] = 0;
         lastMobileState[a] = &maze1[position[a]->y][position[a]->x];
@@ -2954,7 +2951,7 @@ void test_rtaastar(int lookahead, int prunning) {
         // i = random() % NAGENTS;
         // For each agent in the problem..
         for (i = 0; i < NAGENTS; i++) {
-            if (RUN1 >= 0 && robot_steps1 >= 0) {
+            /* if (RUN1 >= 0 && robot_steps1 >= 0) {
                 // if (enable_print) printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f
                 // step:%d time_step:%d
                 // terminado:%d\n",i+1,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,time_step,NAGENTS-finish_all);
@@ -2966,7 +2963,7 @@ void test_rtaastar(int lookahead, int prunning) {
                 }
                 if (enable_print) printf("\n");
                 if (i==0) getchar();
-            }
+            } */
 
             if (position[i] != goal[i]) { // While it is not at its goal...
                 // First, compute the shortest path, ignoring other agents...
@@ -3097,13 +3094,13 @@ void test_rtaastar(int lookahead, int prunning) {
                         
                         // Esta rutina permite empujar los agentes fuera de su celda luego de PUSH_OVER_THRESHOLD tiempo en ella
                         // Si no me encuentro en mi goal
-                        /* if (position[i] != goal[i]) {
+                        if (position[i] != goal[i]) {
                             // No me he movido en el paso anterior
                             if (position[i] == previous) {
                                 // No me he movido desde la ultima vez
                                 if (last_recently_see[i] != NULL &&
                                     last_recently_see[i] == position[i]) {
-                                    // push_over_func(i, previous);
+                                    push_over_func(i, previous);
                                 } else {
                                     // Me moví desde la ultima vez, entonces reinicio
                                     push_over[i] = 0;
@@ -3115,7 +3112,7 @@ void test_rtaastar(int lookahead, int prunning) {
                                 //}
                                 //printf("\n");
                             }
-                        } */
+                        }
 
 
 
@@ -3147,9 +3144,11 @@ void test_rtaastar(int lookahead, int prunning) {
                             enable_print = 1;
                             total_cost = 0;
 
+                            char buf[0x100];
+                            snprintf(buf, sizeof(buf), "log-resultados-%d.txt", lookahead);
                             FILE *fp;
 
-                            fp = fopen("log-resultados", "a+");
+                            fp = fopen(buf, "a+");
 
                             fprintf(fp, "RUN %ld\n", RUN1);
                             
@@ -3263,7 +3262,7 @@ void call_rtaastar() {
     float SDOM = 0;
     int lookahead;
     int prunning, i;
-    int look[1] = {3}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
+    int look[9] = {6,9,12,15,18,21,24,27,30}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
     float total_score[(int)(sizeof(look) / (float)sizeof(int))],
         avg_score[(int)(sizeof(look) / (float)sizeof(int))],
         total_time[(int)(sizeof(look) / (float)sizeof(int))];
