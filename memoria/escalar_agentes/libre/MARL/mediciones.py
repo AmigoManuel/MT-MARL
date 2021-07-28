@@ -93,6 +93,7 @@ def write_excel(RUNS, workbook):
     sheet.cell(row=initial_row + 1, column=8, value="total_pred")
     sheet.cell(row=initial_row + 1, column=9, value="rate_pred")
     sheet.cell(row=initial_row + 1, column=10, value="push_out_count")
+    sheet.cell(row=initial_row + 1, column=11, value="total_count")
     for i in range(len(RUNS)):
         RUN = RUNS[i]
         sheet.cell(row=initial_row + i + 2, column=1, value=i)
@@ -105,6 +106,7 @@ def write_excel(RUNS, workbook):
         sheet.cell(row=initial_row + i + 2, column=8, value=RUN.bad_good_total_rate_pred[2])
         sheet.cell(row=initial_row + i + 2, column=9, value=RUN.bad_good_total_rate_pred[3])
         sheet.cell(row=initial_row + i + 2, column=10, value=RUN.push_out_count)
+        sheet.cell(row=initial_row + i + 2, column=11, value=np.sum(RUN.costo_por_agente))
 
     initial_row = initial_row + len(RUNS) + 3
 
@@ -174,6 +176,62 @@ def manage_refs(workbook):
         sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!e89:e128)")
         sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!e89:e128)")
         sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!e89:e128)")
+
+    initial_row = (len(events) + 2) * 4
+    sheet.cell(row=initial_row + 1, column=2, value="push_out")
+    sheet.cell(row=initial_row + 1, column=3, value="MAX")
+    sheet.cell(row=initial_row + 1, column=4, value="STDEV")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + initial_row + 2, column=1, value=event)
+        sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!j89:j128)")
+        sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!j89:j128)")
+        sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!j89:j128)")
+
+    initial_row = (len(events) + 2) * 5
+    sheet.cell(row=initial_row + 1, column=2, value="total")
+    sheet.cell(row=initial_row + 1, column=3, value="MAX")
+    sheet.cell(row=initial_row + 1, column=4, value="STDEV")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + initial_row + 2, column=1, value=event)
+        sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!k89:k128)")
+        sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!k89:k128)")
+        sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!k89:k128)")
+
+    initial_row = (len(events) + 2) * 6
+    sheet.cell(row=initial_row + 1, column=2, value="good_pred")
+    sheet.cell(row=initial_row + 1, column=3, value="MAX")
+    sheet.cell(row=initial_row + 1, column=4, value="STDEV")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + initial_row + 2, column=1, value=event)
+        sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!f89:f128)")
+        sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!f89:f128)")
+        sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!f89:f128)")
+
+    initial_row = (len(events) + 2) * 7
+    sheet.cell(row=initial_row + 1, column=2, value="bad_pred")
+    sheet.cell(row=initial_row + 1, column=3, value="MAX")
+    sheet.cell(row=initial_row + 1, column=4, value="STDEV")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + initial_row + 2, column=1, value=event)
+        sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!g89:g128)")
+        sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!g89:g128)")
+        sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!g89:g128)")
+
+    initial_row = (len(events) + 2) * 8
+    sheet.cell(row=initial_row + 1, column=2, value="rate_pred")
+    sheet.cell(row=initial_row + 1, column=3, value="MAX")
+    sheet.cell(row=initial_row + 1, column=4, value="STDEV")
+    for i in range(len(events)):
+        event = events[i]
+        sheet.cell(row=i + initial_row + 2, column=1, value=event)
+        sheet.cell(row=i + initial_row + 2, column=2, value="=AVERAGE("+event+"_agents!i89:i128)")
+        sheet.cell(row=i + initial_row + 2, column=3, value="=MAX("+event+"_agents!i89:i128)")
+        sheet.cell(row=i + initial_row + 2, column=4, value="=STDEV("+event+"_agents!i89:i128)")
+
     return workbook
 
 
