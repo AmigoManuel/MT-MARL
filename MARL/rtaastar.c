@@ -3262,7 +3262,7 @@ void call_rtaastar() {
     float SDOM = 0;
     int lookahead;
     int prunning, i;
-    int look[9] = {6,9,12,15,18,21,24,27,30}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
+    int look[10] = {3,6,9,12,15,18,21,24,27,30}; // 3,4,5,8,14};//{1,8,16,32,64,128,256,512,1024};
     float total_score[(int)(sizeof(look) / (float)sizeof(int))],
         avg_score[(int)(sizeof(look) / (float)sizeof(int))],
         total_time[(int)(sizeof(look) / (float)sizeof(int))];
@@ -3380,6 +3380,7 @@ void call_rtaastar() {
             open_size = 0;
             memory_count = 0;
             statexpanded1_prune = 0;
+            push_out_count = 0;
 
             for (int a = 0; a < NAGENTS; a++) {
                 for (int j = 0; j < NAGENTS; j++) {
