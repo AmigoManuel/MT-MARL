@@ -2,6 +2,12 @@
 
 Control de versiones para MARL en memoria de título
 
+## Requisitos
+
+- Ubuntu 16.04
+- make
+- gcc
+
 ## Instalación
 
 Clonar el repositorio localmente.
@@ -11,9 +17,5 @@ Clonar el repositorio localmente.
 ## Compilación y ejecución.
 
 Para realizar pruebas sobre baseline.
-
-``cd Baseline && make && ./testall``
-
-Para pruebas sobre MARL.
-
-``cd MARL && make && ./testall``
+- compilar con ``make`` sobre el directorio de Baseline o MARL
+- ejecutar ``./testall`` para inicial la ejecución
