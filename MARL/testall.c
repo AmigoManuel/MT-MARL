@@ -287,14 +287,6 @@ void generate_maze(int RUN1) {
 
 /*----------------------------------------------------------------------------------*/
 
-void task_set(int coreid){
-    int result;
-    cpu_set_t mask;
-    CPU_ZERO(&mask);
-    CPU_SET(coreid, &mask);
-    result = sched_setaffinity(0, sizeof(mask), &mask);
-}
-
 int main(int argc, char *argv[]) {
 
     // map y locations mediante parametros
@@ -316,8 +308,6 @@ int main(int argc, char *argv[]) {
     #endif
     #endif
     #ifdef TESTRTAASTAR
-        // Affinidad procesador
-        task_set(0);
         call_rtaastar();
     #endif
     #ifdef TESTLSSLRTA

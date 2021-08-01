@@ -2951,7 +2951,7 @@ void test_rtaastar(int lookahead, int prunning) {
         // i = random() % NAGENTS;
         // For each agent in the problem..
         for (i = 0; i < NAGENTS; i++) {
-            /* if (RUN1 >= 0 && robot_steps1 >= 0) {
+            if (RUN1 >= 0 && robot_steps1 >= 0) {
                 // if (enable_print) printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f
                 // step:%d time_step:%d
                 // terminado:%d\n",i+1,position[i]->y,position[i]->x,goal[i]->y,goal[i]->x,position[i]->h,robot_steps1,time_step,NAGENTS-finish_all);
@@ -2963,7 +2963,7 @@ void test_rtaastar(int lookahead, int prunning) {
                 }
                 if (enable_print) printf("\n");
                 if (i==0) getchar();
-            } */
+            }
 
             if (position[i] != goal[i]) { // While it is not at its goal...
                 // First, compute the shortest path, ignoring other agents...
