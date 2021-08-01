@@ -371,7 +371,7 @@ void test_rtaastar(int lookahead, int prunning)
         time_step++;
         for (i = 0; i < NAGENTS; i++)
         {
-            /* if (RUN1 >= 0 && robot_steps1 >= 0) {
+            if (RUN1 >= 0 && robot_steps1 >= 0) {
                 if (enable_print) printf("Antes Agent[%d] A* Start [%d,%d] Goal [%d,%d] h:%f step:%lld time_step:%d terminado:%d\n", i + 1,
                        position[i]->y, position[i]->x, goal[i]->y, goal[i]->x, position[i]->h, robot_steps1, time_step,
                        NAGENTS - finish_all);
@@ -384,7 +384,7 @@ void test_rtaastar(int lookahead, int prunning)
                     if (enable_print) printf("(%d)[%d,%d]", k + 1, position[k]->y, position[k]->x);
                 if (enable_print) printf("\n");
                 // getchar();
-            } */
+            }
 
             if (goal_reached[i])
             {
@@ -593,7 +593,7 @@ void call_rtaastar()
     int lookahead;
     int prunning, i;
     //int look[9] = {1, 8, 16, 32, 64, 128, 256, 512, 1024};
-    int look[1] = {30};
+    int look[1] = {3};
 
     for (prunning = 0; prunning < 1; prunning++)
     {
