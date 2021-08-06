@@ -24,8 +24,8 @@ MARL
             if el agente no se encuetra en su casilla de destino
                 ->compute_shortestpath_astar(i, lookahead)
                 for cada instante l dentro del lookahead
-                    if se encuentra determinado el camino ideal para el agente i sobre el instante l
-                        if el instante l es posterior al inicial y existe un camino ideal determinado sobre el instante anterior a l
+                    if se encuentra determinado el ideal_path para el agente i sobre el instante l
+                        if el instante l es posterior al inicial y existe un ideal_path determinado sobre el instante anterior a l
                             if el costo de conflicto sobre el instante anterior a l es muy elevado (mayor a .5) //
                                 transformar este en 1 para recalcar esta dificultad
                         se asigna el valor de l como el largo del camino para el agente i
@@ -145,7 +145,9 @@ MARL
         if lastMobileCellDist[a] < 900
             lastMobileCellDist[a] = lastMobileCellDist[a] + 1
     // se determina formula, con h en position[a]
-    formula = h(position[a], a) + 2 * (lastMobileCellDist[a]) + 3
+    // si el agente unicamente puede quedarse estatico o devolverse por su camino
+    // entonces lastMobileCellDist[a]++
+    formula = h(position[a], a) + ((2 * (lastMobileCellDist[a])) + 3)
     // se almacena para luego
     agentInfo[a] = formula
     // se inicializa el camino, ya que uno nuevo se calculara
@@ -172,6 +174,98 @@ MARL
             cellpas = celda
             for cada z sobre los estados cerrados // entre 1 y lookahead 
 
+-> compute_constraintpath(int a, int lookahead)
+    for cada celda en el camino de a
+        if conflict_cost[a][celda] > 0.49
+            // No se puede accesar a esa celda
+            celda.maked[a] = bloqueada
+            limitcell = celda - 1
+        if 0.01 < conflict_cost[a][celda] <= 0.49 && celda.grado < 3
+            celda.marked[a] = disponible
+            celda+1 .marked[a] = bloqueada
+            limitcell = celda - 1
+        if 0.201 < conflict_cost[a][celda] <= 0.49 && celda.grado >= 3
+            // Es posible moverse, pero probablemente se encuentre bloqueada
+            celda.marked[a] = disponible
+            celda+1 .marked[a] = bloqueada
+            limitcell = celda - 1
+        // limpia el camino de a
+        for l in lookahead
+            path[a][l] = null
+        // nuevo lookahead restando los conflictos
+        new_lookahead = pathlength[a] - limitcell
+        // Nueva busqueda con inicio en idealpath[a][limitcell]
+        mazestart1 = idealPath[a][limitcell]
+        insertheap2(mazestart1)
+        if new_lookahead > 0
+            a* con objetivo goal[a] y lookahead = new_lookahead
+        reconstruye el camino
+
+-> determine_constraints(int a,
+                        int lookahead,
+                        int formula,
+                        cell1 *currentCell,
+                        int initialState)
+    // para la primera llamada entra con pathlength[a] = 1
+    // así hasta la ultima en que pathlength[a] = lookahead
+    for future = pathlength[a] ; future <= lookahead ; future++
+        // Si la celda se prevee bloqueada por a en future o en future - 1
+        if currentCell.blockedAgent[a][future] || currentCell.blockedAgent[a][future - 1]
+            if future == pathlength[a]
+                for cada agente j
+                    // Existe una transición de j a currentCell en future
+                    if j!=a && currentCell.agentMovingTo[a][future][j] > 0
+                        if el objetivo fue alcanzado por j
+                            // ignorar j
+                            continue
+                        numConflicts++
+                        if formula < agentInfo[j]
+                            maxInfo = j
+                        determine_role(role[a][j], maxInfo, a, j, cell_role)
+            // caso 2 - Se espera que currentCell se encuentre bloqueada por a en future - 1
+            if currentCell.blockedAgent[a][future - 1] && future > 0
+                for cada agente j
+                    // existe transición de j a currentCell en future - 1
+                    if currentCell.agentMovingTo[a][future - 1][j] > 0
+                        numConflicts++
+                        if formula < agentInfo[j]
+                            maxInfo = j
+                        determine_role(role[a][j], maxInfo, a, j, cell_role)
+            // caso 3 - hay un agente en actualCell
+            for cada agente u
+                if currentCell == position[u] && future == 1 && u!=a && u no esta en goal
+                    hay un agente sobre actualCell
+            if currentCell.blockedAgent[a][0] && hay un agente sobre actualCell
+                // no se puede mover sobre actualCell, hay un agente
+                for cada agente j
+                    if currentCell == position[j]
+                        numConflicts++
+                        maxInfo = j
+                        determine_role(role[a][j], maxInfo, a, j, cell_role)
+            // No existen conflictos
+            if numConflicts == 0
+                for cada agente j
+                    if currentCell.agentMovingTo[a][future - 1][j] > 0 && idealPath[j][future] != NULL
+                        if j esta en goal
+                            // ignorar
+                            continue
+                        numConflicts++
+                        if formula < agentInfo[j]
+                            maxInfo = j
+                        else
+                            maxInfo = a
+                        determine_role(role[a][j], maxInfo, a, j, cell_role)
+            if cell_role == 0
+                step = 0
+                if conflict_cost[a][currentCell][step] == 0
+                    if ocurre caso 2
+                        conflict_cost[a][currentCell][future] = 1 / ((future - 1) - step + 2)
+                        if conflict_cost[a][currentCell][step] > 1
+                            conflict_cost[a][currentCell][future] = 1
+                    else
+                        conflictCost[a][currentCell][step] = 1 / (future - step + 2)
+                        if conflict_cost[a][currentCell][step] > 1
+                            conflict_cost[a][currentCell][future] = 1
 
 ->observe_agent2(int a, int i, int lookahead, cell1 *previous)
 

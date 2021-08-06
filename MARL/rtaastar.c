@@ -293,6 +293,7 @@ void determine_constraints(int a, int lookahead, int formula,
 
         /* Si el objetivo no ha sido alcanzado por j y
       la distancia entre a y j esta entre 0 y lookahead */
+      // esto nunca sucede
         if ((!goal_reached[j]) &&
             (((abs(position[j]->x - position[a]->x) +
                abs(position[j]->y - position[a]->y)) <= (lookahead)) &&
@@ -301,9 +302,11 @@ void determine_constraints(int a, int lookahead, int formula,
             (a != j)) {
             // La linea superior es verdadera si el vecino es visible
 
-            if (((formula < 20000) || (agentInfo[j] < 20000)) &&
-                ((formula > 20000) && (agentInfo[j] > 20000) &&
-                 (agentInfo[j] < formula))) {
+            if (
+                ((formula < 20000) || (agentInfo[j] < 20000)) &&
+                ((formula > 20000) && (agentInfo[j] > 20000) && (agentInfo[j] < formula))
+            ) {
+
                 // Analiza el camino del vecino, compara con el camino ideal del
                 // vecino j (shared after the previous iteration)
                 for (int l = 1; l <= lookahead; l++) {
@@ -438,14 +441,12 @@ void determine_constraints(int a, int lookahead, int formula,
     for (int future = pathlength[a]; future <= lookahead; ++future) {
         cell_role = -1;
         if (enable_print) printf("*****Checking issues of stayin here [%d %d] at time %i!!: \n",currentCell->y, currentCell->x, future);
-
         // Verificando si mi celda actual se encuetra bloqueada
         // Si me quedo en esta celda a futuro llevara posiblemente a un conflicto
-        if (((maze1[currentCell->y][currentCell->x].blockedAgent[a][future]) &&
-             (future > 0)) ||
-            (((maze1[currentCell->y][currentCell->x]
-                   .blockedAgent[a][future - 1])) &&
-             (future > 0))) {
+        if (
+            ((maze1[currentCell->y][currentCell->x].blockedAgent[a][future]) && (future > 0)) ||
+            (((maze1[currentCell->y][currentCell->x].blockedAgent[a][future - 1])) && (future > 0))
+        ) {
             if (enable_print) printf("*****Staying here will bring me trouble at time %i!!\n",future);
 
             // TODO: Definir estás variables
@@ -514,7 +515,6 @@ void determine_constraints(int a, int lookahead, int formula,
                             // position[j]->x][j])+1 >
                             //(int)(hvalues[MAZEWIDTH*position[a]->y +
                             // position[a]->x][a])+2)
-
                             if (formula < agentInfo[j]) {
                                 maxInfo = j;
                             }
@@ -602,8 +602,7 @@ void determine_constraints(int a, int lookahead, int formula,
                         if (enable_print) printf(", SumH is %f \n", sumH);
 
                         // Si el valor heuristico de j es mayor que el actual mayor
-                        if ((hvalues[MAZEWIDTH * (position[j]->y) + (position[j]->x)]
-                                    [j] > maxH)) {
+                        if ((hvalues[MAZEWIDTH * (position[j]->y) + (position[j]->x)][j] > maxH)) {
                             // Marca a j como el nuevo agente con mayor valor
                             // heuristico
                             maxHagent = j;
@@ -622,9 +621,7 @@ void determine_constraints(int a, int lookahead, int formula,
             }
 
             // Otro agente ya debiera encontrarse aquí
-            if (((maze1[currentCell->y][currentCell->x]
-                      .blockedAgent[a][future - 1])) &&
-                (future > 0)) {
+            if (((maze1[currentCell->y][currentCell->x].blockedAgent[a][future - 1])) && (future > 0)) {
                 // El agente future-1 no puede desplazarse a la celda actual, ya que
                 // hay un agente en ella
                 if (enable_print) printf("****At %i MIGHT NOT BE ABLE to move to [%d %d], there MIGHT ""ALREADY BE an agent\n",future - 1, currentCell->y, currentCell->x);
@@ -847,6 +844,8 @@ void determine_constraints(int a, int lookahead, int formula,
                 if (initialState == 0) {
                     step = pathlength[a];
                 }
+                printf("[%d]->%d", a + 1, pathlength[a]);
+                getchar();
                 if (enable_print) printf(" My step (of pathlength) is now %i\n", step);
                 if (conflictCost[a][currentCell->y][currentCell->x][step] ==
                     0) //<  (float)1/(float)(future-pathlength[a]+1))
@@ -1142,6 +1141,10 @@ int compute_shortestpath_astar(int a, int lookahead) {
     if (enable_print) printf("My M currently is %i \n", lastMobileCellDist[a]);
 
     // Compute my formula..
+    if (lastMobileCellDist[a] > 0) {
+        printf("[%d]->%d", a + 1, lastMobileCellDist[a]);
+        getchar();
+    }
     int formula =
         (int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]) +
         (2 * (lastMobileCellDist[a]) + 3);
