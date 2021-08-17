@@ -844,8 +844,6 @@ void determine_constraints(int a, int lookahead, int formula,
                 if (initialState == 0) {
                     step = pathlength[a];
                 }
-                printf("[%d]->%d", a + 1, pathlength[a]);
-                getchar();
                 if (enable_print) printf(" My step (of pathlength) is now %i\n", step);
                 if (conflictCost[a][currentCell->y][currentCell->x][step] ==
                     0) //<  (float)1/(float)(future-pathlength[a]+1))
@@ -1142,13 +1140,15 @@ int compute_shortestpath_astar(int a, int lookahead) {
 
     // Compute my formula..
     if (lastMobileCellDist[a] > 0) {
-        printf("[%d]->%d", a + 1, lastMobileCellDist[a]);
-        getchar();
+        printf("lastMobileCellDist: [%d]->%d\n", a + 1, lastMobileCellDist[a]);
+        
     }
     int formula =
         (int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]) +
         (2 * (lastMobileCellDist[a]) + 3);
-
+    printf("h(position[%d],%d): %d\n", a+1, a+1, (int)hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
+    printf("formula: [%d]->%d\n", a + 1, formula);
+    getchar();
     if (enable_print) printf("My formula is %i and my pathlenght is %i ((H:) %i + 2* ""(lastmobilecell) %i +3)\n",formula, pathlength[a],(int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]),lastMobileCellDist[a]);
 
     agentInfo[a] = formula;
