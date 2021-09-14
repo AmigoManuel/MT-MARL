@@ -36,18 +36,18 @@
 //#define MAZEWIDTH  252
 //#define MAZEHEIGHT  163
 
+/* #define MAZEWIDTH  34
+#define MAZEHEIGHT  34 */
+
 #define MAZEWIDTH  34
 #define MAZEHEIGHT  34
-
-//#define MAZEWIDTH  12
-//#define MAZEHEIGHT  11
 
 
 #define MAZEDENSITY 0.2     /* percentage of blocked cells if RANDOMMAZE is defined       */
 
 #define PUSH_OVER_THRESHOLD 5
 #define MAX_TIME_STEPS 1000
-#define NAGENTS 50
+#define NAGENTS 90
 
 float hvalues[MAZEWIDTH * MAZEHEIGHT][NAGENTS];
 int agent_expansions[NAGENTS];

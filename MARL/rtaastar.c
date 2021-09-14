@@ -1146,9 +1146,9 @@ int compute_shortestpath_astar(int a, int lookahead) {
     int formula =
         (int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]) +
         (2 * (lastMobileCellDist[a]) + 3);
-    printf("h(position[%d],%d): %d\n", a+1, a+1, (int)hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
-    printf("formula: [%d]->%d\n", a + 1, formula);
-    getchar();
+    /* printf("h(position[%d],%d): %d\n", a+1, a+1, (int)hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]);
+    printf("estado interno: [%d]->%d\n", a + 1, formula);
+    getchar(); */
     if (enable_print) printf("My formula is %i and my pathlenght is %i ((H:) %i + 2* ""(lastmobilecell) %i +3)\n",formula, pathlength[a],(int)(hvalues[MAZEWIDTH * position[a]->y + position[a]->x][a]),lastMobileCellDist[a]);
 
     agentInfo[a] = formula;
@@ -2965,7 +2965,10 @@ void test_rtaastar(int lookahead, int prunning) {
                     if (enable_print) printf("(%d)[%d,%d]....(%i and %i) ", k + 1, position[k]->y,position[k]->x, role[0][1], role[1][0]);
                 }
                 if (enable_print) printf("\n");
-                if (i==0) getchar();
+                if (i==0) {
+                    printf("\n");
+                    sleep(1);
+                }
             }
 
             if (position[i] != goal[i]) { // While it is not at its goal...

@@ -377,7 +377,9 @@ void test_rtaastar(int lookahead, int prunning)
                        NAGENTS - finish_all);
                 if (i == NAGENTS - 1){
                     Multi_print_grid();
-                    getchar();
+                    //getchar();
+                    printf("\n");
+                    sleep(1);
                 }
 
                 for (k = 0; k < NAGENTS; k++)
